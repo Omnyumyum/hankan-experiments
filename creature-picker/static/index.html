@@ -286,6 +286,7 @@ cv.onpointermove = (e) => {
   const [x, y] = pos(e);
   const v = [Math.max(0, Math.min(S.prep.w - 1, x)), Math.max(0, Math.min(S.prep.h - 1, y))];
   drag.set(v); drag.xy = v;
+  if (S.pts.no_body) { delete S.pts.no_body; setHint(); }  // 사람이 점을 옮겼으면 네 발로 움직인다
   drawEditor();
   if (Date.now() - S.lastReq > 180) refreshOverlay();  // 끄는 동안에도 가끔
 };
@@ -319,7 +320,7 @@ function drawTools() {
   const btn = (label, fn, dis) => {
     const b = document.createElement("button");
     b.className = "btn"; b.textContent = label; b.disabled = !!dis;
-    b.onclick = () => { fn(); drawTools(); drawEditor(); refreshOverlay(); };
+    b.onclick = () => { fn(); if (S.kind === "quadruped" && S.pts.no_body) { delete S.pts.no_body; setHint(); } drawTools(); drawEditor(); refreshOverlay(); };
     t.appendChild(b);
   };
   if (S.kind === "quadruped") {
@@ -354,10 +355,15 @@ $("reset-points").onclick = () => {
   if (S.kind === "wings" && S.pts.mode === "regions") Object.assign(S.pts, { regions: [], pivots: [], userPivots: false });
   else if (S.kind === "wings") { S.wingSets.points = structuredClone(S.prep.points.wings); S.pts = S.wingSets.points; }
   else S.pts = structuredClone(S.prep.points[S.kind]);
-  drawTools(); drawEditor(); refreshOverlay();
+  setHint(); drawTools(); drawEditor(); refreshOverlay();
 };
 
 function setHint() {
+  if (S.kind === "quadruped") {
+    $("kind-hint").textContent = S.pts.no_body
+      ? "다리를 못 찾았어요 (얼굴만 그린 그림 같아요). 그대로 두면 몸통만으로 출렁이게 움직여요. 네 발로 움직이려면 발 점을 다리 끝으로 옮겨 주세요." : "";
+    return;
+  }
   $("kind-hint").textContent = S.kind !== "wings" ? ""
     : S.pts.mode === "regions"
       ? "움직일 날개 칸을 누르거나 쓱 문지르세요 (고른 칸을 다시 누르면 빠져요). 날개 안 줄무늬까지 한 번에 문지르면 편해요. 초록 점(뿌리)은 날개가 몸에 붙은 곳이에요 — 틀렸으면 끌어서 옮기세요. 선이 끊긴 그림이라 칸이 몸까지 번지면 「점 3개」 방식을 쓰세요."
@@ -385,7 +391,7 @@ async function animate() {
   errBox.textContent = "";
   go("s-play");
   $("play-title").textContent = `${KIND[S.kind].ico} ${KIND[S.kind].name}`;
-  $("play-meta").textContent = `메시 ${a.mesh === "cdt" ? "CDT(외곽선 고정)" : "격자"} · 꼭짓점 ${a.n_vertices} · 삼각형 ${a.n_triangles} · 서버 ${a.sec}초 · ${a.frames}프레임 × ${a.frame_ms}ms`;
+  $("play-meta").textContent = `메시 ${a.mesh === "cdt" ? "CDT(외곽선 고정)" : "격자"} · 꼭짓점 ${a.n_vertices} · 삼각형 ${a.n_triangles} · 서버 ${a.sec}초 · ${a.frames}프레임 × ${a.frame_ms}ms` + (a.notice ? ` — ${a.notice}` : "");
   try { await play(a); } catch (e) { $("play-err").textContent = "재생 실패 (WebGL?): " + e.message; }
 }
 

@@ -151,6 +151,9 @@ def propose(d):
         pts["quadruped"] = {"head": r1(nearest_px(mask, x0, y0 + 0.3 * (y1 - y0))), "tail": r1(nearest_px(mask, x1, y0 + 0.4 * (y1 - y0))),
                             "feet": [r1(f) for f in feet]}
         why["quadruped"] = f"자동으로 못 찾음 ({e}) → 바닥에 고르게 놓음"
+        if looks_face_only(mask):
+            pts["quadruped"]["no_body"] = True  # animate 가 네 발 대신 몸통만으로 움직인다 (사람이 점을 옮기면 화면이 지운다)
+            why["quadruped"] = f"다리를 못 찾았고 앞모습 얼굴처럼 보임 ({e}) → 그대로 두면 몸통만으로 움직임. 네 발로 움직이려면 발 점을 옮겨 주세요"
 
     # 긴 몸: shape_rig 의 긴 몸 판정이 되면 그 머리 · 꼬리, 아니면 가지친 뼈대의 가장 먼 두 끝 (굵은 쪽이 머리)
     axis, _ = sr.find_body_axis(mask, d.ink)
@@ -231,6 +234,22 @@ def propose(d):
             "bbox": (x0, y0, x1, y1), "size": size}
     d._guess_feat = feat
     return {"guess": guess_kind(d, feat), "points": pts, "why": why}
+
+
+FACE_SYM_LR = 0.4  # 좌우 대칭이 이 이상이고
+FACE_ASPECT = 1.3  # 가로 ÷ 세로가 이 이하면 앞모습 얼굴
+
+
+def looks_face_only(mask):
+    """몸 없이 얼굴만 그린 그림(앞모습 고양이 · 돼지 얼굴)인가. 다리 찾기가 실패한 그림에만 쓴다.
+    네 발 그림은 옆모습이라 좌우가 다르고 가로로 길다. 얼굴만 그린 그림은 앞모습이라 좌우가 비슷하고 동그랗다.
+    QuickDraw 학습용 480장(eval_real/QUAD_STRETCH.md)에서 진짜 네 발 250장 중 1장만 걸리고, 얼굴만 184장 중 93장이 걸린 기준.
+    억지로 다리를 만들면 얼굴 안이 소용돌이치며 늘어났다 (REPORT.md 실패 1번의 대부분)."""
+    ys, xs = np.nonzero(mask)
+    sub = mask[ys.min():ys.max() + 1, xs.min():xs.max() + 1] > 0
+    sym_lr = (sub & sub[:, ::-1]).sum() / max(1, (sub | sub[:, ::-1]).sum())
+    aspect = sub.shape[1] / sub.shape[0]
+    return bool(sym_lr >= FACE_SYM_LR and aspect <= FACE_ASPECT)
 
 
 GUESS_MODEL = Path(__file__).resolve().parent / "guess_model.json"
@@ -372,44 +391,79 @@ def snap_to_tips(d, pts, keys_single=("head", "tail"), key_multi="feet"):
     return out
 
 
+def walk_leg(mask, f, top):
+    """발에서 위로 한 줄씩 올라가며, 지금 잡은 구간 폭이 다리 폭의 2.5배를 넘는 곳 = 몸통에 닿은 곳.
+    반환: root · knee · foot, found(몸통에 닿는 곳을 찾았나). 못 찾으면 발과 그림 맨 위 사이 절반을 뿌리로 둔다."""
+    H, W = mask.shape
+    x, trail, widths, root_y = float(f[0]), [], [], None
+    for yy in range(int(f[1]), top - 1, -1):
+        row = mask[yy] > 0
+        xi = int(round(x))
+        if not row[xi]:
+            near = [xi + dx for dx in (-1, 1, -2, 2, -3, 3) if 0 <= xi + dx < W and row[xi + dx]]
+            if not near:
+                break
+            xi = near[0]
+        s = xi
+        while s > 0 and row[s - 1]:
+            s -= 1
+        e = xi
+        while e < W - 1 and row[e + 1]:
+            e += 1
+        widths.append(e - s + 1)
+        base = float(np.median(widths[:5]))
+        if len(widths) > 5 and widths[-1] > max(2.5 * base, 6):
+            root_y = yy
+            break
+        x = 0.7 * x + 0.3 * (s + e) / 2
+        trail.append((x, yy))
+    leg_w = float(np.median(widths[:5])) if widths else 4.0
+    found = root_y is not None and bool(trail)
+    if not found:
+        root_y = f[1] - 0.5 * (f[1] - top)
+        trail = [(f[0], f[1] - k * (f[1] - root_y) / 10) for k in range(11)]
+    root = snap(mask, (trail[-1][0], root_y - 0.6 * leg_w))
+    knee = snap(mask, trail[len(trail) // 2])
+    return {"root": root, "knee": knee, "foot": f, "found": found, "leg_w": leg_w}
+
+
+def merge_same_leg(mask, feet):
+    """한 다리에 붙은 발 둘을 하나로. 낙서의 막대 다리는 한 다리를 두 줄(U 자)로 그려서 발 점 둘이 한 다리 양쪽에 붙고,
+    서로 다른 박자로 당겨 다리가 찢어졌다 (QuickDraw 말 · 개 늘어남의 대부분).
+    그림 안으로 걸어서 잰 거리가 곧은 거리와 거의 같으면(= 아래에서 바로 이어짐) 같은 다리다.
+    따로 선 두 다리는 몸통까지 올라갔다 내려와야 해서 그림 안 거리가 훨씬 길다."""
+    if len(feet) < 2:
+        return feet
+    size = max(mask.shape)
+    cost = np.where(mask > 0, 1.0, np.inf)
+    feet = list(feet)
+    merged = True
+    while merged and len(feet) > 1:
+        merged = False
+        for i in range(len(feet)):
+            D, _ = MCP_Geometric(cost).find_costs([(int(feet[i][1]), int(feet[i][0]))])
+            for j in range(i + 1, len(feet)):
+                eu = float(np.linalg.norm(feet[i] - feet[j]))
+                geo = float(D[int(feet[j][1]), int(feet[j][0])])
+                if eu <= 0.15 * size and geo <= 1.5 * eu + 10:
+                    lo = feet[i] if feet[i][1] >= feet[j][1] else feet[j]
+                    feet[i] = snap(mask, ((feet[i][0] + feet[j][0]) / 2, lo[1]))
+                    del feet[j]
+                    merged = True
+                    break
+            if merged:
+                break
+    return feet
+
+
 def build_quadruped(mask, pts):
     H, W = mask.shape
     feet = [snap(mask, f) for f in pts["feet"]]
     if len(feet) < 2:
         raise ValueError("발을 2개 이상 놓아 주세요")
+    feet = merge_same_leg(mask, feet)  # 하나만 남아도 그 다리는 움직인다
     top = np.nonzero(mask.any(1))[0][0]
-    legs = []
-    for f in feet:
-        # 발에서 위로 한 줄씩 올라가며, 지금 잡은 구간 폭이 다리 폭의 2.5배를 넘는 곳 = 몸통에 닿은 곳
-        x, trail, widths, root_y = float(f[0]), [], [], None
-        for yy in range(int(f[1]), top - 1, -1):
-            row = mask[yy] > 0
-            xi = int(round(x))
-            if not row[xi]:
-                near = [xi + dx for dx in (-1, 1, -2, 2, -3, 3) if 0 <= xi + dx < W and row[xi + dx]]
-                if not near:
-                    break
-                xi = near[0]
-            s = xi
-            while s > 0 and row[s - 1]:
-                s -= 1
-            e = xi
-            while e < W - 1 and row[e + 1]:
-                e += 1
-            widths.append(e - s + 1)
-            base = float(np.median(widths[:5]))
-            if len(widths) > 5 and widths[-1] > max(2.5 * base, 6):
-                root_y = yy
-                break
-            x = 0.7 * x + 0.3 * (s + e) / 2
-            trail.append((x, yy))
-        leg_w = float(np.median(widths[:5])) if widths else 4.0
-        if root_y is None or not trail:
-            root_y = f[1] - 0.5 * (f[1] - top)
-            trail = [(f[0], f[1] - k * (f[1] - root_y) / 10) for k in range(11)]
-        root = snap(mask, (trail[-1][0], root_y - 0.6 * leg_w))
-        knee = snap(mask, trail[len(trail) // 2])
-        legs.append({"root": root, "knee": knee, "foot": f})
+    legs = [walk_leg(mask, f, top) for f in feet]
     y_belly = int(min(l["root"][1] for l in legs))
     rx = sorted(float(l["root"][0]) for l in legs)
     dt = cv2.distanceTransform(mask, cv2.DIST_L2, 5)
@@ -456,7 +510,42 @@ def build_quadruped(mask, pts):
         rig["tail"] = len(pins)
         pins += tail_pins
     pins0 = np.array(pins, np.float32)
-    return pins0, lambda t, H: q.pose(pins0, rig, t, H)
+    keep = drop_crowded_pins(pins0, rig, max(mask.shape))
+    return pins0[keep], lambda t, H: q.pose(pins0, rig, t, H)[keep]
+
+
+def drop_crowded_pins(pins0, rig, size):
+    """서로 다른 줄(다리마다 · 머리 · 꼬리 · 몸 가운데)의 기준점이 거의 같은 자리에 있으면 덜 중요한 쪽을 ARAP 에서 뺀다.
+    칠 없는 선 그림은 머리 · 꼬리 길이 다리 선을 지나가고, 다리 선 둘이 맞닿기도 해서 두 기준점이 같은 곳을
+    서로 다른 쪽으로 당겨 그 사이가 찢어졌다. 중요도: 발 > 다리 뿌리 > 몸 가운데 > 무릎 · 머리 끝 > 머리 중간 > 꼬리.
+    반환: 남길 기준점 번호 (pose 결과도 같은 번호만 쓴다)."""
+    chain = np.zeros(len(pins0), int)  # 0 = 몸 가운데
+    prio = np.full(len(pins0), 3.5)
+    for k, leg in enumerate(rig["legs"]):
+        i = leg["i"]
+        chain[i:i + 3] = k + 1
+        prio[i:i + 3] = (4, 3, 5)
+    if rig["head"] is not None:
+        h = rig["head"]
+        chain[h:h + 3] = 100
+        prio[h:h + 3] = (2, 2, 3)
+    if rig["tail"] is not None:
+        t = rig["tail"]
+        chain[t:t + 3] = 101
+        prio[t:t + 3] = 1
+    R = max(12.0, CROWD_R * size)
+    alive = np.ones(len(pins0), bool)
+    order = sorted(range(len(pins0)), key=lambda j: (-prio[j], j))
+    for a_i, a in enumerate(order):
+        if not alive[a]:
+            continue
+        for b in order[a_i + 1:]:
+            if alive[b] and chain[b] != chain[a] and np.linalg.norm(pins0[a] - pins0[b]) < R:
+                alive[b] = False
+    return np.nonzero(alive)[0]
+
+
+CROWD_R = 0.04  # 기준점끼리 이보다 가까우면(긴 변 비율) 겹친 것으로 본다
 
 
 def build_long(mask, pts):
@@ -1135,6 +1224,11 @@ def animate(d, kind, pts):
     """프레임마다 꼭짓점 위치를 만든다. 그리는 것은 브라우저(Pixi MeshSimple)가 한다."""
     if kind not in BUILD:
         raise ValueError(f"모르는 종류: {kind}")
+    notice = None
+    if kind == "quadruped" and pts.get("no_body"):
+        # 몸 · 다리가 없는 그림(얼굴만)을 네 발로 억지로 움직이면 크게 늘어난다 → 안전한 몸통만으로
+        kind, pts = "blob", {}
+        notice = "다리를 못 찾아서(얼굴만 그린 그림 같아요) 몸통만으로 움직였어요. 네 발로 움직이려면 발 점을 직접 놓아 주세요."
     mask, alpha = d.masks(kind)
     v0, tris, comps, mesh_kind = build_mesh(mask)
     H, W = mask.shape
@@ -1188,4 +1282,6 @@ def animate(d, kind, pts):
         "positions": b64(np.stack(frames)),  # (프레임, 꼭짓점, 2) float32
         "pins": [[r1(x) for x in pf] for pf in pin_frames],
         "wing_mode": used,
+        "used_kind": kind,
+        "notice": notice,
     }
