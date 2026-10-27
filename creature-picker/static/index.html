@@ -287,6 +287,7 @@ cv.onpointermove = (e) => {
   const v = [Math.max(0, Math.min(S.prep.w - 1, x)), Math.max(0, Math.min(S.prep.h - 1, y))];
   drag.set(v); drag.xy = v;
   if (S.pts.no_body) { delete S.pts.no_body; setHint(); }  // 사람이 점을 옮겼으면 네 발로 움직인다
+  delete S.pts.auto_feet;  // 사람이 놓은 발이면 찢어져도 몸통만으로 바꾸지 않는다
   drawEditor();
   if (Date.now() - S.lastReq > 180) refreshOverlay();  // 끄는 동안에도 가끔
 };
@@ -320,7 +321,7 @@ function drawTools() {
   const btn = (label, fn, dis) => {
     const b = document.createElement("button");
     b.className = "btn"; b.textContent = label; b.disabled = !!dis;
-    b.onclick = () => { fn(); if (S.kind === "quadruped" && S.pts.no_body) { delete S.pts.no_body; setHint(); } drawTools(); drawEditor(); refreshOverlay(); };
+    b.onclick = () => { fn(); if (S.kind === "quadruped" && S.pts.no_body) { delete S.pts.no_body; setHint(); } delete S.pts.auto_feet; drawTools(); drawEditor(); refreshOverlay(); };
     t.appendChild(b);
   };
   if (S.kind === "quadruped") {

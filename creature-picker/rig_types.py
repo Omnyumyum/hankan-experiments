@@ -149,7 +149,7 @@ def propose(d):
         bw = x1 - x0
         feet = [nearest_px(mask, x0 + f * bw, y1) for f in (0.15, 0.38, 0.62, 0.85)]
         pts["quadruped"] = {"head": r1(nearest_px(mask, x0, y0 + 0.3 * (y1 - y0))), "tail": r1(nearest_px(mask, x1, y0 + 0.4 * (y1 - y0))),
-                            "feet": [r1(f) for f in feet]}
+                            "feet": [r1(f) for f in feet], "auto_feet": True}  # 찢어지면 animate 가 몸통만으로 (사람이 점을 옮기면 화면이 지운다)
         why["quadruped"] = f"자동으로 못 찾음 ({e}) → 바닥에 고르게 놓음"
         if looks_face_only(mask):
             pts["quadruped"]["no_body"] = True  # animate 가 네 발 대신 몸통만으로 움직인다 (사람이 점을 옮기면 화면이 지운다)
@@ -330,7 +330,7 @@ def guess_kind(d, f):
     d._guess_x = guess_features(d, f)
     p = guess_proba(d._guess_x)
     k = max(p, key=p.get)
-    return k if p[k] >= GUESS_MIN_P else None
+    return k if p[k] >= _guess_model.get("min_p", GUESS_MIN_P) else None  # 모델마다 기준이 다르다 (train_guess.py --min-p)
 
 
 def guess_rules(f):
@@ -1312,12 +1312,42 @@ def build_blob(mask, pts):
 
 
 BUILD = {"quadruped": build_quadruped, "long": build_long, "wings": build_wings, "blob": build_blob}
+TORN_STRETCH = 5.0  # 메시 모서리가 이 배율보다 늘어나거나
+TORN_FLIP = 0.01  # 뒤집힌 삼각형이 이 비율을 넘으면 「찢어짐」 (eval_real 의 망가짐 기준과 같다)
+
+
+def anim_torn(anim):
+    """animate 결과가 찢어졌나: 프레임 중 가장 늘어난 모서리 배율 · 뒤집힌 삼각형 비율."""
+    n = anim["n_vertices"]
+    pos = np.frombuffer(base64.b64decode(anim["positions"]), np.float32).reshape(anim["frames"], n, 2)
+    tris = np.frombuffer(base64.b64decode(anim["indices"]), np.uint32).reshape(-1, 3).astype(np.int64)
+    v0 = np.frombuffer(base64.b64decode(anim["uvs"]), np.float32).reshape(n, 2) * [anim["w"], anim["h"]]
+    e = np.concatenate([tris[:, [0, 1]], tris[:, [1, 2]], tris[:, [2, 0]]])
+    l0 = np.linalg.norm(v0[e[:, 0]] - v0[e[:, 1]], axis=1) + 1e-3
+
+    def area(p):
+        a, b, c = p[tris[:, 0]], p[tris[:, 1]], p[tris[:, 2]]
+        return (b[:, 0] - a[:, 0]) * (c[:, 1] - a[:, 1]) - (c[:, 0] - a[:, 0]) * (b[:, 1] - a[:, 1])
+
+    s0 = np.sign(area(v0))
+    stretch = max(float((np.linalg.norm(p[e[:, 0]] - p[e[:, 1]], axis=1) / l0).max()) for p in pos)
+    flip = max(float((np.sign(area(p)) != s0).mean()) for p in pos)
+    return stretch > TORN_STRETCH or flip > TORN_FLIP
 
 
 def animate(d, kind, pts):
     """프레임마다 꼭짓점 위치를 만든다. 그리는 것은 브라우저(Pixi MeshSimple)가 한다."""
     if kind not in BUILD:
         raise ValueError(f"모르는 종류: {kind}")
+    if kind == "quadruped" and pts.get("auto_feet") and not pts.get("no_body"):
+        # 다리를 못 찾아 발을 바닥에 고르게 놓은 그림: 다리 없는 몸 · 얼굴이 많다(사자 갈기 얼굴, 다리 없이 그린 양 · 곰).
+        # 먼저 네 발로 움직여 보고, 찢어지면 몸통만으로 (모양만 보고 미리 떨어뜨리면 다리를 못 찾은 진짜 네 발까지 떨어진다)
+        a = animate(d, kind, {k: v for k, v in pts.items() if k != "auto_feet"})
+        if not anim_torn(a):
+            return a
+        a = animate(d, "blob", {})
+        a["notice"] = "다리를 못 찾아서 네 발로 움직이면 그림이 찢어져요. 몸통만으로 움직였어요. 네 발로 움직이려면 발 점을 다리 끝으로 옮겨 주세요."
+        return a
     notice = None
     if kind == "quadruped" and pts.get("no_body"):
         # 몸 · 다리가 없는 그림(얼굴만)을 네 발로 억지로 움직이면 크게 늘어난다 → 안전한 몸통만으로
