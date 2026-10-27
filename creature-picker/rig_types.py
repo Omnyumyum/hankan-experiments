@@ -632,12 +632,16 @@ def region_labels(d):
         halo = np.unique(lab[edge])
         halo = halo[halo > 0]
         # 다만 윤곽선 없이 칠만 한 날개(크레파스)는 칸 자체가 그림 둘레에 닿는다. 띠는 얇고(가장 두꺼운 곳 6px 이하)
-        # 둘레에 닿은 길이에 비해 넓이가 작다 → 두껍고 넓은 칸은 띠가 아니라 진짜 칸으로 남긴다
-        # (띠로 지우면 날개 칸이 통째로 사라져 날개 점을 칸에 맞출 수 없었다)
+        # 둘레에 닿은 길이에 비해 넓이가 작다 → 두껍고 넓고 「칠한」 칸은 띠가 아니라 진짜 칸으로 남긴다
+        # (띠로 지우면 날개 칸이 통째로 사라져 날개 점을 칸에 맞출 수 없었다).
+        # 흰 종이색 칸은 그대로 띠로 친다: 선만 있는 낙서(QuickDraw)의 칸 수가 바뀌어 종류 추측이 흔들렸다
         keep = []
         for h in halo:
             Hm = (lab == h).astype(np.uint8)
-            if st[h, cv2.CC_STAT_AREA] >= 8 * int((Hm.astype(bool) & edge).sum()) and cv2.distanceTransform(Hm, cv2.DIST_L2, 3).max() >= 8:
+            if st[h, cv2.CC_STAT_AREA] < 8 * int((Hm.astype(bool) & edge).sum()) or cv2.distanceTransform(Hm, cv2.DIST_L2, 3).max() < 8:
+                continue
+            L_, a_, b_ = (float(np.median(lab_img[..., c][Hm > 0])) for c in range(3))
+            if L_ < 235 or max(abs(a_ - 128), abs(b_ - 128)) > 6:
                 keep.append(h)
         halo = np.setdiff1d(halo, keep)
         ink = ink | np.isin(lab, halo)
