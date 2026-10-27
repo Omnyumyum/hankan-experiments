@@ -1,0 +1,11 @@
+﻿카테고리,기대,quadruped,long,wings,blob,None,(오류)
+dog,quadruped,11,1,1,1,16,0
+cat,quadruped,3,1,11,1,14,0
+horse,quadruped,15,2,3,1,9,0
+pig,quadruped,5,0,2,4,19,0
+snake,long,2,19,0,2,7,0
+bird,wings,2,4,5,1,18,0
+butterfly,wings,0,1,4,2,23,0
+bee,wings,2,1,7,0,20,0
+cloud,blob,0,4,0,16,10,0
+star,blob,0,2,7,0,21,0

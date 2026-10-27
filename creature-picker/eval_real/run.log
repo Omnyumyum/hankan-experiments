@@ -1,0 +1,300 @@
+dog 0 None 1 8.11 0.0056  
+dog 1 None 1 7.72 0.011  
+dog 2 None 1 1.76 0.001  
+dog 3 quadruped 1 1.23 0.0  
+dog 4 quadruped 1 1.33 0.0  
+dog 5 None 1 4.73 0.0074  
+dog 6 None 1 3.86 0.0025  
+dog 7 None 1 3.63 0.002  
+dog 8 quadruped 1 1.31 0.0  
+dog 9 quadruped 1 1.19 0.0  
+dog 10 None 1 1.95 0.0  
+dog 11 None 1 1.52 0.0  
+dog 12 long 1 1.57 0.0  
+dog 13 wings 1 3.24 0.0011  
+dog 14 quadruped 1 1.28 0.0  
+dog 15 blob 1 3.59 0.0056  
+dog 16 None 1 4.31 0.0047  
+dog 17 quadruped 1 1.47 0.0  
+dog 18 None 1 6.15 0.0043  
+dog 19 None 1 2.62 0.0035  
+dog 20 quadruped 1 1.72 0.0  
+dog 21 quadruped 1 3.04 0.0023  
+dog 22 None 1 4.91 0.0038  
+dog 23 None 1 6.76 0.0059  
+dog 24 quadruped 1 1.21 0.0  
+dog 25 None 1 5.92 0.0023  
+dog 26 quadruped 1 1.24 0.0  
+dog 27 None 1 1.51 0.0  
+dog 28 quadruped 1 1.17 0.0  
+dog 29 None 1 10.71 0.0035  
+cat 0 None 1 7.15 0.0073  
+cat 1 None 1 3.74 0.002  
+cat 2 None 1 7.2 0.0074  
+cat 3 wings 1 5.07 0.0035  
+cat 4 None 1 4.45 0.0205  
+cat 5 long 1 4.85 0.0039  
+cat 6 wings 1 8.58 0.0097  
+cat 7 None 1 10.01 0.0109  
+cat 8 None 1 16.73 0.0128  
+cat 9 blob 1 9.11 0.0052  
+cat 10 wings 1 10.44 0.0171  
+cat 11 None 1 4.63 0.0024  
+cat 12 wings 1 6.26 0.005  
+cat 13 None 1 1.35 0.0  
+cat 14 None 1 8.13 0.004  
+cat 15 quadruped 1 5.67 0.0049  
+cat 16 None 1 5.07 0.0072  
+cat 17 quadruped 1 1.8 0.0  
+cat 18 wings 1 6.57 0.0061  
+cat 19 wings 1 8.49 0.0051  
+cat 20 wings 1 8.0 0.0101  
+cat 21 wings 1 4.73 0.005  
+cat 22 None 1 3.42 0.0068  
+cat 23 wings 1 8.88 0.0082  
+cat 24 quadruped 1 3.57 0.0  
+cat 25 None 1 7.56 0.0067  
+cat 26 wings 1 1.92 0.0004  
+cat 27 None 1 7.13 0.0078  
+cat 28 wings 1 9.08 0.0072  
+cat 29 None 1 3.95 0.0047  
+horse 0 quadruped 1 7.59 0.0019  
+horse 1 quadruped 1 1.93 0.0  
+horse 2 quadruped 1 1.29 0.0  
+horse 3 quadruped 1 1.75 0.0  
+horse 4 quadruped 1 2.13 0.0  
+horse 5 quadruped 1 4.15 0.001  
+horse 6 None 1 1.43 0.0  
+horse 7 long 1 1.3 0.0  
+horse 8 long 1 6.59 0.0021  
+horse 9 quadruped 1 1.58 0.0  
+horse 10 None 1 1.44 0.0  
+horse 11 None 1 1.38 0.0  
+horse 12 quadruped 1 1.39 0.0  
+horse 13 quadruped 1 1.64 0.0  
+horse 14 quadruped 1 1.92 0.0  
+horse 15 quadruped 1 3.03 0.0028  
+horse 16 None 1 8.37 0.0085  
+horse 17 None 1 1.42 0.0  
+horse 18 None 1 6.65 0.0055  
+horse 19 None 1 1.37 0.0  
+horse 20 quadruped 1 1.62 0.0  
+horse 21 quadruped 1 1.24 0.0  
+horse 22 wings 1 7.85 0.0068  
+horse 23 quadruped 1 1.52 0.0  
+horse 24 blob 1 4.11 0.0072  
+horse 25 wings 1 1.23 0.0  
+horse 26 wings 1 1.26 0.0  
+horse 27 None 1 1.3 0.0  
+horse 28 quadruped 1 2.37 0.0005  
+horse 29 None 1 10.27 0.0024  
+pig 0 None 1 19.93 0.0119  
+pig 1 quadruped 1 3.2 0.0024  
+pig 2 None 1 15.34 0.0139  
+pig 3 None 1 6.8 0.0051  
+pig 4 None 1 2.7 0.0004  
+pig 5 None 1 6.8 0.0055  
+pig 6 wings 1 1.76 0.0  
+pig 7 quadruped 1 5.62 0.0058  
+pig 8 None 1 1.26 0.0  
+pig 9 None 1 6.22 0.0051  
+pig 10 quadruped 1 2.39 0.0011  
+pig 11 None 1 10.31 0.0072  
+pig 12 wings 1 1.48 0.0  
+pig 13 None 1 1.46 0.0  
+pig 14 None 1 1.69 0.0  
+pig 15 None 1 7.8 0.0072  
+pig 16 blob 1 10.48 0.0058  
+pig 17 None 1 9.95 0.0102  
+pig 18 blob 1 8.74 0.0046  
+pig 19 None 1 10.04 0.0066  
+pig 20 blob 1 7.99 0.0086  
+pig 21 blob 1 10.21 0.0097  
+pig 22 None 1 6.52 0.0073  
+pig 23 None 1 6.76 0.0044  
+pig 24 quadruped 1 1.63 0.0  
+pig 25 quadruped 1 2.17 0.0015  
+pig 26 None 1 10.63 0.0112  
+pig 27 None 1 3.38 0.002  
+pig 28 None 1 5.37 0.0067  
+pig 29 None 1 7.5 0.0069  
+snake 0 long 1 1.15 0.0  
+snake 1 long 1 1.12 0.0  
+snake 2 long 1 1.17 0.0  
+snake 3 long 1 1.18 0.0  
+snake 4 long 1 1.14 0.0  
+snake 5 long 1 1.07 0.0  
+snake 6 None 1 1.21 0.0  
+snake 7 long 1 1.14 0.0  
+snake 8 quadruped 1 1.06 0.0  
+snake 9 None 1 1.14 0.0  
+snake 10 long 1 1.05 0.0  
+snake 11 long 1 1.14 0.0  
+snake 12 long 1 1.07 0.0  
+snake 13 long 1 1.33 0.0  
+snake 14 blob 1 1.1 0.0  
+snake 15 long 1 1.19 0.0  
+snake 16 long 1 1.23 0.0  
+snake 17 long 1 1.17 0.0  
+snake 18 long 1 1.13 0.0  
+snake 19 None 1 1.15 0.0  
+snake 20 long 1 1.12 0.0  
+snake 21 None 1 1.2 0.0  
+snake 22 quadruped 1 1.07 0.0  
+snake 23 None 1 1.11 0.0  
+snake 24 None 1 1.19 0.0  
+snake 25 long 1 1.13 0.0  
+snake 26 long 1 1.13 0.0  
+snake 27 long 1 1.06 0.0  
+snake 28 blob 1 1.09 0.0  
+snake 29 None 1 1.11 0.0  
+bird 0 None 1 1.38 0.0 points-snapped 
+bird 1 long 1 1.37 0.0 points 
+bird 2 long 1 17.79 0.008 points 
+bird 3 wings 1 1.54 0.0 points-snapped 
+bird 4 blob 1 1.36 0.0 points-snapped 
+bird 5 None 1 1.31 0.0 points-snapped 
+bird 6 None 1 1.04 0.0013 points 
+bird 7 wings 1 1.0 0.0 points-snapped 
+bird 8 None 1 1.32 0.0 points-snapped 
+bird 9 None 1 1.51 0.0 points-snapped 
+bird 10 quadruped 1 1.89 0.0 points-snapped 
+bird 11 None 1 1.71 0.0 points-snapped 
+bird 12 None 1 1.22 0.0 points-snapped 
+bird 13 wings 1 1.4 0.0 points-snapped 
+bird 14 quadruped 1 1.0 0.0 points-snapped 
+bird 15 None 1 1.49 0.0 points-snapped 
+bird 16 wings 1 2.29 0.0005 points-snapped 
+bird 17 None 1 1.0 0.0 points-snapped 
+bird 18 None 1 1.0 0.0 points-snapped 
+bird 19 None 1 1.0 0.0 points-snapped 
+bird 20 None 1 1.0 0.0 points-snapped 
+bird 21 None 1 1.0 0.0 points-snapped 
+bird 22 None 1 1.29 0.0 points-snapped 
+bird 23 long 1 1.47 0.0 points-snapped 
+bird 24 None 1 1.65 0.0 points-snapped 
+bird 25 None 1 1.0 0.0 points-snapped 
+bird 26 None 1 1.0 0.0 points-snapped 
+bird 27 wings 1 6.12 0.0339 points 
+bird 28 None 1 1.49 0.0 points-snapped 
+bird 29 long 1 1.0 0.0 points-snapped 
+butterfly 0 None 1 1.3 0.0 points-snapped 
+butterfly 1 None 1 1.29 0.0 points-snapped 
+butterfly 2 None 1 1.0 0.0 points-snapped 
+butterfly 3 None 1 25.46 0.0453 points 
+butterfly 4 None 1 1.3 0.0 points-snapped 
+butterfly 5 None 1 23.36 0.0316 points 
+butterfly 6 None 1 1.7 0.0 points-snapped 
+butterfly 7 None 1 1.78 0.0 points-snapped 
+butterfly 8 None 1 1.5 0.0 points-snapped 
+butterfly 9 None 1 6.32 0.0146 points 
+butterfly 10 None 1 1.0 0.0 points-snapped 
+butterfly 11 None 1 1.56 0.0 points-snapped 
+butterfly 12 wings 1 1.02 0.0 points-snapped 
+butterfly 13 None 1 20.48 0.0291 points 
+butterfly 14 None 1 1.0 0.0 points-snapped 
+butterfly 15 None 1 1.17 0.0 points-snapped 
+butterfly 16 wings 1 1.08 0.0 points-snapped 
+butterfly 17 None 1 1.3 0.0 points-snapped 
+butterfly 18 None 1 2.48 0.0004 points-snapped 
+butterfly 19 None 1 1.26 0.0 points-snapped 
+butterfly 20 None 1 1.71 0.0 points-snapped 
+butterfly 21 None 1 1.68 0.0 points-snapped 
+butterfly 22 blob 1 1.01 0.0 points-snapped 
+butterfly 23 None 1 1.36 0.0 points 
+butterfly 24 wings 1 1.75 0.0 points-snapped 
+butterfly 25 None 1 1.0 0.0 points-snapped 
+butterfly 26 None 1 1.29 0.0 points-snapped 
+butterfly 27 long 1 2.32 0.0012 points-snapped 
+butterfly 28 blob 1 1.0 0.0 points-snapped 
+butterfly 29 wings 1 1.74 0.0 points-snapped 
+bee 0 None 1 1.46 0.0 points-snapped 
+bee 1 None 1 1.0 0.0 points-snapped 
+bee 2 None 1 1.13 0.0 points-snapped 
+bee 3 None 1 1.06 0.0 points-snapped 
+bee 4 None 1 1.3 0.0 points-snapped 
+bee 5 None 1 1.12 0.0 points-snapped 
+bee 6 None 1 1.68 0.0 points-snapped 
+bee 7 None 1 1.0 0.0 points-snapped 
+bee 8 None 1 1.04 0.0 points-snapped 
+bee 9 None 1 1.01 0.0 points-snapped 
+bee 10 wings 1 1.11 0.0 points-snapped 
+bee 11 quadruped 1 1.55 0.0 points-snapped 
+bee 12 None 1 1.6 0.0 points-snapped 
+bee 13 None 1 1.38 0.0 points-snapped 
+bee 14 wings 1 1.74 0.0 points-snapped 
+bee 15 None 1 1.65 0.0006 points-snapped 
+bee 16 wings 1 2.82 0.0226 points 
+bee 17 wings 1 1.44 0.0 points-snapped 
+bee 18 wings 1 1.62 0.0 points-snapped 
+bee 19 None 1 1.46 0.0 points-snapped 
+bee 20 None 1 1.51 0.0 points-snapped 
+bee 21 wings 1 1.56 0.0 points-snapped 
+bee 22 wings 1 1.68 0.0 points-snapped 
+bee 23 None 1 1.02 0.0 points-snapped 
+bee 24 None 1 1.55 0.0 points-snapped 
+bee 25 None 1 2.01 0.0013 points-snapped 
+bee 26 long 1 2.46 0.0274 points 
+bee 27 quadruped 1 1.48 0.0 points-snapped 
+bee 28 None 1 20.22 0.045 points 
+bee 29 None 1 1.61 0.0 points-snapped 
+cloud 0 blob 1 1.41 0.0  
+cloud 1 blob 1 1.34 0.0  
+cloud 2 None 1 1.38 0.0  
+cloud 3 blob 1 1.4 0.0  
+cloud 4 None 1 1.28 0.0  
+cloud 5 blob 1 1.31 0.0  
+cloud 6 blob 1 1.26 0.0  
+cloud 7 None 1 1.31 0.0  
+cloud 8 None 1 1.3 0.0  
+cloud 9 blob 1 1.63 0.0  
+cloud 10 blob 1 1.39 0.0  
+cloud 11 blob 1 1.3 0.0  
+cloud 12 blob 1 1.23 0.0  
+cloud 13 None 1 1.28 0.0  
+cloud 14 blob 1 1.28 0.0  
+cloud 15 long 1 10.71 0.0012  
+cloud 16 long 1 1.3 0.0  
+cloud 17 blob 1 1.5 0.0  
+cloud 18 blob 1 1.32 0.0  
+cloud 19 blob 1 1.43 0.0  
+cloud 20 blob 1 1.37 0.0  
+cloud 21 None 1 1.17 0.0  
+cloud 22 None 1 1.28 0.0  
+cloud 23 None 1 1.81 0.0008  
+cloud 24 blob 1 1.44 0.0  
+cloud 25 long 1 1.98 0.0  
+cloud 26 long 1 1.53 0.0  
+cloud 27 blob 1 1.26 0.0  
+cloud 28 None 1 1.19 0.0  
+cloud 29 None 1 1.34 0.0  
+star 0 wings 1 1.34 0.0  
+star 1 None 1 1.35 0.0  
+star 2 wings 1 1.31 0.0  
+star 3 None 1 1.35 0.0  
+star 4 None 1 1.38 0.0  
+star 5 wings 1 1.29 0.0  
+star 6 None 1 1.37 0.0  
+star 7 None 1 1.36 0.0  
+star 8 None 1 1.5 0.0  
+star 9 None 1 1.42 0.0  
+star 10 long 1 1.62 0.0  
+star 11 None 1 1.22 0.0  
+star 12 None 1 1.38 0.0  
+star 13 None 1 1.23 0.0  
+star 14 wings 1 1.49 0.0  
+star 15 None 1 1.35 0.0  
+star 16 long 1 1.29 0.0  
+star 17 None 1 1.44 0.0  
+star 18 None 1 1.37 0.0  
+star 19 None 1 1.42 0.0  
+star 20 None 1 1.29 0.0  
+star 21 None 1 1.58 0.0  
+star 22 None 1 1.22 0.0  
+star 23 wings 1 1.3 0.0  
+star 24 None 1 1.43 0.0  
+star 25 None 1 1.51 0.0  
+star 26 wings 1 1.33 0.0  
+star 27 None 1 1.34 0.0  
+star 28 wings 1 1.29 0.0  
+star 29 None 1 1.41 0.0  
