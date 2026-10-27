@@ -41,9 +41,70 @@ def smooth(x):
     return x * x * (3 - 2 * x)
 
 
+def paper_only(img, notes=None):
+    """책상 위 종이를 찍은 사진이면 종이 밖(책상 · 손 · 종이 가장자리)을 종이 색으로 지운다.
+    지우지 않으면 종이 테두리가 닫힌 선이 되어 종이 전체가 몸 마스크가 된다 (사진 시험: 기울여 찍은 그림 98% 실패).
+    종이가 사진을 거의 채우거나, 밝은 곳이 네모나지 않거나, 경계가 흐리면(그림자) 그대로 둔다."""
+    h, w = img.shape[:2]
+    s = 256 / max(h, w)
+    small = cv2.resize(img, (max(1, round(w * s)), max(1, round(h * s))), interpolation=cv2.INTER_AREA)
+    L = cv2.cvtColor(cv2.GaussianBlur(small, (5, 5), 0), cv2.COLOR_BGR2LAB)[..., 0]
+    _, bright = cv2.threshold(L, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
+    bright = cv2.morphologyEx(bright, cv2.MORPH_OPEN, np.ones((5, 5), np.uint8))
+    n, lab, st, _ = cv2.connectedComponentsWithStats(bright)
+    if n < 2:
+        return img
+    paper = (lab == 1 + int(np.argmax(st[1:, cv2.CC_STAT_AREA]))).astype(np.uint8) * 255
+    ff = np.pad(paper, 1)  # 그림 선이 둘러싼 안쪽(얼굴 등)은 종이에 난 구멍이다 → 채운다
+    cv2.floodFill(ff, None, (0, 0), 128)
+    paper[ff[1:-1, 1:-1] == 0] = 255
+    hull = cv2.convexHull(cv2.findNonZero(paper))
+    hmask = np.zeros_like(paper)
+    cv2.fillConvexPoly(hmask, hull, 255)
+    area, harea, tot = (paper > 0).sum(), (hmask > 0).sum(), paper.size
+    outside = hmask == 0
+    if harea > 0.95 * tot or harea < 0.15 * tot or area < 0.8 * harea or outside.sum() < 0.03 * tot:
+        return img
+    # 종이 밖은 대부분 종이보다 어두워야 한다. 그림이 사진을 꽉 채워 윤곽선이 흰 종이를 안 · 밖으로 나눈 경우
+    # (QuickDraw 고양이 · 돼지 얼굴) 「밖」도 흰 종이라 지우면 윤곽선이 사라진다
+    if np.median(L[outside]) > np.median(L[paper > 0]) - 25 or (bright[outside] > 0).mean() > 0.3:
+        return img
+    # 종이 가장자리는 날카롭고 그림자 경계는 흐리다: 종이 경계(사진 테두리 위는 빼고)의 60% 이상에서 밝기가 확 바뀌어야 종이로 본다
+    Lf = L.astype(np.float32)
+    grad = np.hypot(cv2.Sobel(Lf, cv2.CV_32F, 1, 0, ksize=3), cv2.Sobel(Lf, cv2.CV_32F, 0, 1, ksize=3)) / 8
+    grad = cv2.dilate(grad, np.ones((5, 5), np.uint8))
+    hh, ww = L.shape
+    b = hull[:, 0, :].astype(np.float32)
+    edge = []
+    for i in range(len(b)):
+        p0, p1 = b[i], b[(i + 1) % len(b)]
+        for t in np.linspace(0, 1, max(2, int(np.linalg.norm(p1 - p0))), endpoint=False):
+            x, y = p0 + t * (p1 - p0)
+            if 3 <= x < ww - 3 and 3 <= y < hh - 3:
+                edge.append((int(y), int(x)))
+    if len(edge) < 20:
+        return img
+    ys, xs = np.array(edge).T
+    if (grad[ys, xs] > 12).mean() < 0.6:
+        return img
+    ms = cv2.erode(hmask, np.ones((5, 5), np.uint8)) > 127  # 종이 테두리 · 가장자리 그림자 몇 px 도 뺀다
+    # 종이 밖은 가까운 종이 색으로 (경계에 새 선이 생기지 않게). 넓게 흐리는 계산은 작은 그림에서 한다 (큰 사진에서 몇 초 걸렸다)
+    fs = small.astype(np.float32)
+    sig = 0.05 * max(hh, ww)
+    wgt = cv2.GaussianBlur(ms.astype(np.float32), (0, 0), sig)
+    est = cv2.GaussianBlur(fs * ms[..., None], (0, 0), sig) / np.maximum(wgt, 1e-4)[..., None]
+    est = np.where((wgt > 1e-3)[..., None], est, np.median(fs[ms], axis=0))
+    est = cv2.resize(est, (w, h), interpolation=cv2.INTER_LINEAR)
+    m = cv2.resize(ms.astype(np.uint8) * 255, (w, h), interpolation=cv2.INTER_LINEAR) > 127
+    if notes is not None:
+        notes.append("종이 밖(책상 · 손)을 지움")
+    return np.clip(np.where(m[..., None], img.astype(np.float32), est), 0, 255).astype(np.uint8)
+
+
 class Drawing:
     def __init__(self, img):
         self.notes = []
+        img = paper_only(img, self.notes)
         self.crop, self.mask, self.alpha = sr.crop_and_mask(img, self.notes)
         g = cv2.cvtColor(self.crop, cv2.COLOR_BGR2GRAY)
         self.ink = cv2.adaptiveThreshold(g, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY_INV, 41, 9)
