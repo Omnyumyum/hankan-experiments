@@ -230,7 +230,9 @@ def propose(d):
             "tips": tips, "long_tips": long_tips, "left": left, "right": right, "centre": centre,
             "bbox": (x0, y0, x1, y1), "size": size}
     d._guess_feat = feat
-    return {"guess": guess_kind(d, feat), "points": pts, "why": why}
+    guess = guess_kind(d, feat)
+    # 네 발로 고르면 몸통만으로 돌릴 그림인지 미리 알린다 (animate 가 같은 판정으로 돌린다)
+    return {"guess": guess, "points": pts, "why": why, "warn": {"quadruped": quad_unfit(d)}}
 
 
 GUESS_MODEL = Path(__file__).resolve().parent / "guess_model.json"
@@ -330,6 +332,23 @@ def guess_rules(f):
     return guess
 
 
+def quad_unfit(d):
+    """「네 발」로 움직이면 안 되는 그림이면 그 이유, 아니면 None.
+    몸 · 다리 없이 얼굴만 그린 고양이 · 돼지 낙서를 네 발로 돌리면 발 점이 턱 · 수염에 놓여 크게 늘어났다 (REPORT.md 실패 1번).
+    다리를 자동으로 못 찾았는데 동그랗고 두툼하거나(가장 굵은 곳 > 긴 변 20%) 옆으로 길지 않으면(가로/세로 ≤ 1.05) 얼굴로 본다.
+    기준은 QuickDraw 학습용 500장(eval_real/QUAD_STRETCH.md)에서 정했다: 진짜 네 발 그림 254장 중 4장만 걸렸다."""
+    if getattr(d, "_guess_feat", None) is None:
+        propose(d)
+    x = getattr(d, "_guess_x", None) or guess_features(d, d._guess_feat)
+    if x["feet_spread"] > 0.04:  # 다리를 찾았다
+        return None
+    if x["dtmax"] > 0.20:
+        return "다리를 못 찾았고 동그랗고 두툼해요 — 얼굴만 그린 그림 같아요"
+    if x["aspect"] <= 1.05:
+        return "다리를 못 찾았고 옆으로 길지 않아요 — 얼굴이나 앉은 모습 같아요"
+    return None
+
+
 # ---------- 사용자가 고친 점 → 기준점 · 동작 ----------
 def snap_to_tips(d, pts, keys_single=("head", "tail"), key_multi="feet"):
     """점을 그림의 「끝」(가지친 뼈대의 끝점: 발끝 · 꼬리 끝 · 귀 끝 · 코끝)에 맞춘다. 반경 안에 끝점이 없으면 그대로.
@@ -378,12 +397,16 @@ def build_quadruped(mask, pts):
     if len(feet) < 2:
         raise ValueError("발을 2개 이상 놓아 주세요")
     top = np.nonzero(mask.any(1))[0][0]
+    # 무릎 점은 발과 같은 선 덩어리 안에만 놓는다: 선만 있는 낙서는 몸 · 다리가 여러 덩어리로 나뉘는데,
+    # 무릎이 옆 덩어리에 붙으면 한 다리의 점이 두 덩어리를 따로 끌어 찢겼다 (QuickDraw 말 · 개)
+    n_cc, cc = cv2.connectedComponents((mask > 0).astype(np.uint8))
     legs = []
     for f in feet:
+        own = (cc == cc[int(f[1]), int(f[0])]).astype(np.uint8) if n_cc > 2 else mask
         # 발에서 위로 한 줄씩 올라가며, 지금 잡은 구간 폭이 다리 폭의 2.5배를 넘는 곳 = 몸통에 닿은 곳
         x, trail, widths, root_y = float(f[0]), [], [], None
         for yy in range(int(f[1]), top - 1, -1):
-            row = mask[yy] > 0
+            row = own[yy] > 0
             xi = int(round(x))
             if not row[xi]:
                 near = [xi + dx for dx in (-1, 1, -2, 2, -3, 3) if 0 <= xi + dx < W and row[xi + dx]]
@@ -407,8 +430,13 @@ def build_quadruped(mask, pts):
         if root_y is None or not trail:
             root_y = f[1] - 0.5 * (f[1] - top)
             trail = [(f[0], f[1] - k * (f[1] - root_y) / 10) for k in range(11)]
-        root = snap(mask, (trail[-1][0], root_y - 0.6 * leg_w))
-        knee = snap(mask, trail[len(trail) // 2])
+        root = snap(mask, (trail[-1][0], root_y - 0.6 * leg_w))  # 뿌리는 몸에 (떨어져 그린 다리도 몸을 축으로 젓는다)
+        knee = snap(own, trail[len(trail) // 2])
+        # 막대 다리 하나에 발 두 개가 붙은 것(끝점이 바로 옆 · 같은 길을 올라감)은 한 다리로 친다.
+        # 두 발이 다른 박자로 바로 옆 꼭짓점을 끌어 다리 끝이 찢겼다
+        if any(np.linalg.norm(f - l["foot"]) < 10 or (np.linalg.norm(knee - l["knee"]) < 6 and np.linalg.norm(root - l["root"]) < 6)
+               for l in legs):
+            continue
         legs.append({"root": root, "knee": knee, "foot": f})
     y_belly = int(min(l["root"][1] for l in legs))
     rx = sorted(float(l["root"][0]) for l in legs)
@@ -436,6 +464,20 @@ def build_quadruped(mask, pts):
                 break
         root_i = max(0, root_i)
         tail_pins = [tp[root_i], tp[(root_i + len(tp) - 1) // 2], tp[-1]]
+
+        # 꼬리 끝 · 가운데가 다리 점 길(뿌리-무릎-발)과 겹치면 꼬리는 흔들지 않는다: 아래로 늘어진 꼬리 · 꼬리털 끝에
+        # 발 점이 붙으면 걷기와 꼬리 흔들기가 같은 선을 서로 다르게 끌어 찢겼다 (QuickDraw 말 · 개). 꼬리는 몸을 따라간다
+        def leg_dist(p):
+            best = np.inf
+            for l in legs:
+                for a, b in ((l["root"], l["knee"]), (l["knee"], l["foot"])):
+                    ab = b - a
+                    s = np.clip((p - a) @ ab / max(float(ab @ ab), 1e-6), 0, 1)
+                    best = min(best, float(np.linalg.norm(a + s * ab - p)))
+            return best
+
+        if min(leg_dist(p) for p in tail_pins[1:]) < 12:
+            tail_pins = None
     # 걸음 박자: quadruped.build_rig 와 같은 규칙 (뒷다리 0 · 앞다리 1/4, 같은 쪽 안에서 번갈아)
     hind = sorted([l for l in legs if (l["root"][0] - centre[0]) * forward < 0], key=lambda l: l["root"][0])
     front = sorted([l for l in legs if (l["root"][0] - centre[0]) * forward >= 0], key=lambda l: l["root"][0])
@@ -456,7 +498,12 @@ def build_quadruped(mask, pts):
         rig["tail"] = len(pins)
         pins += tail_pins
     pins0 = np.array(pins, np.float32)
-    return pins0, lambda t, H: q.pose(pins0, rig, t, H)
+
+    def pose(t, H):
+        return q.pose(pins0, rig, t, H)
+
+    pose.rig = rig  # 시험(eval_real/quad_eval.py)이 다리 · 꼬리 점 번호를 읽는다
+    return pins0, pose
 
 
 def build_long(mask, pts):
@@ -1135,6 +1182,10 @@ def animate(d, kind, pts):
     """프레임마다 꼭짓점 위치를 만든다. 그리는 것은 브라우저(Pixi MeshSimple)가 한다."""
     if kind not in BUILD:
         raise ValueError(f"모르는 종류: {kind}")
+    # 네 발로 움직이면 크게 찢어질 그림(얼굴만 그린 것)은 몸통만으로 돌리고 이유를 알린다. 사람이 그래도 네 발로 하겠다면 force
+    note = quad_unfit(d) if kind == "quadruped" and not pts.get("force") else None
+    if note:
+        kind = "blob"
     mask, alpha = d.masks(kind)
     v0, tris, comps, mesh_kind = build_mesh(mask)
     H, W = mask.shape
@@ -1188,4 +1239,5 @@ def animate(d, kind, pts):
         "positions": b64(np.stack(frames)),  # (프레임, 꼭짓점, 2) float32
         "pins": [[r1(x) for x in pf] for pf in pin_frames],
         "wing_mode": used,
+        "fallback": "blob" if note else None, "note": note,
     }

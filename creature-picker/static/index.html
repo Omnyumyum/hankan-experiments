@@ -385,7 +385,7 @@ async function animate() {
   errBox.textContent = "";
   go("s-play");
   $("play-title").textContent = `${KIND[S.kind].ico} ${KIND[S.kind].name}`;
-  $("play-meta").textContent = `메시 ${a.mesh === "cdt" ? "CDT(외곽선 고정)" : "격자"} · 꼭짓점 ${a.n_vertices} · 삼각형 ${a.n_triangles} · 서버 ${a.sec}초 · ${a.frames}프레임 × ${a.frame_ms}ms`;
+  $("play-meta").textContent = `메시 ${a.mesh === "cdt" ? "CDT(외곽선 고정)" : "격자"} · 꼭짓점 ${a.n_vertices} · 삼각형 ${a.n_triangles} · 서버 ${a.sec}초 · ${a.frames}프레임 × ${a.frame_ms}ms` + (a.note ? ` · ${a.note} → 몸통만으로 움직였어요` : "");
   try { await play(a); } catch (e) { $("play-err").textContent = "재생 실패 (WebGL?): " + e.message; }
 }
 
