@@ -49,7 +49,9 @@ def crop_box(img):
 
 
 def mask_iou(img, d, gt):
-    if hasattr(rt, "paper_only"):  # Drawing 이 종이 밖을 먼저 지운다 → 자른 곳도 지운 그림에서 계산
+    if hasattr(rt, "clean_photo"):  # Drawing 이 사진을 먼저 정리한다 → 자른 곳도 정리한 그림에서 계산
+        img = rt.clean_photo(img)
+    elif hasattr(rt, "paper_only"):  # Drawing 이 종이 밖을 먼저 지운다 → 자른 곳도 지운 그림에서 계산
         img = rt.paper_only(img)
     x0, y0, x1, y1 = crop_box(img)
     m = ((d.mask > 0) | (d.alpha > 0)).astype(np.uint8)
