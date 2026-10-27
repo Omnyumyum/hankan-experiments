@@ -9,6 +9,7 @@
 마스크 · ARAP · 걸음 곡선은 ../animal-monster 의 shape_rig · quadruped · arap2d 를 그대로 쓴다.
 """
 import base64
+import os
 import math
 import sys
 from pathlib import Path
@@ -188,7 +189,10 @@ def clean_photo(img, notes=None):
     L = lab[..., 0]
     # 1) 선: 바탕(선 굵기보다 큰 닫기로 선을 지운 밝기)보다 어두운 곳 + 둘레와 색이 다른 곳. 그림자 · 조명은 바탕이 따라간다
     k = max(5, int(0.025 * size) | 1)
-    bgL = cv2.blur(cv2.morphologyEx(L, cv2.MORPH_CLOSE, _disk(k)), (k, k))
+    if os.environ.get("PM_BG") == "median":
+        bgL = np.maximum(cv2.medianBlur(L.astype(np.uint8), k).astype(np.float32), cv2.blur(cv2.morphologyEx(L, cv2.MORPH_CLOSE, _disk(k)), (k, k)) - 25)
+    else:
+        bgL = cv2.blur(cv2.morphologyEx(L, cv2.MORPH_CLOSE, _disk(k)), (k, k))
     dark = np.maximum(bgL - L, 0)
     bga = cv2.medianBlur(lab[..., 1].astype(np.uint8), k)
     bgb = cv2.medianBlur(lab[..., 2].astype(np.uint8), k)
@@ -224,7 +228,11 @@ def clean_photo(img, notes=None):
     rules[fill_in > 0] = 0
     if (rules & ink0).any():
         rd = np.median(dark[(rules & ink0) > 0])
-        rules[dark > max(1.6 * rd, rd + 15)] = 0
+        rest = (ink0 > 0) & (rules == 0) & paper
+        if rest.any() and rd > 0.6 * np.median(dark[rest]):
+            rules[:] = 0  # 「줄」이 그림만큼 진하다 → 공책 줄이 아니라 그림의 곧은 선 (별 · 막대 다리)
+        else:
+            rules[dark > max(1.6 * rd, rd + 15)] = 0
     has_rules = rules.any()
     ink[rules > 0] = 0
     n, lab_i, st, _ = cv2.connectedComponentsWithStats(ink)
@@ -267,6 +275,8 @@ def clean_photo(img, notes=None):
     # 7) 고른 그림만 남기고 나머지는 종이 색. 어두운 선은 종이보다 적어도 80 어둡게, 나머지(칠한 곳)는 선 어두움 중앙값이 60 쯤 되게
     gain = float(np.clip(60 / max(1.0, np.median(dark[sel])), 1, 4))
     line = sel & ink_d
+    if line.any():  # 그림 선보다 훨씬 연한 것(지우개 자국 · 비친 뒷면)은 진하게 하지 않는다
+        line &= dark >= 0.35 * np.median(dark[line])
     # 가는 선(1~2px)은 shape_rig 의 3×3 열기에서 사라진다 → 한 겹 굵게
     thin = cv2.morphologyEx(line.astype(np.uint8), cv2.MORPH_OPEN, np.ones((3, 3), np.uint8)).sum() < 0.5 * line.sum()
     if thin:
