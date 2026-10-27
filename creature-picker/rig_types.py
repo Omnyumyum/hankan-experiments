@@ -1622,10 +1622,12 @@ def snap_points_to_regions(d, mask, pts):
                         drop.add(q)
                         break
         # 양쪽 날개 끝에서 모두 닿은 칸은 몸이다 (옆모습 새 낙서: 몸 전체가 칸 하나라 양쪽 끝 점이 같은 칸에 들어가
-        # 몸통 통째로 날개가 됐다). 같은 뿌리를 쓰는 앞 · 뒤 날개(비스듬한 나비)는 끝이 서로 다른 칸이라 걸리지 않는다.
+        # 몸통 통째로 날개가 됐다). 반대쪽으로 뻗은 날개끼리만 본다: 같은 쪽으로 뻗은 앞 · 뒤 날개(비스듬한 나비)는
+        # 경첩 띠에서 시작 칸을 넓혀 서로의 칸을 같이 담는데, 이것까지 빼면 날개가 통째로 안 움직였다.
         # 이 날개 끝 점이 든 시작 칸은 다른 날개의 시작 칸이기도 할 때만 뺀다
-        others = set().union(set(), *(t[0] for j, t in enumerate(sets) if j != i))
-        other_starts = set().union(set(), *(t[1] for j, t in enumerate(sets) if j != i))
+        opp = [t for j, t in enumerate(sets) if j != i and (Ti - Mi) @ (t[2] - t[3]) < 0]
+        others = set().union(set(), *(t[0] for t in opp))
+        other_starts = set().union(set(), *(t[1] for t in opp))
         picked |= seen - drop - (seen & others - (keep - other_starts))
     if not picked:
         return None
