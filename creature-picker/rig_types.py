@@ -728,12 +728,12 @@ def region_labels(d):
         long_e = np.nonzero(st_e[:, cv2.CC_STAT_AREA] >= max(40, int(0.1 * max(d.mask.shape))))[0]
         color_edge = np.isin(lab_e, long_e[long_e > 0])
         ink = ink | color_edge
-        lab, ink_l = _closed_regions(d.mask, ink)
+        lab, ink_l = _closed_regions(d.mask, ink, lab_img)
         # 닫히지 않은 선 낙서: 선 끝을 가까운 선에 이어 본다. 이어서 「새로」 생긴 칸만 더한다 —
         # 이미 있던 칸은 그대로 둔다 (색칠 그림 · 윤곽 그림의 칸이 바뀌지 않게)
         bridge = bridge_gaps(ink, d.mask)
         if bridge.any():
-            lab_b, ink_b = _closed_regions(d.mask, ink | bridge)
+            lab_b, ink_b = _closed_regions(d.mask, ink | bridge, lab_img)
             n0 = int(lab.max())
             for rid in set(np.unique(lab_b).tolist()) - {0}:
                 R = lab_b == rid
@@ -747,7 +747,7 @@ def region_labels(d):
     return d._regions, d._ink_r
 
 
-def _closed_regions(mask, ink):
+def _closed_regions(mask, ink, lab_img):
     free = ((mask > 0) & ~ink).astype(np.uint8)
     n, lab, st, _ = cv2.connectedComponentsWithStats(free, connectivity=4)
     small = np.nonzero(st[:, cv2.CC_STAT_AREA] < 15)[0]
@@ -757,6 +757,19 @@ def _closed_regions(mask, ink):
     edge = (mask > 0) & (cv2.erode(mask, np.ones((3, 3), np.uint8)) == 0)
     halo = np.unique(lab[edge])
     halo = halo[halo > 0]
+    # 다만 윤곽선 없이 칠만 한 날개(크레파스)는 칸 자체가 그림 둘레에 닿는다. 띠는 얇고(가장 두꺼운 곳 6px 이하)
+    # 둘레에 닿은 길이에 비해 넓이가 작다 → 두껍고 넓고 「칠한」 칸은 띠가 아니라 진짜 칸으로 남긴다
+    # (띠로 지우면 날개 칸이 통째로 사라져 날개 점을 칸에 맞출 수 없었다).
+    # 흰 종이색 칸은 그대로 띠로 친다: 선만 있는 낙서(QuickDraw)의 칸 수가 바뀌어 종류 추측이 흔들렸다
+    keep = []
+    for h in halo:
+        Hm = (lab == h).astype(np.uint8)
+        if st[h, cv2.CC_STAT_AREA] < 8 * int((Hm.astype(bool) & edge).sum()) or cv2.distanceTransform(Hm, cv2.DIST_L2, 3).max() < 8:
+            continue
+        L_, a_, b_ = (float(np.median(lab_img[..., c][Hm > 0])) for c in range(3))
+        if L_ < 235 or max(abs(a_ - 128), abs(b_ - 128)) > 6:
+            keep.append(h)
+    halo = np.setdiff1d(halo, keep)
     ink = ink | np.isin(lab, halo)
     lab[np.isin(lab, halo)] = 0
     return lab, ink
@@ -1051,6 +1064,12 @@ def build_wings_regions(d, mask, pts):
             near_root[np.argmin((cx - pivot[0]) ** 2 + (cy - pivot[1]) ** 2)] = True
         cost = np.where(comp, 1.0, np.inf)
         D, _ = MCP_Geometric(cost).find_costs(list(zip(cy[near_root], cx[near_root])))
+        if (comp & ~np.isfinite(D)).any():
+            # 합친 덩어리 중 뿌리와 픽셀로 이어지지 않은 조각(앞날개와 점처럼만 닿은 뒷날개)은 선 틈을 건너 잰다.
+            # 건너지 않으면 거리가 없어 무게 0 → 뒷날개가 통째로 가만히 있었다
+            near_comp = cv2.dilate(comp.astype(np.uint8), ker) > 0
+            D2, _ = MCP_Geometric(np.where(near_comp, 1.0, np.inf)).find_costs(list(zip(cy[near_root], cx[near_root])))
+            D = np.where(np.isfinite(D), D, D2)
         D = np.where(np.isfinite(D), D, 0)
         reach = max(float(D.max()), 1.0)
         # 위아래(회전) 무게: 뿌리에서 날개 길이의 45% 에 걸쳐 천천히 오른다. 25% 로 급하게 올리면 넓은 나비 날개가
@@ -1189,10 +1208,13 @@ def snap_points_to_regions(d, mask, pts):
             rim_cache[r] = max(1, int((grown_cache[r] & (lab > 0) & (lab != r)).sum()))
         return grown_cache[r]
 
-    picked, per_wing = set(), []
+    area = np.bincount(lab.ravel())
+    min_area = max(15, 0.002 * int((mask > 0).sum()))
+    sets, tried = [], set()
     for w in pts.get("wings") or []:
         if len(w) < 3:
             continue
+        tried = set()
         A, B, T = (np.asarray(p, np.float32) for p in w[:3])
         if np.linalg.norm(B - A) < 4:
             continue
@@ -1220,11 +1242,48 @@ def snap_points_to_regions(d, mask, pts):
             over = max(0.0, -a_c, a_c - L)
             return e_c > 0 and e_c >= 0.3 * over
 
-        # 날개 끝은 보통 그림 맨 끝 테두리 선 위에 찍힌다 (테두리 선 + 바깥 띠 8~10px) → 선 굵기 3배 안에서 가장 가까운 칸
-        start = region_at(d, *T, r=3 * k)
-        if not start:
+        # 날개 끝 쪽: 경첩 가운데 → 날개 끝 방향으로 잰 위치. 뿌리 두 점이 가까이 붙어 빗나가면 경첩 방향이 크게 돌아
+        # 날개 끝 칸조차 「경첩 안쪽」이 됐다 → 시작 칸은 칸 거의 전체(85%)가 날개 끝 쪽에 있고 중심이 끝까지 40% 넘게 나가 있어도 된다
+        mid = (A + B) / 2
+        tv = T - mid
+        tn = float(tv @ tv)
+        tip_proj = ((xx - mid[0]) * tv[0] + (yy - mid[1]) * tv[1]) / max(tn, 1.0)
+
+        def tip_side(Q):
+            pq = tip_proj[Q]
+            return tn > (2 * k) ** 2 and (pq > 0).mean() >= 0.85 and pq.mean() >= 0.4
+
+        # 시작 칸: 날개 끝 둘레(선 굵기 3배, 없으면 6배)에서 가장 가까운 칸 중 경첩 바깥이고 너무 작지 않은 칸.
+        # 끝 점은 보통 그림 맨 끝 테두리 선 위(테두리 선 + 바깥 띠 8~10px)에 찍히고, 조금 빗나가면 종이 · 몸 칸 · 크레파스 결 부스러기
+        # 칸에 떨어진다. 가장 가까운 칸을 그대로 쓰면 부스러기 칸 하나만 날개가 되거나(날개가 안 움직임) 몸 칸에서 넓혀 갔다
+        start = None
+        for rad in (3 * k, 6 * k):
+            x0, y0 = int(round(T[0])), int(round(T[1]))
+            ys, xs = np.nonzero(lab[max(0, y0 - rad): y0 + rad + 1, max(0, x0 - rad): x0 + rad + 1])
+            ys, xs = ys + max(0, y0 - rad), xs + max(0, x0 - rad)
+            dd = (xs - T[0]) ** 2 + (ys - T[1]) ** 2
+            for j in np.argsort(dd, kind="stable"):
+                if dd[j] > rad * rad:
+                    break
+                q = int(lab[ys[j], xs[j]])
+                if q in tried:
+                    continue
+                tried.add(q)
+                if area[q] >= min_area and (wing_side(lab == q) or tip_side(lab == q)):
+                    start = q
+                    break
+            if start:
+                break
+        # 경첩에 붙은 칸도 시작 칸: 뿌리 두 점 사이로 몸에서 나온 칸은 날개다 (끝 점이 앞날개에 있을 때
+        # 앞날개와 짧게만 닿은 뒷날개 · 잠자리 뒷날개가 빠져 움직이지 않았다)
+        strip = (along >= 0) & (along <= L) & (e_pix >= -k) & (e_pix <= 3 * k)
+        seeds = {start} if start else set()
+        for q in set(np.unique(lab[strip]).tolist()) - {0} - seeds:
+            if area[q] >= min_area and (lab[strip] == q).sum() >= k and wing_side(lab == q):
+                seeds.add(q)
+        if not seeds:
             continue
-        seen, todo = {start}, [start]
+        seen, todo = set(seeds), list(seeds)
         while todo:
             r = todo.pop()
             g = grown(r)
@@ -1240,12 +1299,38 @@ def snap_points_to_regions(d, mask, pts):
                     continue
                 seen.add(q)
                 todo.append(q)
-        per_wing.append(seen)
-    # 양쪽 날개 끝에서 모두 닿은 칸은 몸이다 (옆모습 새 낙서: 몸 전체가 칸 하나라 양쪽 끝 점이 같은 칸에 들어가
-    # 몸통 통째로 날개가 됐다). 같은 뿌리를 쓰는 앞 · 뒤 날개(비스듬한 나비)는 끝이 서로 다른 칸이라 걸리지 않는다
-    for i, s in enumerate(per_wing):
-        others = set().union(*(t for j, t in enumerate(per_wing) if j != i))
-        picked |= s - others
+        sets.append((seen, {start} if start else set(), T, mid))
+    # 날개가 양쪽으로 둘일 때: 한쪽 날개로 들어온 칸이 양쪽 날개 끝 사이 가운데쯤(날개 끝 → 반대쪽 날개 끝의 42% 넘게)에 있고
+    # 다른 쪽 날개 칸과도 맞닿아 있으면 가운데 몸 · 머리다. 뿌리 점이 몸 안쪽으로 빗나가면 경첩이 기울어
+    # 가는 몸통(잠자리)이나 양쪽 날개 사이 머리(요정)가 바깥쪽이 됐다.
+    # 가운데쯤인지도 보는 까닭: 다른 쪽에 잘못 들어온 몸통과 맞닿은 이쪽 뒷날개까지 빠졌다.
+    # 날개 끝 점이 든 시작 칸은 빼지 않는다 (위에서 본 나비의 양쪽 앞날개가 머리 위에서 닿을 수 있다)
+    picked = set()
+    for i, (seen, keep, Ti, Mi) in enumerate(sets):
+        drop = set()
+        for j, (seen_j, _k, Tj, Mj) in enumerate(sets):
+            span = Tj - Ti
+            if j == i or (Ti - Mi) @ (Tj - Mj) >= 0 or span @ span < (4 * k) ** 2:
+                continue  # 같은 쪽으로 뻗은 날개 (비스듬한 나비의 앞 · 뒷날개)
+            for q in seen - keep - _k - drop:
+                ys, xs = np.nonzero(lab == q)
+                if ((np.array([xs.mean(), ys.mean()]) - Ti) @ span) / (span @ span) <= 0.42:
+                    continue
+                if q in seen_j:  # 양쪽 날개 모두에 들어온 가운데 칸
+                    drop.add(q)
+                    continue
+                g = grown(q)
+                for o in seen_j - seen:
+                    grown(o)
+                    if int((g & (lab == o)).sum()) / min(rim_cache[q], rim_cache[o]) >= 0.05:
+                        drop.add(q)
+                        break
+        # 양쪽 날개 끝에서 모두 닿은 칸은 몸이다 (옆모습 새 낙서: 몸 전체가 칸 하나라 양쪽 끝 점이 같은 칸에 들어가
+        # 몸통 통째로 날개가 됐다). 같은 뿌리를 쓰는 앞 · 뒤 날개(비스듬한 나비)는 끝이 서로 다른 칸이라 걸리지 않는다.
+        # 이 날개 끝 점이 든 시작 칸은 다른 날개의 시작 칸이기도 할 때만 뺀다
+        others = set().union(set(), *(t[0] for j, t in enumerate(sets) if j != i))
+        other_starts = set().union(set(), *(t[1] for j, t in enumerate(sets) if j != i))
+        picked |= seen - drop - (seen & others - (keep - other_starts))
     if not picked:
         return None
     return sorted(int(r) for r in picked)
