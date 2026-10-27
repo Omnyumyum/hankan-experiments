@@ -125,7 +125,7 @@ def propose(d):
     pts, why = {}, {}
 
     # 네 발: 이미 있는 다리 찾기(quadruped.build_rig)를 먼저, 안 되면 바닥에 고르게
-    quad_ok = False
+    quad_ok, n_feet, y_belly = False, 0, None
     try:
         pins0, rig = q.build_rig(d.mask_q, d.ink)
         feet = [pins0[l["i"] + 2] for l in rig["legs"]]
@@ -142,7 +142,8 @@ def propose(d):
         head_tip = (hx, hy) if cand.max() > 0 else pins0[rig["head"] + 2]
         pts["quadruped"] = {"head": r1(head_tip), "tail": r1(pins0[rig["tail"] + 2]) if rig["tail"] is not None else None,
                             "feet": [r1(f) for f in feet]}
-        quad_ok = len(feet) >= 3
+        n_feet, y_belly = len(feet), rig["y_belly"]
+        quad_ok = n_feet >= 3
         why["quadruped"] = f"다리 {len(feet)}개 찾음"
     except Exception as e:
         bw = x1 - x0
@@ -150,6 +151,9 @@ def propose(d):
         pts["quadruped"] = {"head": r1(nearest_px(mask, x0, y0 + 0.3 * (y1 - y0))), "tail": r1(nearest_px(mask, x1, y0 + 0.4 * (y1 - y0))),
                             "feet": [r1(f) for f in feet]}
         why["quadruped"] = f"자동으로 못 찾음 ({e}) → 바닥에 고르게 놓음"
+        if looks_face_only(mask):
+            pts["quadruped"]["no_body"] = True  # animate 가 네 발 대신 몸통만으로 움직인다 (사람이 점을 옮기면 화면이 지운다)
+            why["quadruped"] = f"다리를 못 찾았고 앞모습 얼굴처럼 보임 ({e}) → 그대로 두면 몸통만으로 움직임. 네 발로 움직이려면 발 점을 옮겨 주세요"
 
     # 긴 몸: shape_rig 의 긴 몸 판정이 되면 그 머리 · 꼬리, 아니면 가지친 뼈대의 가장 먼 두 끝 (굵은 쪽이 머리)
     axis, _ = sr.find_body_axis(mask, d.ink)
@@ -225,18 +229,124 @@ def propose(d):
     pts["blob"] = {}
 
     # AI 추측 (카드에 「AI 추측」 표시만 한다. 고르는 건 사람)
-    if quad_ok:
+    feat = {"quad_ok": quad_ok, "n_feet": n_feet, "y_belly": y_belly, "feet": pts["quadruped"]["feet"], "axis": axis is not None,
+            "tips": tips, "long_tips": long_tips, "left": left, "right": right, "centre": centre,
+            "bbox": (x0, y0, x1, y1), "size": size}
+    d._guess_feat = feat
+    return {"guess": guess_kind(d, feat), "points": pts, "why": why}
+
+
+FACE_SYM_LR = 0.4  # 좌우 대칭이 이 이상이고
+FACE_ASPECT = 1.3  # 가로 ÷ 세로가 이 이하면 앞모습 얼굴
+
+
+def looks_face_only(mask):
+    """몸 없이 얼굴만 그린 그림(앞모습 고양이 · 돼지 얼굴)인가. 다리 찾기가 실패한 그림에만 쓴다.
+    네 발 그림은 옆모습이라 좌우가 다르고 가로로 길다. 얼굴만 그린 그림은 앞모습이라 좌우가 비슷하고 동그랗다.
+    QuickDraw 학습용 480장(eval_real/QUAD_STRETCH.md)에서 진짜 네 발 250장 중 1장만 걸리고, 얼굴만 184장 중 93장이 걸린 기준.
+    억지로 다리를 만들면 얼굴 안이 소용돌이치며 늘어났다 (REPORT.md 실패 1번의 대부분)."""
+    ys, xs = np.nonzero(mask)
+    sub = mask[ys.min():ys.max() + 1, xs.min():xs.max() + 1] > 0
+    sym_lr = (sub & sub[:, ::-1]).sum() / max(1, (sub | sub[:, ::-1]).sum())
+    aspect = sub.shape[1] / sub.shape[0]
+    return bool(sym_lr >= FACE_SYM_LR and aspect <= FACE_ASPECT)
+
+
+GUESS_MODEL = Path(__file__).resolve().parent / "guess_model.json"
+GUESS_MIN_P = 0.8  # 이보다 자신 없으면 「모르겠음」: 틀리게 확신하는 것이 모르겠음보다 나쁘다
+_guess_model = None
+
+
+def guess_features(d, f):
+    """종류 추측에 쓰는 숫자 24개 (그림 크기와 상관없게 긴 변 · 몸 넓이로 나눈 값). eval_real/train_guess.py 가 이것으로 배운다."""
+    m = d.mask
+    x0, y0, x1, y1 = f["bbox"]
+    size = f["size"]
+    sub = m[y0:y1 + 1, x0:x1 + 1] > 0
+    area = sub.sum()
+    cnts, _ = cv2.findContours(m, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
+    c = max(cnts, key=cv2.contourArea)
+    e = {"fill": area / sub.size,  # 테두리 상자 중 그림이 차지한 비율
+         "solidity": area / max(1, cv2.contourArea(cv2.convexHull(c))),  # 볼록 껍질 중 그림 비율 (구름 ↑, 별 · 다리 ↓)
+         "aspect": (x1 - x0 + 1) / (y1 - y0 + 1),
+         "sym_lr": (sub & sub[:, ::-1]).sum() / max(1, (sub | sub[:, ::-1]).sum()),  # 좌우 대칭 (나비 · 얼굴 ↑)
+         "sym_ud": (sub & sub[::-1]).sum() / max(1, (sub | sub[::-1]).sum()),
+         "n_long": len(f["long_tips"]), "n_tips": len(f["tips"]), "n_regions": int(region_labels(d)[0].max()),
+         "n_comp": len(cnts), "inkd": ((d.ink > 0) & (m > 0)).sum() / max(1, area)}  # 몸 안 선 밀도 (수염 · 줄무늬 ↑)
+    cx, cy = f["centre"]
+    lt = f["long_tips"]
+    ang = sorted(float(np.arctan2(t["tip"][1] - cy, t["tip"][0] - cx)) for t in lt)
+    # 튀어나온 곳 사이 가장 큰 빈 각: 별처럼 사방으로 고르게 뻗으면 작다
+    e["maxgap"] = float(np.diff(ang + [ang[0] + 2 * np.pi]).max()) if len(ang) >= 2 else 2 * np.pi
+    L = [t["len"] / size for t in lt]
+    e["l0"] = L[0] if L else 0
+    e["l1"] = L[1] if len(L) > 1 else 0
+    e["lcv"] = float(np.std(L) / np.mean(L)) if len(L) >= 2 else 1  # 갈래 길이가 고른지 (별 ↓)
+    up = side = down = 0
+    for t in lt:
+        a = math.degrees(math.atan2(-(t["tip"][1] - t["base"][1]), abs(t["tip"][0] - t["base"][0])))
+        up, side, down = up + (a > 45), side + (-45 <= a <= 45), down + (a < -45)
+    e.update(up=up, side=side, down=down, n_feet=f["n_feet"], axis=int(f["axis"]))
+    if f["n_feet"]:
+        fx = np.array([p[0] for p in f["feet"]])
+        fy = np.array([p[1] for p in f["feet"]])
+        e["feet_spread"] = (fx.max() - fx.min()) / (x1 - x0 + 1)
+        e["feet_low"] = float(np.mean(fy > y0 + 0.75 * (y1 - y0)))
+        e["belly"] = (f["y_belly"] - y0) / (y1 - y0 + 1)
+    else:
+        e["feet_spread"] = e["feet_low"] = 0
+        e["belly"] = 1
+    try:  # 볼록 껍질에서 깊이 패인 곳 수 (별 꼭짓점 사이 골)
+        dfc = cv2.convexityDefects(c, cv2.convexHull(c, returnPoints=False))
+        e["n_defect"] = int((dfc.reshape(-1, 4)[:, 3] / 256 > 0.08 * size).sum()) if dfc is not None else 0
+    except cv2.error:
+        e["n_defect"] = 0
+    e["dtmax"] = float(cv2.distanceTransform(m, cv2.DIST_L2, 5).max() / size)  # 가장 굵은 곳
+    return {k: float(v) for k, v in e.items()}
+
+
+def guess_proba(x):
+    """작은 결정 나무 묶음(gradient boosting) → 종류마다 확률. 나무는 guess_model.json (eval_real/train_guess.py 가 QuickDraw 학습용 그림으로 만듦)."""
+    global _guess_model
+    if _guess_model is None:
+        import json
+        _guess_model = json.loads(GUESS_MODEL.read_text(encoding="utf-8"))
+    M = _guess_model
+    v = np.array([x[k] for k in M["features"]], np.float32).astype(np.float64)  # scikit-learn 처럼 float32 로 비교
+    raw = np.array(M["init"], np.float64)
+    for stage in M["trees"]:
+        for k, (feat, thr, left, right, value) in enumerate(stage):
+            i = 0
+            while left[i] >= 0:
+                i = left[i] if v[feat[i]] <= thr[i] else right[i]
+            raw[k] += M["lr"] * value[i]
+    p = np.exp(raw - raw.max())
+    return dict(zip(M["classes"], p / p.sum()))
+
+
+def guess_kind(d, f):
+    if not GUESS_MODEL.exists():
+        return guess_rules(f)
+    d._guess_x = guess_features(d, f)
+    p = guess_proba(d._guess_x)
+    k = max(p, key=p.get)
+    return k if p[k] >= GUESS_MIN_P else None
+
+
+def guess_rules(f):
+    """예전 추측 (2026-10 까지). 비교용으로 남긴다."""
+    if f["quad_ok"]:
         guess = "quadruped"
-    elif axis is not None:
+    elif f["axis"]:
         guess = "long"
-    elif not long_tips:
+    elif not f["long_tips"]:
         guess = "blob"
-    elif (left and right and long_tips[0] in (left[0], right[0])
-          and abs(left[0]["len"] - right[0]["len"]) < 0.35 * max(left[0]["len"], right[0]["len"])):
+    elif (f["left"] and f["right"] and f["long_tips"][0] in (f["left"][0], f["right"][0])
+          and abs(f["left"][0]["len"] - f["right"][0]["len"]) < 0.35 * max(f["left"][0]["len"], f["right"][0]["len"])):
         guess = "wings"  # 가장 긴 두 갈래가 양옆으로 비슷하게 뻗었을 때만
     else:
         guess = None
-    return {"guess": guess, "points": pts, "why": why}
+    return guess
 
 
 # ---------- 사용자가 고친 점 → 기준점 · 동작 ----------
@@ -281,44 +391,79 @@ def snap_to_tips(d, pts, keys_single=("head", "tail"), key_multi="feet"):
     return out
 
 
+def walk_leg(mask, f, top):
+    """발에서 위로 한 줄씩 올라가며, 지금 잡은 구간 폭이 다리 폭의 2.5배를 넘는 곳 = 몸통에 닿은 곳.
+    반환: root · knee · foot, found(몸통에 닿는 곳을 찾았나). 못 찾으면 발과 그림 맨 위 사이 절반을 뿌리로 둔다."""
+    H, W = mask.shape
+    x, trail, widths, root_y = float(f[0]), [], [], None
+    for yy in range(int(f[1]), top - 1, -1):
+        row = mask[yy] > 0
+        xi = int(round(x))
+        if not row[xi]:
+            near = [xi + dx for dx in (-1, 1, -2, 2, -3, 3) if 0 <= xi + dx < W and row[xi + dx]]
+            if not near:
+                break
+            xi = near[0]
+        s = xi
+        while s > 0 and row[s - 1]:
+            s -= 1
+        e = xi
+        while e < W - 1 and row[e + 1]:
+            e += 1
+        widths.append(e - s + 1)
+        base = float(np.median(widths[:5]))
+        if len(widths) > 5 and widths[-1] > max(2.5 * base, 6):
+            root_y = yy
+            break
+        x = 0.7 * x + 0.3 * (s + e) / 2
+        trail.append((x, yy))
+    leg_w = float(np.median(widths[:5])) if widths else 4.0
+    found = root_y is not None and bool(trail)
+    if not found:
+        root_y = f[1] - 0.5 * (f[1] - top)
+        trail = [(f[0], f[1] - k * (f[1] - root_y) / 10) for k in range(11)]
+    root = snap(mask, (trail[-1][0], root_y - 0.6 * leg_w))
+    knee = snap(mask, trail[len(trail) // 2])
+    return {"root": root, "knee": knee, "foot": f, "found": found, "leg_w": leg_w}
+
+
+def merge_same_leg(mask, feet):
+    """한 다리에 붙은 발 둘을 하나로. 낙서의 막대 다리는 한 다리를 두 줄(U 자)로 그려서 발 점 둘이 한 다리 양쪽에 붙고,
+    서로 다른 박자로 당겨 다리가 찢어졌다 (QuickDraw 말 · 개 늘어남의 대부분).
+    그림 안으로 걸어서 잰 거리가 곧은 거리와 거의 같으면(= 아래에서 바로 이어짐) 같은 다리다.
+    따로 선 두 다리는 몸통까지 올라갔다 내려와야 해서 그림 안 거리가 훨씬 길다."""
+    if len(feet) < 2:
+        return feet
+    size = max(mask.shape)
+    cost = np.where(mask > 0, 1.0, np.inf)
+    feet = list(feet)
+    merged = True
+    while merged and len(feet) > 1:
+        merged = False
+        for i in range(len(feet)):
+            D, _ = MCP_Geometric(cost).find_costs([(int(feet[i][1]), int(feet[i][0]))])
+            for j in range(i + 1, len(feet)):
+                eu = float(np.linalg.norm(feet[i] - feet[j]))
+                geo = float(D[int(feet[j][1]), int(feet[j][0])])
+                if eu <= 0.15 * size and geo <= 1.5 * eu + 10:
+                    lo = feet[i] if feet[i][1] >= feet[j][1] else feet[j]
+                    feet[i] = snap(mask, ((feet[i][0] + feet[j][0]) / 2, lo[1]))
+                    del feet[j]
+                    merged = True
+                    break
+            if merged:
+                break
+    return feet
+
+
 def build_quadruped(mask, pts):
     H, W = mask.shape
     feet = [snap(mask, f) for f in pts["feet"]]
     if len(feet) < 2:
         raise ValueError("발을 2개 이상 놓아 주세요")
+    feet = merge_same_leg(mask, feet)  # 하나만 남아도 그 다리는 움직인다
     top = np.nonzero(mask.any(1))[0][0]
-    legs = []
-    for f in feet:
-        # 발에서 위로 한 줄씩 올라가며, 지금 잡은 구간 폭이 다리 폭의 2.5배를 넘는 곳 = 몸통에 닿은 곳
-        x, trail, widths, root_y = float(f[0]), [], [], None
-        for yy in range(int(f[1]), top - 1, -1):
-            row = mask[yy] > 0
-            xi = int(round(x))
-            if not row[xi]:
-                near = [xi + dx for dx in (-1, 1, -2, 2, -3, 3) if 0 <= xi + dx < W and row[xi + dx]]
-                if not near:
-                    break
-                xi = near[0]
-            s = xi
-            while s > 0 and row[s - 1]:
-                s -= 1
-            e = xi
-            while e < W - 1 and row[e + 1]:
-                e += 1
-            widths.append(e - s + 1)
-            base = float(np.median(widths[:5]))
-            if len(widths) > 5 and widths[-1] > max(2.5 * base, 6):
-                root_y = yy
-                break
-            x = 0.7 * x + 0.3 * (s + e) / 2
-            trail.append((x, yy))
-        leg_w = float(np.median(widths[:5])) if widths else 4.0
-        if root_y is None or not trail:
-            root_y = f[1] - 0.5 * (f[1] - top)
-            trail = [(f[0], f[1] - k * (f[1] - root_y) / 10) for k in range(11)]
-        root = snap(mask, (trail[-1][0], root_y - 0.6 * leg_w))
-        knee = snap(mask, trail[len(trail) // 2])
-        legs.append({"root": root, "knee": knee, "foot": f})
+    legs = [walk_leg(mask, f, top) for f in feet]
     y_belly = int(min(l["root"][1] for l in legs))
     rx = sorted(float(l["root"][0]) for l in legs)
     dt = cv2.distanceTransform(mask, cv2.DIST_L2, 5)
@@ -365,7 +510,42 @@ def build_quadruped(mask, pts):
         rig["tail"] = len(pins)
         pins += tail_pins
     pins0 = np.array(pins, np.float32)
-    return pins0, lambda t, H: q.pose(pins0, rig, t, H)
+    keep = drop_crowded_pins(pins0, rig, max(mask.shape))
+    return pins0[keep], lambda t, H: q.pose(pins0, rig, t, H)[keep]
+
+
+def drop_crowded_pins(pins0, rig, size):
+    """서로 다른 줄(다리마다 · 머리 · 꼬리 · 몸 가운데)의 기준점이 거의 같은 자리에 있으면 덜 중요한 쪽을 ARAP 에서 뺀다.
+    칠 없는 선 그림은 머리 · 꼬리 길이 다리 선을 지나가고, 다리 선 둘이 맞닿기도 해서 두 기준점이 같은 곳을
+    서로 다른 쪽으로 당겨 그 사이가 찢어졌다. 중요도: 발 > 다리 뿌리 > 몸 가운데 > 무릎 · 머리 끝 > 머리 중간 > 꼬리.
+    반환: 남길 기준점 번호 (pose 결과도 같은 번호만 쓴다)."""
+    chain = np.zeros(len(pins0), int)  # 0 = 몸 가운데
+    prio = np.full(len(pins0), 3.5)
+    for k, leg in enumerate(rig["legs"]):
+        i = leg["i"]
+        chain[i:i + 3] = k + 1
+        prio[i:i + 3] = (4, 3, 5)
+    if rig["head"] is not None:
+        h = rig["head"]
+        chain[h:h + 3] = 100
+        prio[h:h + 3] = (2, 2, 3)
+    if rig["tail"] is not None:
+        t = rig["tail"]
+        chain[t:t + 3] = 101
+        prio[t:t + 3] = 1
+    R = max(12.0, CROWD_R * size)
+    alive = np.ones(len(pins0), bool)
+    order = sorted(range(len(pins0)), key=lambda j: (-prio[j], j))
+    for a_i, a in enumerate(order):
+        if not alive[a]:
+            continue
+        for b in order[a_i + 1:]:
+            if alive[b] and chain[b] != chain[a] and np.linalg.norm(pins0[a] - pins0[b]) < R:
+                alive[b] = False
+    return np.nonzero(alive)[0]
+
+
+CROWD_R = 0.04  # 기준점끼리 이보다 가까우면(긴 변 비율) 겹친 것으로 본다
 
 
 def build_long(mask, pts):
@@ -379,6 +559,19 @@ def build_long(mask, pts):
     path = np.stack([np.convolve(pad[:, i], np.ones(2 * k + 1) / (2 * k + 1), "valid") for i in (0, 1)], 1)
     pins0, _ = sr.make_body_pins(path[:, ::-1])  # make_body_pins 는 (y, x)
     return pins0, lambda t, H: sr.pose_body(pins0, t)
+
+
+WING_SOFT = 0.04  # 점 3개 날개 무게를 흐리는 폭 (그림 긴 변 비율, 가우스 시그마)
+
+
+def soft_in_mask(w, dom, sigma):
+    """dom 안에서만 흐리기 (바깥 0 이 섞여 가장자리 무게가 줄지 않게 나눠 준다). dom 밖은 0."""
+    if sigma <= 0:
+        return w
+    dm = dom.astype(np.float32)
+    num = cv2.GaussianBlur(w * dm, (0, 0), sigma)
+    den = cv2.GaussianBlur(dm, (0, 0), sigma)
+    return np.where(dom, num / np.maximum(den, 1e-6), 0).astype(np.float32)
 
 
 def build_wings(mask, pts):
@@ -429,6 +622,9 @@ def build_wings(mask, pts):
             r = np.where(ok, d_seg / np.maximum(d_seg + d_tip, 1e-6), 0.0)  # 0 = 경첩, 1 = 날개 끝
         # 경첩 바로 바깥부터 돌기 시작해 날개 끝까지 25% 지점부터 통째로 (가만히 있는 구간이 길면 어깨에서 꺾여 보인다)
         wmap = (belong * smooth((r - 0.03) / 0.22) * smooth(e_pix / 4.0)).astype(np.float32)
+        # 무게가 몇 px 안에서 0 → 1 로 바뀌면 경첩에서 먼 곳일수록 이웃 꼭짓점이 크게 엇갈려 삼각형이 뒤집혔다
+        # (QuickDraw 날개 뒤집힘 > 1% 는 모두 이 점 3개 방식에서 나왔다). 그림 안에서만 흐리게 해 바뀌는 폭을 넓힌다
+        wmap = soft_in_mask(wmap, dom, WING_SOFT * max(mask.shape))
         wmap = cv2.dilate(wmap, np.ones((5, 5), np.uint8))  # 윤곽선 위 꼭짓점도 값을 받게
         up = -1.0 if (tip - mid)[0] >= 0 else 1.0  # + 각은 오른쪽으로 뻗은 날개를 내린다
         wings.append({"a": a, "b": b, "tip": tip, "m": m, "mid": mid, "wmap": wmap, "up": up})
@@ -511,7 +707,8 @@ def wing_deformer(wings, style):
 
 def region_labels(d):
     """선으로 닫힌 칸 (페인트 통으로 채우는 칸). 색칠 공부 그림 · 윤곽선으로 그린 아이 그림에서 날개 · 몸 · 머리가 서로 다른 칸이 된다.
-    선이 끊긴 곳은 3px 까지 메운다. 그보다 크게 끊기면 칸이 이웃 칸과 합쳐진다 (그때는 점 3개 방식)."""
+    선이 끊긴 곳은 3px 까지 메우고, 더 큰 틈은 선 끝을 가까운 선에 이어(bridge_gaps) 새로 닫힌 칸만 더한다.
+    마스크가 안 채워진 열린 낙서는 여전히 칸이 안 생긴다 (그때는 점 3개 방식)."""
     if getattr(d, "_regions", None) is None:
         # 선은 결을 지운 그림에서 찾고 점 같은 작은 조각은 버린다: 크레파스 · 색연필 결의 어두운 점이 선으로 잡혀
         # 날개가 자잘한 칸으로 쪼개졌다 (안 고른 조각이 가만히 있어 날개가 얼룩덜룩하게 움직였다)
@@ -531,19 +728,91 @@ def region_labels(d):
         long_e = np.nonzero(st_e[:, cv2.CC_STAT_AREA] >= max(40, int(0.1 * max(d.mask.shape))))[0]
         color_edge = np.isin(lab_e, long_e[long_e > 0])
         ink = ink | color_edge
-        free = ((d.mask > 0) & ~ink).astype(np.uint8)
-        n, lab, st, _ = cv2.connectedComponentsWithStats(free, connectivity=4)
-        small = np.nonzero(st[:, cv2.CC_STAT_AREA] < 15)[0]
-        lab[np.isin(lab, small)] = 0
-        # 마스크는 선보다 2~3px 넓게 잡혀서, 그림 바깥 둘레에 선 바깥쪽 얇은 띠가 칸 하나로 생긴다.
-        # 이 띠를 칸으로 두면 날개 바깥 테두리 전체가 「몸에 붙은 곳」이 되어 테두리만 안 움직이고 번진다 → 선으로 친다
-        edge = (d.mask > 0) & (cv2.erode(d.mask, np.ones((3, 3), np.uint8)) == 0)
-        halo = np.unique(lab[edge])
-        halo = halo[halo > 0]
-        ink = ink | np.isin(lab, halo)
-        lab[np.isin(lab, halo)] = 0
-        d._regions, d._ink_r = lab, ink
+        lab, ink_l = _closed_regions(d.mask, ink)
+        # 닫히지 않은 선 낙서: 선 끝을 가까운 선에 이어 본다. 이어서 「새로」 생긴 칸만 더한다 —
+        # 이미 있던 칸은 그대로 둔다 (색칠 그림 · 윤곽 그림의 칸이 바뀌지 않게)
+        bridge = bridge_gaps(ink, d.mask)
+        if bridge.any():
+            lab_b, ink_b = _closed_regions(d.mask, ink | bridge)
+            n0 = int(lab.max())
+            for rid in set(np.unique(lab_b).tolist()) - {0}:
+                R = lab_b == rid
+                if (lab[R] == 0).mean() < 0.9:
+                    continue
+                R &= lab == 0
+                n0 += 1
+                lab[R] = n0
+            ink_l = (ink_l | (bridge & (d.mask > 0))) & ~(lab > 0)
+        d._regions, d._ink_r = lab, ink_l
     return d._regions, d._ink_r
+
+
+def _closed_regions(mask, ink):
+    free = ((mask > 0) & ~ink).astype(np.uint8)
+    n, lab, st, _ = cv2.connectedComponentsWithStats(free, connectivity=4)
+    small = np.nonzero(st[:, cv2.CC_STAT_AREA] < 15)[0]
+    lab[np.isin(lab, small)] = 0
+    # 마스크는 선보다 2~3px 넓게 잡혀서, 그림 바깥 둘레에 선 바깥쪽 얇은 띠가 칸 하나로 생긴다.
+    # 이 띠를 칸으로 두면 날개 바깥 테두리 전체가 「몸에 붙은 곳」이 되어 테두리만 안 움직이고 번진다 → 선으로 친다
+    edge = (mask > 0) & (cv2.erode(mask, np.ones((3, 3), np.uint8)) == 0)
+    halo = np.unique(lab[edge])
+    halo = halo[halo > 0]
+    ink = ink | np.isin(lab, halo)
+    lab[np.isin(lab, halo)] = 0
+    return lab, ink
+
+
+BRIDGE_MAX = 0.08  # 선 끝을 이을 수 있는 가장 먼 거리 (그림 긴 변 비율)
+
+
+def bridge_gaps(ink, mask):
+    """선 끝(뼈대 끝점)마다, 끝이 향하는 쪽(±60°)의 가까운 다른 선까지 잇는 짧은 선을 그린다.
+    「다른 선」= 선을 따라가면 멀리 돌아가거나 이어지지 않는 선 (자기 자신 바로 옆은 안 됨).
+    이은 선은 마스크 안에만 (그림 밖 종이를 가로지르지 않는다). 짧은 조각(눈 · 점)에서는 잇지 않는다."""
+    from skimage.morphology import skeletonize
+    H, W = ink.shape
+    out = np.zeros((H, W), bool)
+    D = BRIDGE_MAX * max(H, W)
+    sk = skeletonize(ink > 0)
+    nb = cv2.filter2D(sk.astype(np.uint8), -1, np.ones((3, 3), np.float32), borderType=cv2.BORDER_CONSTANT) - sk
+    ends = np.argwhere(sk & (nb == 1))
+    if len(ends) == 0 or len(ends) > 200:
+        return out
+    n_c, comp, st, _ = cv2.connectedComponentsWithStats(sk.astype(np.uint8), connectivity=8)
+    R = int(np.ceil(3 * D))
+    for y, x in ends:
+        if st[comp[y, x], cv2.CC_STAT_AREA] < 15:
+            continue
+        y0, y1, x0, x1 = max(0, y - R), min(H, y + R + 1), max(0, x - R), min(W, x + R + 1)
+        win = ink[y0:y1, x0:x1] > 0
+        # 끝이 향하는 쪽: 같은 뼈대 위 10px 안 점들의 가운데 → 끝
+        sy, sx = np.nonzero(sk[y0:y1, x0:x1] & (comp[y0:y1, x0:x1] == comp[y, x]))
+        near = (sy + y0 - y) ** 2 + (sx + x0 - x) ** 2 <= 100
+        v = np.array([x - (sx[near] + x0).mean(), y - (sy[near] + y0).mean()])
+        if np.linalg.norm(v) < 1:
+            continue
+        v /= np.linalg.norm(v)
+        geo, _ = MCP_Geometric(np.where(win, 1.0, np.inf)).find_costs([(y - y0, x - x0)])
+        ty, tx = np.nonzero(win)
+        dx, dy = tx + x0 - x, ty + y0 - y
+        e = np.hypot(dx, dy)
+        g = geo[ty, tx]
+        cos = (dx * v[0] + dy * v[1]) / np.maximum(e, 1e-6)
+        ok = (e > 2) & (e <= D) & (cos >= 0.5) & ~(g <= 2.5 * e + 10)
+        if not ok.any():
+            continue
+        score = np.where(ok, e * (2 - cos), np.inf)
+        j = int(np.argmin(score))
+        p, q = (int(x), int(y)), (int(tx[j] + x0), int(ty[j] + y0))
+        n = max(2, int(e[j]))
+        ly = np.linspace(p[1], q[1], n).round().astype(int)
+        lx = np.linspace(p[0], q[0], n).round().astype(int)
+        if (mask[ly, lx] > 0).mean() < 0.9:
+            continue
+        line = np.zeros((H, W), np.uint8)
+        cv2.line(line, p, q, 1, 3)
+        out |= line > 0
+    return out
 
 
 def region_at(d, x, y, r=6):
@@ -920,7 +1189,7 @@ def snap_points_to_regions(d, mask, pts):
             rim_cache[r] = max(1, int((grown_cache[r] & (lab > 0) & (lab != r)).sum()))
         return grown_cache[r]
 
-    picked = set()
+    picked, per_wing = set(), []
     for w in pts.get("wings") or []:
         if len(w) < 3:
             continue
@@ -971,7 +1240,12 @@ def snap_points_to_regions(d, mask, pts):
                     continue
                 seen.add(q)
                 todo.append(q)
-        picked |= seen
+        per_wing.append(seen)
+    # 양쪽 날개 끝에서 모두 닿은 칸은 몸이다 (옆모습 새 낙서: 몸 전체가 칸 하나라 양쪽 끝 점이 같은 칸에 들어가
+    # 몸통 통째로 날개가 됐다). 같은 뿌리를 쓰는 앞 · 뒤 날개(비스듬한 나비)는 끝이 서로 다른 칸이라 걸리지 않는다
+    for i, s in enumerate(per_wing):
+        others = set().union(*(t for j, t in enumerate(per_wing) if j != i))
+        picked |= s - others
     if not picked:
         return None
     return sorted(int(r) for r in picked)
@@ -1044,6 +1318,11 @@ def animate(d, kind, pts):
     """프레임마다 꼭짓점 위치를 만든다. 그리는 것은 브라우저(Pixi MeshSimple)가 한다."""
     if kind not in BUILD:
         raise ValueError(f"모르는 종류: {kind}")
+    notice = None
+    if kind == "quadruped" and pts.get("no_body"):
+        # 몸 · 다리가 없는 그림(얼굴만)을 네 발로 억지로 움직이면 크게 늘어난다 → 안전한 몸통만으로
+        kind, pts = "blob", {}
+        notice = "다리를 못 찾아서(얼굴만 그린 그림 같아요) 몸통만으로 움직였어요. 네 발로 움직이려면 발 점을 직접 놓아 주세요."
     mask, alpha = d.masks(kind)
     v0, tris, comps, mesh_kind = build_mesh(mask)
     H, W = mask.shape
@@ -1097,4 +1376,6 @@ def animate(d, kind, pts):
         "positions": b64(np.stack(frames)),  # (프레임, 꼭짓점, 2) float32
         "pins": [[r1(x) for x in pf] for pf in pin_frames],
         "wing_mode": used,
+        "used_kind": kind,
+        "notice": notice,
     }

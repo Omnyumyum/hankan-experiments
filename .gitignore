@@ -17,3 +17,9 @@ animal-monster/models/
 .env
 **/.env
 *.key
+
+# 실제 그림 시험: 받은 원본 · 그린 PNG 는 올리지 않는다
+creature-picker/eval_real/data/
+**/*.ndjson
+**/*.tar
+amateur_drawings*
