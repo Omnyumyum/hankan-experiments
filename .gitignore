@@ -1,0 +1,14 @@
+# 이 저장소에는 animal-monster · creature-picker 만 올린다 (다른 실험 폴더는 로컬에만)
+/*
+!/.gitignore
+!/README.md
+!/animal-monster/
+!/creature-picker/
+**/venv/
+**/__pycache__/
+**/out/
+animal-monster/results/
+animal-monster/shape/
+animal-monster/quadruped/
+animal-monster/models/
+*.onnx

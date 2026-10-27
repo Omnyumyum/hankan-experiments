@@ -1,0 +1,428 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>친구 종류 고르기 시험판</title>
+<style>
+  :root {
+    --bg: #faf7f2; --card: #fff; --ink: #2b2620; --sub: #7a7166; --line: #e6dfd4;
+    --accent: #e8743b; --accent-soft: #fde9dd; --ok: #2f9e62;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 15px/1.5 "Pretendard", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif; }
+  header { padding: 14px 16px; border-bottom: 1px solid var(--line); background: var(--card); }
+  header h1 { margin: 0; font-size: 17px; }
+  header p { margin: 2px 0 0; color: var(--sub); font-size: 13px; }
+  main { max-width: 760px; margin: 0 auto; padding: 16px; }
+  .step { display: none; } .step.on { display: block; }
+  h2 { font-size: 16px; margin: 4px 0 12px; }
+  .row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; }
+  .card { position: relative; background: var(--card); border: 2px solid var(--line); border-radius: 14px; padding: 16px 14px; cursor: pointer; text-align: left; font: inherit; color: inherit; }
+  .card:hover { border-color: var(--accent); }
+  .card .ico { font-size: 34px; line-height: 1; }
+  .card b { display: block; margin-top: 8px; font-size: 16px; }
+  .card small { color: var(--sub); }
+  .card .ai { position: absolute; top: 8px; right: 8px; background: var(--accent-soft); color: var(--accent); font-size: 11px; font-weight: 700; padding: 2px 7px; border-radius: 99px; }
+  .thumb { width: 120px; height: 120px; object-fit: contain; background: #fff; border: 1px solid var(--line); border-radius: 10px; }
+  button.btn { font: inherit; border: 1px solid var(--line); background: var(--card); border-radius: 10px; padding: 8px 14px; cursor: pointer; }
+  button.btn.main { background: var(--accent); color: #fff; border-color: var(--accent); font-weight: 700; }
+  button.btn:disabled { opacity: .5; cursor: default; }
+  select, input[type=file] { font: inherit; max-width: 100%; }
+  .stage { background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 8px; display: inline-block; max-width: 100%; }
+  canvas { display: block; max-width: 100%; touch-action: none; }
+  .hint { color: var(--sub); font-size: 13px; margin: 8px 0; }
+  .legend span { display: inline-flex; align-items: center; gap: 4px; margin-right: 10px; font-size: 13px; }
+  .legend i { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+  .err { color: #c0392b; white-space: pre-wrap; }
+  .meta { color: var(--sub); font-size: 12px; margin-top: 6px; }
+  .back { margin-bottom: 12px; }
+  .note { background: var(--accent-soft); border-radius: 10px; padding: 10px 12px; font-size: 13px; }
+</style>
+</head>
+<body>
+<header>
+  <h1>친구 종류 고르기 · 비휴머노이드 시험판</h1>
+  <p>어른 화면(S-06 확장 가안). 로컬 실험 — 팀 저장소와 상관없음</p>
+</header>
+<main>
+  <!-- 1. 그림 -->
+  <section class="step on" id="s-pick">
+    <h2>1. 그림 고르기</h2>
+    <div class="row">
+      <input type="file" id="file" accept="image/*">
+      <span class="hint">또는 시험 그림</span>
+      <select id="sample"><option value="">— 시험 그림 —</option></select>
+    </div>
+    <p class="err" id="pick-err"></p>
+  </section>
+
+  <!-- 2. 사람 / 다른 모양 -->
+  <section class="step" id="s-human">
+    <button class="btn back" data-go="s-pick">← 다른 그림</button>
+    <div class="row" style="margin-bottom:12px"><img class="thumb" id="thumb1"><div>
+      <h2 style="margin:0">2. 어떤 친구예요?</h2><div class="hint" id="guess-text"></div></div></div>
+    <div class="cards">
+      <button class="card" data-human="yes"><div class="ico">🧍</div><b>두 발로 선 친구</b><small>사람 · 로봇 · 두 발로 선 곰</small></button>
+      <button class="card" data-human="no"><span class="ai" id="ai-other" hidden>AI 추측</span><div class="ico">🐾</div><b>다른 모양 친구</b><small>네 발 · 뱀 · 새 · 괴물 · 별 …</small></button>
+    </div>
+  </section>
+
+  <!-- 2-1. 사람 → 기존 흐름 -->
+  <section class="step" id="s-humanoid">
+    <button class="btn back" data-go="s-human">← 다시 고르기</button>
+    <h2>두 발로 선 친구</h2>
+    <p class="note">기존 흐름(Meta 관절 15개 → 자신 없으면 S-06 관절 고치기)으로 넘어갑니다. 이 시험판은 비휴머노이드만 다룹니다.</p>
+  </section>
+
+  <!-- 3. 비휴머노이드 4종 -->
+  <section class="step" id="s-kind">
+    <button class="btn back" data-go="s-human">← 다시 고르기</button>
+    <div class="row" style="margin-bottom:12px"><img class="thumb" id="thumb2"><h2 style="margin:0">3. 어떤 모양이에요?</h2></div>
+    <div class="cards">
+      <button class="card" data-kind="quadruped"><span class="ai" hidden>AI 추측</span><div class="ico">🐕</div><b>네 발</b><small>개 · 고양이 · 말 · 돼지 (옆모습)</small></button>
+      <button class="card" data-kind="long"><span class="ai" hidden>AI 추측</span><div class="ico">🐍</div><b>긴 몸</b><small>뱀 · 지렁이 · 애벌레</small></button>
+      <button class="card" data-kind="wings"><span class="ai" hidden>AI 추측</span><div class="ico">🦋</div><b>날개</b><small>나비 · 날아가는 새 (앞모습)</small></button>
+      <button class="card" data-kind="blob"><span class="ai" hidden>AI 추측</span><div class="ico">🫧</div><b>몸통만</b><small>괴물 · 별 · 구름 · 그 밖의 모든 것</small></button>
+    </div>
+    <p class="hint">모르겠으면 「몸통만」을 고르세요. 어떤 그림이든 통통 · 말랑하게 움직입니다.</p>
+  </section>
+
+  <!-- 4. 점 고치기 -->
+  <section class="step" id="s-points">
+    <button class="btn back" data-go="s-kind">← 종류 다시 고르기</button>
+    <h2 id="points-title">4. 점 확인하기</h2>
+    <p class="hint">점을 끌어서 맞는 곳에 놓아 주세요. 틀린 점만 옮기면 됩니다.</p>
+    <div class="legend" id="legend"></div>
+    <div class="stage"><canvas id="editor"></canvas></div>
+    <p class="hint" id="kind-hint"></p>
+    <div class="row" style="margin-top:10px" id="point-tools"></div>
+    <div class="row" style="margin-top:12px">
+      <button class="btn main" id="go-animate">움직여 보기</button>
+      <button class="btn" id="reset-points">처음 위치로</button>
+    </div>
+    <p class="err" id="points-err"></p>
+  </section>
+
+  <!-- 5. 보기 -->
+  <section class="step" id="s-play">
+    <div class="row back">
+      <button class="btn" id="back-points">← 점 다시 고치기</button>
+      <button class="btn" data-go="s-kind">종류 다시 고르기</button>
+      <button class="btn" data-go="s-pick">다른 그림</button>
+    </div>
+    <h2 id="play-title">움직임</h2>
+    <div class="stage" id="pixi-host"></div>
+    <div class="row" style="margin-top:8px"><label><input type="checkbox" id="show-pins"> 기준점 보기</label></div>
+    <div class="meta" id="play-meta"></div>
+    <p class="err" id="play-err"></p>
+  </section>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/pixi.js@8.22.0/dist/pixi.min.js"></script>
+<script>
+const KIND = {
+  quadruped: { name: "네 발", ico: "🐕" }, long: { name: "긴 몸", ico: "🐍" },
+  wings: { name: "날개", ico: "🦋" }, blob: { name: "몸통만", ico: "🫧" },
+};
+const COLOR = { head: "#2b7de9", tail: "#a34fd6", feet: "#e0453a", wings: "#2f9e62", tip: "#e8743b" };
+const S = { prep: null, kind: null, pts: null, img: null, app: null, overlay: null, req: 0, lastReq: 0 };
+const $ = (id) => document.getElementById(id);
+
+function go(id) {
+  document.querySelectorAll(".step").forEach((s) => s.classList.toggle("on", s.id === id));
+  if (id !== "s-play") stopPlay();
+  window.scrollTo(0, 0);
+}
+document.querySelectorAll("[data-go]").forEach((b) => b.onclick = () => go(b.dataset.go));
+
+async function api(path, body) {
+  const r = await fetch(path, body ? { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) } : {});
+  const j = await r.json();
+  if (!r.ok) throw new Error(j.error || r.statusText);
+  return j;
+}
+
+// ---------- 1. 그림 ----------
+api("/api/samples").then((list) => {
+  for (const s of list) $("sample").add(new Option(s, s));
+});
+$("sample").onchange = () => $("sample").value && prepare({ sample: $("sample").value });
+$("file").onchange = () => {
+  const f = $("file").files[0];
+  if (!f) return;
+  const rd = new FileReader();
+  rd.onload = () => prepare({ image: rd.result });
+  rd.readAsDataURL(f);
+};
+
+async function prepare(body) {
+  $("pick-err").textContent = "그림을 살펴보는 중…";
+  try {
+    S.prep = await api("/api/prepare", body);
+  } catch (e) { $("pick-err").textContent = "실패: " + e.message; return; }
+  $("pick-err").textContent = "";
+  S.img = new Image();
+  S.img.src = S.prep.crop;
+  await S.img.decode();
+  $("thumb1").src = $("thumb2").src = S.prep.crop;
+  const g = S.prep.guess;
+  $("ai-other").hidden = !g;
+  $("guess-text").textContent = g ? `AI 추측: 다른 모양 친구 — ${KIND[g].name}` : "AI 가 잘 모르겠대요. 골라 주세요.";
+  document.querySelectorAll("[data-kind]").forEach((c) => c.querySelector(".ai").hidden = c.dataset.kind !== g);
+  go("s-human");
+}
+
+// ---------- 2 · 3. 카드 ----------
+document.querySelectorAll("[data-human]").forEach((b) => b.onclick = () => go(b.dataset.human === "yes" ? "s-humanoid" : "s-kind"));
+document.querySelectorAll("[data-kind]").forEach((b) => b.onclick = () => {
+  S.kind = b.dataset.kind;
+  S.pts = structuredClone(S.prep.points[S.kind]);
+  if (S.kind === "wings") {  // 날개: 칸 고르기가 기본, 점 3개는 선이 끊긴 그림용
+    S.wingSets = { regions: { mode: "regions", regions: [], pivots: [], userPivots: false, style: S.pts.style }, points: S.pts };
+    S.pts = S.wingSets.regions;
+  }
+  if (S.kind === "blob") return animate();  // 몸통만은 점이 없다
+  $("points-title").textContent = `4. 점 확인하기 — ${KIND[S.kind].ico} ${KIND[S.kind].name}`;
+  go("s-points");
+  S.overlay = null;
+  setHint();
+  drawTools();
+  drawEditor();
+  refreshOverlay();
+});
+
+// 날개: 점을 옮길 때마다 움직일 범위를 빨갛게 (서버 계산 약 0.1초)
+function refreshOverlay() {
+  if (S.kind !== "wings") { S.overlay = null; return; }
+  const id = ++S.req;
+  S.lastReq = Date.now();
+  api("/api/weights", { id: S.prep.id, points: S.pts }).then((r) => {
+    if (id !== S.req) return;  // 그 사이 점이 또 바뀌었으면 버린다
+    if (S.pts.mode === "regions" && !S.pts.userPivots) S.pts.pivots = r.pivots || [];
+    const im = new Image();
+    im.onload = () => { S.overlay = im; drawEditor(); };
+    im.src = r.overlay;
+  }).catch((e) => { if (id === S.req) $("points-err").textContent = e.message; });
+}
+
+// ---------- 4. 점 고치기 ----------
+const cv = $("editor"), ctx = cv.getContext("2d");
+let scale = 1, drag = null;
+
+function handles() {
+  // 화면에 그릴 점 목록: [{label, color, get, set}]
+  const p = S.pts, out = [];
+  if (p.mode === "regions") {
+    (p.pivots || []).forEach((v, i) => out.push({ label: `뿌리${p.pivots.length > 1 ? i + 1 : ""}`, color: COLOR.wings, xy: v,
+      set: (nv) => { p.pivots[i] = nv; p.userPivots = true; } }));
+    return out;
+  }
+  const one = (key, label) => p[key] && out.push({ label, color: COLOR[key], xy: p[key], set: (v) => p[key] = v });
+  one("head", "머리");
+  one("tail", "꼬리");
+  (p.feet || []).forEach((f, i) => out.push({ label: `발${i + 1}`, color: COLOR.feet, xy: f, set: (v) => p.feet[i] = v }));
+  (p.wings || []).forEach((wg, i) => ["뿌리 위", "뿌리 아래", "끝"].forEach((nm, j) =>
+    out.push({ label: `날개${i + 1} ${nm}`, color: j === 2 ? COLOR.tip : COLOR.wings, xy: wg[j], set: (v) => p.wings[i][j] = v })));
+  return out;
+}
+
+function drawEditor() {
+  const w = S.prep.w, h = S.prep.h;
+  scale = Math.min(1.4, Math.max(0.6, Math.min(560, window.innerWidth - 60) / w));
+  cv.width = w * scale; cv.height = h * scale;
+  ctx.clearRect(0, 0, cv.width, cv.height);
+  ctx.globalAlpha = 0.85;
+  ctx.drawImage(S.img, 0, 0, cv.width, cv.height);
+  ctx.globalAlpha = 1;
+  if (S.overlay && S.kind === "wings") ctx.drawImage(S.overlay, 0, 0, cv.width, cv.height);
+  for (const [a, b, t] of S.pts.wings || []) {
+    // 경첩(뿌리 위 ~ 뿌리 아래, 점선)과 날개 방향(경첩 가운데 → 날개 끝, 가는 선)
+    ctx.beginPath(); ctx.moveTo(a[0] * scale, a[1] * scale); ctx.lineTo(b[0] * scale, b[1] * scale);
+    ctx.lineWidth = 3; ctx.setLineDash([6, 4]); ctx.strokeStyle = COLOR.wings; ctx.stroke(); ctx.setLineDash([]);
+    ctx.beginPath(); ctx.moveTo((a[0] + b[0]) / 2 * scale, (a[1] + b[1]) / 2 * scale); ctx.lineTo(t[0] * scale, t[1] * scale);
+    ctx.lineWidth = 1.5; ctx.strokeStyle = COLOR.tip; ctx.stroke();
+  }
+  if (S.paint && S.paint.length > 1) {
+    ctx.beginPath(); ctx.moveTo(S.paint[0][0] * scale, S.paint[0][1] * scale);
+    for (const [x, y] of S.paint) ctx.lineTo(x * scale, y * scale);
+    ctx.lineWidth = 5; ctx.lineCap = "round"; ctx.strokeStyle = "rgba(232,116,59,.7)"; ctx.stroke();
+  }
+  for (const hd of handles()) {
+    const [x, y] = hd.xy.map((v) => v * scale);
+    ctx.beginPath(); ctx.arc(x, y, 9, 0, Math.PI * 2);
+    ctx.fillStyle = hd.color; ctx.fill();
+    ctx.lineWidth = 2; ctx.strokeStyle = "#fff"; ctx.stroke();
+    ctx.font = "bold 12px sans-serif"; ctx.lineWidth = 3; ctx.strokeStyle = "#fff";
+    ctx.strokeText(hd.label, x + 11, y - 8); ctx.fillStyle = hd.color; ctx.fillText(hd.label, x + 11, y - 8);
+  }
+  if (S.pts.mode === "regions") {
+    $("legend").innerHTML = `<span><i style="background:#fbb07a"></i>고른 칸 (누르기 · 문지르기)</span><span><i style="background:#e0453a"></i>움직이는 곳</span><span><i style="background:${COLOR.wings}"></i>뿌리 (끌어서 옮기기)</span>`;
+    return;
+  }
+  const names = { head: "머리", tail: "꼬리", feet: "발 끝", wings: "날개 뿌리 위 · 아래 (몸에 붙은 곳)", tip: "날개 끝" };
+  $("legend").innerHTML = Object.keys(names).filter((k) => S.pts[k] !== undefined || (k === "tip" && S.pts.wings))
+    .map((k) => `<span><i style="background:${COLOR[k]}"></i>${names[k]}</span>`).join("");
+}
+
+function pos(e) {
+  const r = cv.getBoundingClientRect();
+  return [(e.clientX - r.left) * (cv.width / r.width) / scale, (e.clientY - r.top) * (cv.height / r.height) / scale];
+}
+cv.onpointerdown = (e) => {
+  const [x, y] = pos(e);
+  let best = null, bd = 18 / scale;
+  for (const hd of handles()) {
+    const d = Math.hypot(hd.xy[0] - x, hd.xy[1] - y);
+    if (d < bd) { bd = d; best = hd; }
+  }
+  if (best) { drag = best; cv.setPointerCapture(e.pointerId); return; }
+  if (S.pts.mode === "regions") { S.paint = [[x, y]]; cv.setPointerCapture(e.pointerId); }
+};
+cv.onpointermove = (e) => {
+  if (S.paint) { S.paint.push(pos(e)); drawEditor(); return; }
+  if (!drag) return;
+  const [x, y] = pos(e);
+  const v = [Math.max(0, Math.min(S.prep.w - 1, x)), Math.max(0, Math.min(S.prep.h - 1, y))];
+  drag.set(v); drag.xy = v;
+  drawEditor();
+  if (Date.now() - S.lastReq > 180) refreshOverlay();  // 끄는 동안에도 가끔
+};
+cv.onpointerup = async () => {
+  if (drag) refreshOverlay();
+  drag = null;
+  if (!S.paint) return;
+  const path = S.paint;
+  S.paint = null;
+  const len = path.slice(1).reduce((a, q, i) => a + Math.hypot(q[0] - path[i][0], q[1] - path[i][1]), 0);
+  try {
+    const r = await api("/api/region", len < 4 ? { id: S.prep.id, x: path[0][0], y: path[0][1] } : { id: S.prep.id, points: path });
+    const ids = r.regions || (r.region ? [r.region] : []);
+    if (!ids.length) { drawEditor(); return; }
+    const sel = new Set(S.pts.regions);
+    // 시작한 칸으로 정한다: 고른 칸에서 시작하면 지우기, 아니면 칠하기 (이어 칠하다 이미 칠한 곳을 지나도 안 지워지게)
+    const first = r.first !== undefined ? r.first : ids[0];
+    if (first && sel.has(first)) ids.forEach((i) => sel.delete(i)); else ids.forEach((i) => sel.add(i));
+    S.pts.regions = [...sel];
+    S.pts.pivots = []; S.pts.userPivots = false;  // 날개가 바뀌면 뿌리는 다시 자동
+    $("points-err").textContent = "";
+  } catch (e) { $("points-err").textContent = e.message; }
+  drawTools();
+  drawEditor();
+  refreshOverlay();
+};
+
+function drawTools() {
+  const t = $("point-tools"), p = S.pts;
+  t.innerHTML = "";
+  const btn = (label, fn, dis) => {
+    const b = document.createElement("button");
+    b.className = "btn"; b.textContent = label; b.disabled = !!dis;
+    b.onclick = () => { fn(); drawTools(); drawEditor(); refreshOverlay(); };
+    t.appendChild(b);
+  };
+  if (S.kind === "quadruped") {
+    btn("발 더하기", () => p.feet.push([S.prep.w / 2, S.prep.h * 0.9]), p.feet.length >= 6);
+    btn("발 빼기", () => p.feet.pop(), p.feet.length <= 2);
+    btn(p.tail ? "꼬리 없음" : "꼬리 있음", () => {
+      p.tail = p.tail ? null : [p.head[0] < S.prep.w / 2 ? S.prep.w * 0.9 : S.prep.w * 0.1, S.prep.h * 0.4];
+    });
+  }
+  if (S.kind === "wings") {
+    btn(p.mode === "regions" ? "방식: 칸 고르기 ↔ 점 3개" : "방식: 점 3개 ↔ 칸 고르기", () => {
+      const style = S.pts.style;
+      S.pts = p.mode === "regions" ? S.wingSets.points : S.wingSets.regions;
+      S.pts.style = style;
+      S.overlay = null;
+      setHint();
+    });
+    btn(p.style === "fold" ? "날개짓: 접었다 폈다 (위에서 본 나비) ↔" : "날개짓: 위아래 (앞모습 새) ↔",
+        () => p.style = p.style === "fold" ? "updown" : "fold");
+    if (p.mode === "regions") {
+      btn("고른 칸 모두 빼기", () => { p.regions = []; p.pivots = []; p.userPivots = false; }, !p.regions.length);
+      if (p.userPivots) btn("뿌리 자동으로", () => { p.pivots = []; p.userPivots = false; });
+      return;
+    }
+    btn(p.wings.length === 2 ? "날개 하나만 (옆모습)" : "날개 둘", () => {
+      if (p.wings.length === 2) p.wings.pop();
+      else p.wings.push(p.wings[0].map(([x, y]) => [S.prep.w - x, y]));  // 반대쪽에 거울처럼
+    });
+  }
+}
+$("reset-points").onclick = () => {
+  if (S.kind === "wings" && S.pts.mode === "regions") Object.assign(S.pts, { regions: [], pivots: [], userPivots: false });
+  else if (S.kind === "wings") { S.wingSets.points = structuredClone(S.prep.points.wings); S.pts = S.wingSets.points; }
+  else S.pts = structuredClone(S.prep.points[S.kind]);
+  drawTools(); drawEditor(); refreshOverlay();
+};
+
+function setHint() {
+  $("kind-hint").textContent = S.kind !== "wings" ? ""
+    : S.pts.mode === "regions"
+      ? "움직일 날개 칸을 누르거나 쓱 문지르세요 (고른 칸을 다시 누르면 빠져요). 날개 안 줄무늬까지 한 번에 문지르면 편해요. 초록 점(뿌리)은 날개가 몸에 붙은 곳이에요 — 틀렸으면 끌어서 옮기세요. 선이 끊긴 그림이라 칸이 몸까지 번지면 「점 3개」 방식을 쓰세요."
+      : "뿌리 두 점은 날개가 몸에서 빠져나오는 곳(몸 윤곽선 쪽)에, 끝 점은 날개 끝에 놓으세요. 빨갛게 칠해진 곳이 움직입니다 — 몸통까지 빨갛다면 뿌리 점을 날개 쪽으로 옮기세요.";
+}
+$("go-animate").onclick = () => animate();
+$("back-points").onclick = () => S.kind === "blob" ? go("s-kind") : (go("s-points"), drawEditor());
+
+// ---------- 5. 보기 (Pixi MeshSimple) ----------
+function f32(b64) { return new Float32Array(Uint8Array.from(atob(b64), (c) => c.charCodeAt(0)).buffer); }
+function u32(b64) { return new Uint32Array(Uint8Array.from(atob(b64), (c) => c.charCodeAt(0)).buffer); }
+
+function stopPlay() {
+  if (S.app) { S.app.destroy(true, { children: true, texture: true }); S.app = null; }
+  $("pixi-host").innerHTML = "";
+}
+
+async function animate() {
+  const errBox = S.kind === "blob" ? $("pick-err") : $("points-err");
+  errBox.textContent = "움직임을 만드는 중…";
+  let a;
+  try {
+    a = await api("/api/animate", { id: S.prep.id, kind: S.kind, points: S.pts });
+  } catch (e) { errBox.textContent = "실패: " + e.message; return; }
+  errBox.textContent = "";
+  go("s-play");
+  $("play-title").textContent = `${KIND[S.kind].ico} ${KIND[S.kind].name}`;
+  $("play-meta").textContent = `메시 ${a.mesh === "cdt" ? "CDT(외곽선 고정)" : "격자"} · 꼭짓점 ${a.n_vertices} · 삼각형 ${a.n_triangles} · 서버 ${a.sec}초 · ${a.frames}프레임 × ${a.frame_ms}ms`;
+  try { await play(a); } catch (e) { $("play-err").textContent = "재생 실패 (WebGL?): " + e.message; }
+}
+
+async function play(a) {
+  stopPlay();
+  const W = a.w + 2 * a.pad, H = a.h + 2 * a.pad;
+  const k = Math.min(1.5, Math.min(560, window.innerWidth - 60) / W);
+  const app = new PIXI.Application();
+  await app.init({ width: W * k, height: H * k, background: "#ffffff", antialias: true });
+  S.app = app;
+  $("pixi-host").appendChild(app.canvas);
+  const img = new Image(); img.src = a.texture; await img.decode();
+  const texture = PIXI.Texture.from(img);
+  const n = a.n_vertices, frames = f32(a.positions);
+  const mesh = new PIXI.MeshSimple({ texture, vertices: frames.slice(0, 2 * n), uvs: f32(a.uvs), indices: u32(a.indices) });
+  const root = new PIXI.Container();
+  root.scale.set(k);
+  root.position.set(a.pad * k, a.pad * k);
+  root.addChild(mesh);
+  const pins = new PIXI.Graphics();
+  root.addChild(pins);
+  app.stage.addChild(root);
+  let t = 0, last = -1;
+  app.ticker.add((tk) => {
+    t += tk.deltaMS;
+    const f = Math.floor(t / a.frame_ms) % a.frames;
+    if (f === last) return;
+    last = f;
+    mesh.vertices.set(frames.subarray(f * 2 * n, (f + 1) * 2 * n));
+    mesh.geometry.getBuffer("aPosition").update();
+    pins.clear();
+    if ($("show-pins").checked) {
+      for (const [x, y] of a.pins[f]) pins.circle(x, y, 3);
+      pins.fill({ color: 0x2f9e62 });
+    }
+  });
+}
+</script>
+</body>
+</html>

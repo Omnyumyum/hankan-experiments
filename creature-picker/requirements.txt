@@ -1,0 +1,7 @@
+numpy
+opencv-python
+scikit-image
+scipy
+imageio
+skan          # BSD-3 (numba · pandas 를 같이 받는다)
+pythoncdt     # MPL-2.0
