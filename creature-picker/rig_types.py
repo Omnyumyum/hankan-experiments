@@ -125,7 +125,7 @@ def propose(d):
     pts, why = {}, {}
 
     # 네 발: 이미 있는 다리 찾기(quadruped.build_rig)를 먼저, 안 되면 바닥에 고르게
-    quad_ok = False
+    quad_ok, n_feet, y_belly = False, 0, None
     try:
         pins0, rig = q.build_rig(d.mask_q, d.ink)
         feet = [pins0[l["i"] + 2] for l in rig["legs"]]
@@ -142,7 +142,8 @@ def propose(d):
         head_tip = (hx, hy) if cand.max() > 0 else pins0[rig["head"] + 2]
         pts["quadruped"] = {"head": r1(head_tip), "tail": r1(pins0[rig["tail"] + 2]) if rig["tail"] is not None else None,
                             "feet": [r1(f) for f in feet]}
-        quad_ok = len(feet) >= 3
+        n_feet, y_belly = len(feet), rig["y_belly"]
+        quad_ok = n_feet >= 3
         why["quadruped"] = f"다리 {len(feet)}개 찾음"
     except Exception as e:
         bw = x1 - x0
@@ -225,18 +226,108 @@ def propose(d):
     pts["blob"] = {}
 
     # AI 추측 (카드에 「AI 추측」 표시만 한다. 고르는 건 사람)
-    if quad_ok:
+    feat = {"quad_ok": quad_ok, "n_feet": n_feet, "y_belly": y_belly, "feet": pts["quadruped"]["feet"], "axis": axis is not None,
+            "tips": tips, "long_tips": long_tips, "left": left, "right": right, "centre": centre,
+            "bbox": (x0, y0, x1, y1), "size": size}
+    d._guess_feat = feat
+    return {"guess": guess_kind(d, feat), "points": pts, "why": why}
+
+
+GUESS_MODEL = Path(__file__).resolve().parent / "guess_model.json"
+GUESS_MIN_P = 0.8  # 이보다 자신 없으면 「모르겠음」: 틀리게 확신하는 것이 모르겠음보다 나쁘다
+_guess_model = None
+
+
+def guess_features(d, f):
+    """종류 추측에 쓰는 숫자 24개 (그림 크기와 상관없게 긴 변 · 몸 넓이로 나눈 값). eval_real/train_guess.py 가 이것으로 배운다."""
+    m = d.mask
+    x0, y0, x1, y1 = f["bbox"]
+    size = f["size"]
+    sub = m[y0:y1 + 1, x0:x1 + 1] > 0
+    area = sub.sum()
+    cnts, _ = cv2.findContours(m, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
+    c = max(cnts, key=cv2.contourArea)
+    e = {"fill": area / sub.size,  # 테두리 상자 중 그림이 차지한 비율
+         "solidity": area / max(1, cv2.contourArea(cv2.convexHull(c))),  # 볼록 껍질 중 그림 비율 (구름 ↑, 별 · 다리 ↓)
+         "aspect": (x1 - x0 + 1) / (y1 - y0 + 1),
+         "sym_lr": (sub & sub[:, ::-1]).sum() / max(1, (sub | sub[:, ::-1]).sum()),  # 좌우 대칭 (나비 · 얼굴 ↑)
+         "sym_ud": (sub & sub[::-1]).sum() / max(1, (sub | sub[::-1]).sum()),
+         "n_long": len(f["long_tips"]), "n_tips": len(f["tips"]), "n_regions": int(region_labels(d)[0].max()),
+         "n_comp": len(cnts), "inkd": ((d.ink > 0) & (m > 0)).sum() / max(1, area)}  # 몸 안 선 밀도 (수염 · 줄무늬 ↑)
+    cx, cy = f["centre"]
+    lt = f["long_tips"]
+    ang = sorted(float(np.arctan2(t["tip"][1] - cy, t["tip"][0] - cx)) for t in lt)
+    # 튀어나온 곳 사이 가장 큰 빈 각: 별처럼 사방으로 고르게 뻗으면 작다
+    e["maxgap"] = float(np.diff(ang + [ang[0] + 2 * np.pi]).max()) if len(ang) >= 2 else 2 * np.pi
+    L = [t["len"] / size for t in lt]
+    e["l0"] = L[0] if L else 0
+    e["l1"] = L[1] if len(L) > 1 else 0
+    e["lcv"] = float(np.std(L) / np.mean(L)) if len(L) >= 2 else 1  # 갈래 길이가 고른지 (별 ↓)
+    up = side = down = 0
+    for t in lt:
+        a = math.degrees(math.atan2(-(t["tip"][1] - t["base"][1]), abs(t["tip"][0] - t["base"][0])))
+        up, side, down = up + (a > 45), side + (-45 <= a <= 45), down + (a < -45)
+    e.update(up=up, side=side, down=down, n_feet=f["n_feet"], axis=int(f["axis"]))
+    if f["n_feet"]:
+        fx = np.array([p[0] for p in f["feet"]])
+        fy = np.array([p[1] for p in f["feet"]])
+        e["feet_spread"] = (fx.max() - fx.min()) / (x1 - x0 + 1)
+        e["feet_low"] = float(np.mean(fy > y0 + 0.75 * (y1 - y0)))
+        e["belly"] = (f["y_belly"] - y0) / (y1 - y0 + 1)
+    else:
+        e["feet_spread"] = e["feet_low"] = 0
+        e["belly"] = 1
+    try:  # 볼록 껍질에서 깊이 패인 곳 수 (별 꼭짓점 사이 골)
+        dfc = cv2.convexityDefects(c, cv2.convexHull(c, returnPoints=False))
+        e["n_defect"] = int((dfc.reshape(-1, 4)[:, 3] / 256 > 0.08 * size).sum()) if dfc is not None else 0
+    except cv2.error:
+        e["n_defect"] = 0
+    e["dtmax"] = float(cv2.distanceTransform(m, cv2.DIST_L2, 5).max() / size)  # 가장 굵은 곳
+    return {k: float(v) for k, v in e.items()}
+
+
+def guess_proba(x):
+    """작은 결정 나무 묶음(gradient boosting) → 종류마다 확률. 나무는 guess_model.json (eval_real/train_guess.py 가 QuickDraw 학습용 그림으로 만듦)."""
+    global _guess_model
+    if _guess_model is None:
+        import json
+        _guess_model = json.loads(GUESS_MODEL.read_text(encoding="utf-8"))
+    M = _guess_model
+    v = np.array([x[k] for k in M["features"]], np.float32).astype(np.float64)  # scikit-learn 처럼 float32 로 비교
+    raw = np.array(M["init"], np.float64)
+    for stage in M["trees"]:
+        for k, (feat, thr, left, right, value) in enumerate(stage):
+            i = 0
+            while left[i] >= 0:
+                i = left[i] if v[feat[i]] <= thr[i] else right[i]
+            raw[k] += M["lr"] * value[i]
+    p = np.exp(raw - raw.max())
+    return dict(zip(M["classes"], p / p.sum()))
+
+
+def guess_kind(d, f):
+    if not GUESS_MODEL.exists():
+        return guess_rules(f)
+    d._guess_x = guess_features(d, f)
+    p = guess_proba(d._guess_x)
+    k = max(p, key=p.get)
+    return k if p[k] >= GUESS_MIN_P else None
+
+
+def guess_rules(f):
+    """예전 추측 (2026-10 까지). 비교용으로 남긴다."""
+    if f["quad_ok"]:
         guess = "quadruped"
-    elif axis is not None:
+    elif f["axis"]:
         guess = "long"
-    elif not long_tips:
+    elif not f["long_tips"]:
         guess = "blob"
-    elif (left and right and long_tips[0] in (left[0], right[0])
-          and abs(left[0]["len"] - right[0]["len"]) < 0.35 * max(left[0]["len"], right[0]["len"])):
+    elif (f["left"] and f["right"] and f["long_tips"][0] in (f["left"][0], f["right"][0])
+          and abs(f["left"][0]["len"] - f["right"][0]["len"]) < 0.35 * max(f["left"][0]["len"], f["right"][0]["len"])):
         guess = "wings"  # 가장 긴 두 갈래가 양옆으로 비슷하게 뻗었을 때만
     else:
         guess = None
-    return {"guess": guess, "points": pts, "why": why}
+    return guess
 
 
 # ---------- 사용자가 고친 점 → 기준점 · 동작 ----------
