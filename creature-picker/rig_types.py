@@ -16,6 +16,9 @@ from pathlib import Path
 import cv2
 import numpy as np
 from skimage.graph import MCP_Geometric
+from scipy.sparse import coo_matrix
+from scipy.sparse.csgraph import dijkstra
+from skimage.morphology import skeletonize
 
 AM = Path(__file__).resolve().parent.parent / "animal-monster"
 sys.path.insert(0, str(AM))
@@ -49,6 +52,9 @@ class Drawing:
         self.skel = Skel(self.mask)
 
     def masks(self, kind):
+        if kind == "long":
+            m = long_body_mask(self)
+            return m, np.where(m > 0, self.alpha, 0).astype(np.uint8)
         return (self.mask_q, self.alpha_q) if kind == "quadruped" else (self.mask, self.alpha)
 
 
@@ -167,6 +173,21 @@ def propose(d):
             head, tail = nearest_px(mask, x0, (y0 + y1) / 2), nearest_px(mask, x1, (y0 + y1) / 2)
         pts["long"] = {"head": r1(head), "tail": r1(tail)}
         why["long"] = "가장 먼 두 끝에 놓음"
+    lmask = long_body_mask(d)
+    if lmask is not mask:
+        # 똬리 · 닿은 몸: 위에서 찾은 두 끝을 감긴 곳을 떼어 낸 마스크의 가장 큰 덩어리 뼈대 끝 중 가장 가까운 곳으로 옮긴다
+        # (원래 점이 떼어 낸 빈 곳 · 다른 조각에 있으면 머리 → 꼬리 길이 끊긴다)
+        nl, ll, sl, _ = cv2.connectedComponentsWithStats(lmask, connectivity=8)
+        big = np.where(ll == 1 + np.argmax(sl[1:, cv2.CC_STAT_AREA]), 255, 0).astype(np.uint8)
+        ends = [np.array(t["tip"], np.float32) for t in Skel(big).tips()]
+        if len(ends) < 2:
+            ends += [np.array(p, np.float32) for p in d._long_far]
+        if len(ends) >= 2:
+            h0, t0 = np.array(pts["long"]["head"], np.float32), np.array(pts["long"]["tail"], np.float32)
+            hi = int(np.argmin([np.linalg.norm(e - h0) for e in ends]))
+            ti = int(np.argmin([np.linalg.norm(e - t0) if i != hi else np.inf for i, e in enumerate(ends)]))
+            pts["long"] = {"head": r1(ends[hi]), "tail": r1(ends[ti])}
+            why["long"] += f" → 감긴 몸 끝으로 옮김 ({d._long_how})"
 
     # 날개: 몸 가운데를 사이에 두고 양쪽에서 가장 긴, 아래로 뻗지 않은 튀어나온 곳 (아래로 뻗은 것은 다리). 없으면 좌우 끝
     def sideways(t):
@@ -459,6 +480,206 @@ def build_quadruped(mask, pts):
     return pins0, lambda t, H: q.pose(pins0, rig, t, H)
 
 
+def long_body_mask(d):
+    """긴 몸 전용 마스크. 똬리 · 몸이 스스로 닿은 그림은 바깥에서 채운 마스크(d.mask)가 원판 하나가 되어
+    뼈대가 감긴 몸을 가로질러 지름길로 잡히고, 감긴 몸끼리 한 덩어리로 움직였다. 그래서 두 가지 고친 마스크를 만든다.
+    - M1 「빈 곳 빼고 닿은 곳 가름」: 선으로 나뉜 빈 칸마다 「바깥에서 선을 몇 번 건너야 닿는지」를 센다.
+      홀수 번 = 몸 속, 짝수 번(2 이상) = 똬리 가운데처럼 몸에 둘러싸인 빈 곳 → 뺀다.
+      선 양쪽이 같은 몸 칸인 선(감긴 몸끼리 닿은 곳)은 가운데를 2px 가른다.
+    - M2 「바깥과 이어진 빈 곳도 뺌」: 한 줄로 그은 뱀이 촘촘히 감겨 틈 메우기로 원판이 된 것. 바깥과 이어진 종이색 빈 곳도 뺀다.
+    고친 마스크는 몸 길이(뼈대에서 가장 먼 두 점 사이 길)가 원래보다 1.3 배 넘게 길어질 때만 쓴다 — 지름길이 없어지면 감긴 몸을 따라가 길어진다.
+    일자 · S자 뱀은 빈 곳 · 닿은 곳이 없거나 길이가 안 늘어서 원래 마스크 그대로다."""
+    if getattr(d, "_long_mask", None) is not None:
+        return d._long_mask
+    M0 = d.mask
+    d._long_mask, d._long_how = M0, "그대로"
+    H, W = M0.shape
+    g = cv2.cvtColor(cv2.medianBlur(d.crop, 5), cv2.COLOR_BGR2GRAY)
+    ink = cv2.adaptiveThreshold(g, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY_INV, 41, 9)
+    ink = cv2.morphologyEx(ink, cv2.MORPH_CLOSE, np.ones((3, 3), np.uint8))
+    n_i, lab_i, st_i, _ = cv2.connectedComponentsWithStats(ink, connectivity=8)
+    ink = np.isin(lab_i, np.nonzero(st_i[:, cv2.CC_STAT_AREA] >= 30)[0][1:])
+    if not ink.any():
+        return M0
+    lw = line_width(ink)
+    n, lab, st, _ = cv2.connectedComponentsWithStats((~ink).astype(np.uint8), connectivity=4)
+    # 아주 작은 칸 · 겹쳐 그은 선 사이 가는 틈은 선으로 친다
+    dt_free = cv2.distanceTransform((~ink).astype(np.uint8), cv2.DIST_L2, 3)
+    thick = np.zeros(n)
+    np.maximum.at(thick, lab.ravel(), dt_free.ravel())
+    thin = (st[:, cv2.CC_STAT_AREA] < 15) | (thick < 2)
+    thin[0] = False
+    ink = ink | thin[lab]
+    lab[ink] = 0
+    edge = np.zeros(n, bool)
+    edge[np.unique(np.concatenate([lab[0], lab[-1], lab[:, 0], lab[:, -1]]))] = True
+    level = np.full(n, -1)
+    level[edge & ~thin] = 0
+    level[0] = -2  # 선
+    k = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (2 * lw + 5, 2 * lw + 5))
+    for step in range(1, 8):  # 선 하나를 건널 때마다 한 단계
+        cur = np.isin(lab, np.nonzero(level == step - 1)[0])
+        if not cur.any():
+            break
+        hit = np.unique(lab[cv2.dilate(cur.astype(np.uint8), k) > 0])
+        hit = hit[(level[hit] == -1)]
+        level[hit] = step
+    level[level == -1] = 1  # 못 닿은 칸은 몸으로
+    # 빼는 빈 곳: 짝수 단계(2 이상) 칸 중 종이 색이고 눈보다 큰 것. 색칠한 무늬 · 눈은 남긴다
+    lab_img = cv2.cvtColor(cv2.medianBlur(d.crop, 5), cv2.COLOR_BGR2LAB).astype(np.float32)
+    bg = (lab > 0) & (level[lab] == 0)
+    paper = np.median(lab_img[bg], axis=0) if bg.any() else np.array([255, 128, 128], np.float32)
+    hole = np.zeros(n, bool)
+    for r in np.nonzero((level >= 2) & (level % 2 == 0))[0]:
+        if st[r, cv2.CC_STAT_AREA] < max(80, (3 * lw) ** 2):
+            continue
+        c = lab_img[lab == r].mean(0)
+        hole[r] = abs(c[0] - paper[0]) < 40 and np.hypot(c[1] - paper[1], c[2] - paper[2]) < 15
+    M1 = M0.copy()
+    M1[hole[lab]] = 0
+    # 감긴 몸끼리 닿은 선: 선 둘레(r)에 몸 칸이 딱 하나만 있고 바깥 · 빈 곳은 없다 → 선 가운데를 가른다
+    body = (level % 2 == 1) & (level > 0)
+    r_k = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (2 * lw + 7, 2 * lw + 7))
+    not_body = ((lab > 0) & ~body[lab]) | (M1 == 0) & ~ink
+    near_nb = cv2.dilate(not_body.astype(np.uint8), r_k) > 0
+    cnt = np.zeros((H, W), np.int32)
+    for r in np.nonzero(body)[0]:
+        x, y, w, h = st[r, :4]
+        p = lw + 4
+        y0, y1, x0, x1 = max(0, y - p), min(H, y + h + p), max(0, x - p), min(W, x + w + p)
+        cnt[y0:y1, x0:x1] += cv2.dilate((lab[y0:y1, x0:x1] == r).astype(np.uint8), r_k) > 0
+    cand = ink & (M1 > 0) & ~near_nb & (cnt == 1)
+    cut = np.zeros((H, W), np.uint8)
+    if cand.any():
+        nc, lc, sc, _ = cv2.connectedComponentsWithStats(cand.astype(np.uint8), connectivity=8)
+        big_c = [c for c in range(1, nc) if max(sc[c, 2], sc[c, 3]) >= 2 * lw]
+        if big_c:
+            # 선 뼈대를 따라 끝을 (둘레 반경 + 2)px 더 늘린다: 둘레에 바깥이 보이는 곳에서 멈추면 그 끝에 몸이 이어진 다리가 남아 지름길이 된다
+            skel = skeletonize(ink & (M1 > 0)).astype(np.uint8)
+            own = skeletonize(np.isin(lc, big_c)).astype(np.uint8)
+            cut = own.copy()
+            for _ in range(lw + 6):
+                cut = cv2.dilate(cut, np.ones((3, 3), np.uint8)) & (skel | own)
+            cut = skeletonize(cut > 0).astype(np.uint8)  # 끝 찾기용으로 다시 한 줄로
+            # 감긴 몸 사이 선을 바깥 윤곽까지 다 긋지 않고 멈춘 그림: 선 끝을 그 방향으로 늘려 바깥 · 빈 곳에 닿으면 거기까지 가른다
+            nbr = cv2.filter2D(cut, -1, np.ones((3, 3), np.float32), borderType=cv2.BORDER_CONSTANT)
+            cy, cx = np.nonzero((cut > 0) & (nbr == 2))
+            cyx = np.argwhere(cut > 0)
+            for y, x in zip(cy, cx):
+                dd = np.hypot(cyx[:, 0] - y, cyx[:, 1] - x)
+                back = cyx[(dd >= 5) & (dd <= 10)]
+                if len(back) == 0:
+                    continue
+                u = np.array([x, y], np.float32) - back.mean(0)[::-1]
+                u /= np.linalg.norm(u) + 1e-6
+                was_ink, runs = True, 0  # 몸 속 빈 곳 → (윤곽선 하나) → 바깥 · 빈 곳 순서만 받는다. 다른 감긴 몸을 건너면 안 된다
+                for s in range(2, 2 * lw + 6):
+                    px, py = int(round(x + u[0] * s)), int(round(y + u[1] * s))
+                    if not (0 <= px < W and 0 <= py < H) or (s > 3 and cut[py, px]):
+                        break
+                    if M1[py, px] == 0 or not_body[py, px]:
+                        cv2.line(cut, (int(x), int(y)), (px, py), 1, 1)
+                        break
+                    if ink[py, px] and not was_ink:
+                        runs += 1
+                        if runs > 1:
+                            break
+                    elif not ink[py, px] and was_ink and runs == 1:
+                        break  # 선 하나를 건넜는데 또 몸 속이면 다른 감긴 몸이다
+                    was_ink = bool(ink[py, px])
+        cut = cv2.dilate(cut, np.ones((2, 2), np.uint8))
+    M1[cut > 0] = 0
+    if cut.any():
+        # 가른 자리 둘레의 1~2px 실 다리 · 선 부스러기는 뗀다: 떨어진 몸이 따로 움직일 때 이 다리 삼각형이 수십 배 늘어났다
+        near_cut = cv2.dilate(cut, np.ones((9, 9), np.uint8)) > 0
+        opened = cv2.morphologyEx(M1, cv2.MORPH_OPEN, np.ones((3, 3), np.uint8))
+        M1[near_cut] = opened[near_cut]
+    # M2 한 줄 뱀: 바깥과 이어진 빈 곳(틈 메우기로 채워진 곳)도 뺀다
+    M2 = M1.copy()
+    # 색칠한 곳 · 떨어져 그린 조각을 잇는 다리(d.mask 에만 있고 d.alpha 에는 없음)는 남긴다
+    M2[bg & (d.alpha > 0) & (np.abs(lab_img[..., 0] - paper[0]) < 40) & (np.hypot(lab_img[..., 1] - paper[1], lab_img[..., 2] - paper[2]) < 15)] = 0
+    def body_len(M):
+        """뼈대에서 가장 먼 두 점 사이 길 (두 번 훑기). 고리(머리를 동그라미로 그린 것)가 있어도 길을 찾는다.
+        굵기로 나눈 값(find_body_axis 의 elong)은 선만 남기면 저절로 커져서 쓰지 않는다."""
+        yx = np.argwhere(skeletonize(M > 0))
+        if len(yx) < 10:
+            return 0.0, None
+        idx = -np.ones(M.shape, np.int64)
+        idx[yx[:, 0], yx[:, 1]] = np.arange(len(yx))
+        rows, cols, wts = [], [], []
+        for dy, dx in ((0, 1), (1, 0), (1, 1), (1, -1)):
+            y2, x2 = yx[:, 0] + dy, yx[:, 1] + dx
+            ok = (y2 < M.shape[0]) & (x2 >= 0) & (x2 < M.shape[1])
+            j = np.full(len(yx), -1)
+            j[ok] = idx[y2[ok], x2[ok]]
+            m = j >= 0
+            rows.append(np.nonzero(m)[0]), cols.append(j[m]), wts.append(np.full(m.sum(), math.hypot(dy, dx)))
+        G = coo_matrix((np.concatenate(wts), (np.concatenate(rows), np.concatenate(cols))), shape=(len(yx), len(yx))).tocsr()
+        d0 = dijkstra(G, directed=False, indices=0)
+        a = int(np.argmax(np.where(np.isfinite(d0), d0, -1)))
+        d1, pred = dijkstra(G, directed=False, indices=a, return_predecessors=True)
+        b = int(np.argmax(np.where(np.isfinite(d1), d1, -1)))
+        path = [b]
+        while pred[path[-1]] >= 0:
+            path.append(int(pred[path[-1]]))
+        return float(d1[b]), yx[path][:, ::-1].astype(np.float32)
+
+    def coiled_one_line(path, near):
+        """길 위 점마다 길을 따라 멀리 떨어졌는데 가까이 붙은 짝 점을 찾아, 두 곳의 진행 방향이 같은지(+) 반대인지(-) 본다.
+        한 줄로 감은 똬리는 옆 바퀴가 같은 방향으로 돈다. 끝이 열린 윤곽선 뱀(양쪽 선이 머리에서 만남)은 선만 남기면 한 줄처럼 보이지만
+        옆 선이 반대 방향이다 → M2 를 쓰면 안 된다."""
+        seg = np.linalg.norm(np.diff(path, axis=0), axis=1)
+        s = np.concatenate([[0], np.cumsum(seg)])
+        at = np.arange(0, s[-1], 3.0)
+        p = np.stack([np.interp(at, s, path[:, 0]), np.interp(at, s, path[:, 1])], 1)
+        t = np.gradient(p, axis=0)
+        t /= np.linalg.norm(t, axis=1, keepdims=True) + 1e-6
+        dd = np.linalg.norm(p[:, None] - p[None], axis=2)
+        dd[np.abs(at[:, None] - at[None]) < 2.5 * dd + 10] = np.inf  # 길을 따라서는 멀고 (2.5 배 넘게) 실제로는 가까운 짝만
+        j = np.argmin(dd, axis=1)
+        has = dd[np.arange(len(p)), j] < near
+        # 감긴 것: 한 방향으로 한 바퀴 넘게 돈다 (윤곽선 뱀의 U 자 · S 자 굽이는 돈 각이 서로 지워진다)
+        k = 5
+        ts = np.stack([np.convolve(t[:, i], np.ones(2 * k + 1), "same") for i in (0, 1)], 1)
+        ang = np.unwrap(np.arctan2(ts[k:-k, 1], ts[k:-k, 0]))
+        if len(ang) < 2 or abs(ang[-1] - ang[0]) < 1.5 * math.pi:
+            return False
+        if has.sum() < 0.1 * len(p):
+            return True  # 붙은 곳이 거의 없으면 그냥 긴 선
+        return float(np.median((t * t[j]).sum(1)[has])) > 0
+
+    # 빈 곳 · 가른 곳이 있으면 M1 을, 원래 마스크가 긴 관(find_body_axis)이 아니면 M2 도 본다. M1 이 되면 M1 을 쓴다
+    tries = [("빈 곳 빼고 닿은 곳 가름", M1)] if hole.any() or cut.any() else []
+    if sr.find_body_axis(M0, d.ink)[0] is None:
+        tries.append(("바깥과 이어진 빈 곳도 뺌", M2))
+    tries = [(how, M) for how, M in tries if (M != M0).sum() >= 20]
+    if not tries:
+        return M0
+    # 「바깥과 이어진 빈 곳도 뺌」이 선만 남기는지 (몸 속이 선으로 닫힌 칸이면 윤곽선 똬리라 한 줄 똬리 검사가 필요 없다)
+    lines_only = (body[lab] & (M2 > 0)).sum() < 0.2 * max(1, (M2 > 0).sum())
+    near = 0.3 * max(H, W)  # 옆 선 짝을 찾는 거리: 윤곽선 뱀 양쪽 선 사이(몸 굵기) · 똬리 바퀴 사이보다 넉넉히
+    best_len = 1.3 * body_len(M0)[0]
+    for how, M in tries:
+        nm, lm, sm, _ = cv2.connectedComponentsWithStats(M, connectivity=8)
+        if nm < 2:
+            continue
+        big = 1 + np.argmax(sm[1:, cv2.CC_STAT_AREA])
+        if sm[big, cv2.CC_STAT_AREA] < 0.8 * sm[1:, cv2.CC_STAT_AREA].sum():
+            continue  # 몸이 큰 조각 여럿으로 갈라지면 쓰지 않는다
+        Mb = np.where(lm == big, 255, 0).astype(np.uint8)  # 몸 길이는 가장 큰 덩어리로, 마스크에는 떨어져 그린 조각(머리 등)도 남긴다
+        if M is M2 and d._long_mask is not M0:
+            continue  # M1 이 되면 그것을 쓴다 (바깥과 이어진 곳까지 빼면 몸 속 · 굵기를 잃을 수 있다)
+        L, dia = body_len(Mb)
+        if L < best_len or (M is M2 and lines_only and not coiled_one_line(dia, near)):
+            continue
+        if sr.find_body_axis(Mb, d.ink)[1].get("cover", 0) < 0.75:
+            continue
+        keep = [k for k in range(1, nm) if sm[k, cv2.CC_STAT_AREA] >= 30]
+        d._long_mask, d._long_how, best_len = np.where(np.isin(lm, keep), 255, 0).astype(np.uint8), how, L
+        d._long_far = [dia[0], dia[-1]]  # 뼈대에서 가장 먼 두 점 (고리가 있어 뼈대 끝이 모자랄 때 점 놓기에 쓴다)
+    return d._long_mask
+
+
 def build_long(mask, pts):
     path = ridge(mask, pts["tail"], pts["head"])  # 꼬리 → 머리
     if len(path) < 12:
@@ -469,6 +690,20 @@ def build_long(mask, pts):
     pad = np.pad(path, ((k, k), (0, 0)), mode="edge")
     path = np.stack([np.convolve(pad[:, i], np.ones(2 * k + 1) / (2 * k + 1), "valid") for i in (0, 1)], 1)
     pins0, _ = sr.make_body_pins(path[:, ::-1])  # make_body_pins 는 (y, x)
+    if pts.get("dense"):
+        # 똬리: 기준점이 최대 14개라 감긴 몸에서는 점 사이 곧은 마디가 바퀴를 가로지른다 → 마디가 몸을 벗어나지 않을 만큼 촘촘히
+        seg = np.linalg.norm(np.diff(path, axis=0), axis=1)
+        s = np.concatenate([[0], np.cumsum(seg)])
+        for n in range(len(pins0), 61, 4):
+            at_ = np.linspace(0, s[-1], n)
+            p = np.stack([np.interp(at_, s, path[:, 0]), np.interp(at_, s, path[:, 1])], 1).astype(np.float32)
+            a, b = p[:-1], p[1:]
+            ab = b - a
+            tt = np.clip(((path[:, None] - a[None]) * ab[None]).sum(2) / ((ab ** 2).sum(1)[None] + 1e-6), 0, 1)
+            dev = np.linalg.norm(path[:, None] - (a[None] + tt[..., None] * ab[None]), axis=2).min(1).max()
+            pins0 = p
+            if dev <= max(3.0, 0.7 * med):
+                break
     return pins0, lambda t, H: sr.pose_body(pins0, t)
 
 
@@ -1136,7 +1371,7 @@ def animate(d, kind, pts):
     if kind not in BUILD:
         raise ValueError(f"모르는 종류: {kind}")
     mask, alpha = d.masks(kind)
-    v0, tris, comps, mesh_kind = build_mesh(mask)
+    v0, tris, comps, mesh_kind = build_mesh(mask, holes=kind == "long" and mask is not d.mask)  # 긴 몸 똬리: 빈 곳 · 가른 곳을 지킨다
     H, W = mask.shape
     frames, pin_frames = [], []
     used = None
@@ -1145,6 +1380,8 @@ def animate(d, kind, pts):
     else:
         if kind == "quadruped" and pts.get("snap", True):
             pts = snap_to_tips(d, pts)
+        if kind == "long" and mask is not d.mask:
+            pts = {**pts, "dense": True}  # 감긴 몸: 기준점을 촘촘히
         rig = BUILD[kind](mask, pts)
     if isinstance(rig, dict):  # 날개: ARAP 없이 꼭짓점을 직접 옮긴다
         vw = None
