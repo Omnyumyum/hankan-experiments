@@ -1,0 +1,34 @@
+From 4b06fe0bb87ecc4bfaeeadfb730179fa14301c69 Mon Sep 17 00:00:00 2001
+From: Claude <noreply@anthropic.com>
+Date: Tue, 27 Oct 2026 08:04:11 +0000
+Subject: [PATCH 7/8] =?UTF-8?q?2-3:=20S-14=20=EC=84=A4=EB=AA=85=EC=9D=84?=
+ =?UTF-8?q?=20=E3=80=8C=EC=A7=81=EC=A0=91=20=EA=B7=B8=EB=A6=B0=20=EA=B7=B8?=
+ =?UTF-8?q?=EB=A6=BC=EC=9D=B4=E3=80=8D=EB=A1=9C=20(S-14-03)?=
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+「종이에 그린 그림을 찍으면 …」은 사진 찍기가 기본 경로처럼 읽힌다.
+기본 경로는 화면에 그리기이고 사진 올리기는 어른이 켤 때만 있으므로
+둘 다 맞는 「직접 그린 그림이 움직이는 이야기가 됩니다.」로 바꿨다. 뒷문장은 그대로.
+근거: 05 S-03-04 「기본 경로」, 03 F-SET-06
+---
+ src/screens/S14Welcome.tsx | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/screens/S14Welcome.tsx b/src/screens/S14Welcome.tsx
+index e05c6c6..a411fd8 100644
+--- a/src/screens/S14Welcome.tsx
++++ b/src/screens/S14Welcome.tsx
+@@ -28,7 +28,7 @@ export default function S14Welcome() {
+       </h1>
+       <p className="hint" style={{ textAlign: "center" }}>
+         {left > 0
+-          ? `종이에 그린 그림을 찍으면 움직이는 이야기가 됩니다. 로그인 없이 ${left}편까지 만들어 볼 수 있어요.`
++          ? `직접 그린 그림이 움직이는 이야기가 됩니다. 로그인 없이 ${left}편까지 만들어 볼 수 있어요.`
+           : "로그인하면 이어서 만들 수 있어요. 지금까지 만든 이야기는 저장되지 않았습니다."}
+       </p>
+ 
+-- 
+2.43.0
+

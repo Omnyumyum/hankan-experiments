@@ -1,0 +1,64 @@
+From e713d45af3944d3a3255aaf0c96f87237bb3d2d9 Mon Sep 17 00:00:00 2001
+From: Claude <noreply@anthropic.com>
+Date: Tue, 27 Oct 2026 08:04:33 +0000
+Subject: [PATCH 8/8] =?UTF-8?q?14-2:=20=E3=80=8C=EC=84=A4=EA=B3=84?=
+ =?UTF-8?q?=EC=84=9C=EC=97=90=20=EC=97=86=EB=8B=A4=E3=80=8D=EA=B3=A0=20?=
+ =?UTF-8?q?=EC=A0=81=ED=9E=8C=20=EC=98=9B=20=EC=A3=BC=EC=84=9D=EC=9D=84=20?=
+ =?UTF-8?q?=EC=A7=80=EA=B8=88=20=EC=84=A4=EA=B3=84=20=EB=AC=B8=EC=84=9C?=
+ =?UTF-8?q?=EC=97=90=20=EB=A7=9E=EC=B6=A4=20(S-03D=20=C2=B7=20S-15C=20?=
+ =?UTF-8?q?=C2=B7=20E-01-02)?=
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+S-03D 화면에 그리기, S-15C 소셜 로그인 돌아오기, E-01 CONTENT_BLOCKED 는
+이제 pt_docs 05 에 다 있다. 주석 세 줄만 바꿨고 동작은 그대로다.
+S05Name.tsx 주석은 다른 로컬 판에서 이미 바꿨다고 해서 건드리지 않았다.
+---
+ src/lib.ts                  | 2 +-
+ src/screens/S03Draw.tsx     | 2 +-
+ src/screens/S15Callback.tsx | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/src/lib.ts b/src/lib.ts
+index 2e44e6e..d60e40d 100644
+--- a/src/lib.ts
++++ b/src/lib.ts
+@@ -48,7 +48,7 @@ export const ERROR_TEXT: Record<string, { title: string; hint: string; primary:
+   UNSUPPORTED_IMAGE:   { title: "이 그림은 열 수 없어요", hint: "다른 그림을 골라 볼까요?", primary: "앨범에서 고르기" },
+   ENGINE_TIMEOUT:      { title: "시간이 오래 걸리고 있어요", hint: "잠시 뒤에 다시 해 볼까요?", primary: "다시 하기" },
+   ENGINE_ERROR:        { title: "잠깐 문제가 생겼어요", hint: "처음부터 다시 해 볼까요?", primary: "처음으로" },
+-  // 설계서 E-01 표에 없다. 검열에 걸린 말을 아이 탓으로 들리지 않게 쓴다 (open-decisions 0-5)
++  // pt_docs 05 E-01 표. 검열에 걸린 말을 아이 탓으로 들리지 않게 쓴다 (처음 결정은 open-decisions 0-5)
+   CONTENT_BLOCKED:     { title: "이 이야기는 만들 수 없어요", hint: "다른 카드를 골라 볼까요?", primary: "다시 고르기" },
+ };
+ 
+diff --git a/src/screens/S03Draw.tsx b/src/screens/S03Draw.tsx
+index 08c1596..dba19b5 100644
+--- a/src/screens/S03Draw.tsx
++++ b/src/screens/S03Draw.tsx
+@@ -9,7 +9,7 @@ import {
+ } from "@/features/draw/drawing";
+ import type { Drawing, Part, Pt } from "@/features/draw/drawing";
+ 
+-/** S-03D 화면에 그리기. 설계서에 없는 화면이다 (open-decisions 0-4, 2026-09-29 사용자 결정).
++/** S-03D 화면에 그리기 (pt_docs 05 S-03D, v0.3 신설. 처음 결정은 open-decisions 0-4, 2026-09-29).
+  *  S-03 의 「그림 찍기」와 나란히 있다. 머리 → 몸 → 팔 → 다리를 한 단계씩, 점선 안내 위에
+  *  손으로 그리거나 도장을 찍는다. 다 그리면 S-03 으로 돌아가 「이 그림으로」를 누른다.
+  *  한 화면 한 질문, 자동 전환 없음 — 「다음」은 아이가 누른다.
+diff --git a/src/screens/S15Callback.tsx b/src/screens/S15Callback.tsx
+index ebde2f6..3ad0d20 100644
+--- a/src/screens/S15Callback.tsx
++++ b/src/screens/S15Callback.tsx
+@@ -7,7 +7,7 @@ import { finishSocialLogin, PROVIDER_NAME } from "@/api/auth";
+ import type { SocialProvider } from "@/api/auth";
+ 
+ /** S-15 소셜 로그인에서 돌아오는 자리 (`/auth/:provider/callback`).
+- *  설계서에 없는 화면이다. 로그인 흐름의 일부라 S-15 에 붙인다 (open-decisions 0-3). */
++ *  pt_docs 05 S-15C. 로그인 흐름의 일부라 S-15 에 붙인다 (처음 결정은 open-decisions 0-3). */
+ export default function S15Callback() {
+   const nav = useNavigate();
+   const { provider = "" } = useParams();
+-- 
+2.43.0
+

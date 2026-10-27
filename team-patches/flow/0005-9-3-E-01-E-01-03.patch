@@ -1,0 +1,43 @@
+From ba42cee5226e5542c73a975aab3e013f4529f0a1 Mon Sep 17 00:00:00 2001
+From: Claude <noreply@anthropic.com>
+Date: Tue, 27 Oct 2026 08:02:18 +0000
+Subject: [PATCH 5/8] =?UTF-8?q?9-3:=20E-01=20=E3=80=8C=EC=B9=9C=EA=B5=AC?=
+ =?UTF-8?q?=EB=A5=BC=20=EB=AA=BB=20=EC=B0=BE=EC=95=98=EC=96=B4=EC=9A=94?=
+ =?UTF-8?q?=E3=80=8D=20=EB=B3=B4=EC=A1=B0=20=EC=95=88=EB=82=B4=EB=A5=BC=20?=
+ =?UTF-8?q?=EC=84=A4=EA=B3=84=20=EB=AC=B8=EA=B5=AC=EB=A1=9C=20(E-01-03)?=
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+「사람을 한 명만 크게 그려 볼까요?」 → 「지금은 두 발로 선 친구만 움직일 수 있어요」.
+사진을 찍은 경우(ERROR_TEXT)와 화면에 그린 경우(DRAW_TEXT) 둘 다 바꿨다.
+근거: 05 E-01 표 NO_CHARACTER, 06 4-3 (「사람을 그려 주세요」라고 쓰지 않는다)
+---
+ src/lib.ts | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/src/lib.ts b/src/lib.ts
+index 38be1b5..2e44e6e 100644
+--- a/src/lib.ts
++++ b/src/lib.ts
+@@ -41,7 +41,7 @@ export async function shrink(file: File, max = 1600, quality = 0.85): Promise<Fi
+ 
+ /** 설계서 E-01 오류 문구표 */
+ export const ERROR_TEXT: Record<string, { title: string; hint: string; primary: string }> = {
+-  NO_CHARACTER:        { title: "그림에서 친구를 못 찾았어요", hint: "사람을 한 명만 크게 그려 볼까요?", primary: "다시 찍기" },
++  NO_CHARACTER:        { title: "그림에서 친구를 못 찾았어요", hint: "지금은 두 발로 선 친구만 움직일 수 있어요", primary: "다시 찍기" },
+   MULTIPLE_CHARACTERS: { title: "친구가 여러 명이에요", hint: "한 명만 나오게 찍어 볼까요?", primary: "다시 찍기" },
+   // AI 는 흐린 사진보다 낙서·도형처럼 사람 모양이 아닌 그림에서 이 code 를 낸다 (너무 흐리면 NO_CHARACTER)
+   LOW_CONFIDENCE:      { title: "그림이 잘 안 보여요", hint: "사람을 크게 그려서 밝은 곳에서 찍어 볼까요?", primary: "다시 찍기" },
+@@ -54,7 +54,7 @@ export const ERROR_TEXT: Record<string, { title: string; hint: string; primary:
+ 
+ /** 사진 올리기가 꺼져 있을 때(F-SET-06 기본, 화면에 그린 그림) 「찍기」 문구를 바꿔 쓴다 */
+ export const DRAW_TEXT: Record<string, { hint: string; primary: string }> = {
+-  NO_CHARACTER:        { hint: "사람을 한 명만 크게 그려 볼까요?", primary: "다시 그리기" },
++  NO_CHARACTER:        { hint: "지금은 두 발로 선 친구만 움직일 수 있어요", primary: "다시 그리기" },
+   MULTIPLE_CHARACTERS: { hint: "한 명만 그려 볼까요?", primary: "다시 그리기" },
+   LOW_CONFIDENCE:      { hint: "사람을 크게 그려 볼까요?", primary: "다시 그리기" },
+   // 앨범에서 고르기(S-03-05)는 사진 올리기를 켰을 때만 있다
+-- 
+2.43.0
+

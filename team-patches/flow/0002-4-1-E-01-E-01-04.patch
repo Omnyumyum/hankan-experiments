@@ -1,0 +1,35 @@
+From ffbcb0e63574e7ff63eb97ee5cdd957759a54481 Mon Sep 17 00:00:00 2001
+From: Claude <noreply@anthropic.com>
+Date: Tue, 27 Oct 2026 07:59:50 +0000
+Subject: [PATCH 2/8] =?UTF-8?q?4-1:=20=EC=82=AC=EC=A7=84=20=EC=98=AC?=
+ =?UTF-8?q?=EB=A6=AC=EA=B8=B0=EA=B0=80=20=EA=BA=BC=EC=A0=B8=20=EC=9E=88?=
+ =?UTF-8?q?=EC=9D=84=20=EB=95=8C=20E-01=20=E3=80=8C=EC=97=B4=20=EC=88=98?=
+ =?UTF-8?q?=20=EC=97=86=EC=96=B4=EC=9A=94=E3=80=8D=20=EB=B2=84=ED=8A=BC?=
+ =?UTF-8?q?=EC=9D=84=20=E3=80=8C=EB=8B=A4=EC=8B=9C=20=EA=B7=B8=EB=A6=AC?=
+ =?UTF-8?q?=EA=B8=B0=E3=80=8D=EB=A1=9C=20(E-01-04)?=
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+UNSUPPORTED_IMAGE 의 1차 행동이 늘 「앨범에서 고르기」였는데, 앨범 버튼(S-03-05)은
+사진 올리기를 켰을 때만 있다. 꺼져 있으면(기본) 다른 그림 오류처럼
+「다시 그려 볼까요?」 · 「다시 그리기」로 바꿔 쓴다 (DRAW_TEXT 한 줄).
+근거: 05 S-03-05 「사진 올리기를 켰을 때만」
+---
+ src/lib.ts | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/src/lib.ts b/src/lib.ts
+index f11643b..38be1b5 100644
+--- a/src/lib.ts
++++ b/src/lib.ts
+@@ -57,4 +57,6 @@ export const DRAW_TEXT: Record<string, { hint: string; primary: string }> = {
+   NO_CHARACTER:        { hint: "사람을 한 명만 크게 그려 볼까요?", primary: "다시 그리기" },
+   MULTIPLE_CHARACTERS: { hint: "한 명만 그려 볼까요?", primary: "다시 그리기" },
+   LOW_CONFIDENCE:      { hint: "사람을 크게 그려 볼까요?", primary: "다시 그리기" },
++  // 앨범에서 고르기(S-03-05)는 사진 올리기를 켰을 때만 있다
++  UNSUPPORTED_IMAGE:   { hint: "다시 그려 볼까요?", primary: "다시 그리기" },
+ };
+-- 
+2.43.0
+

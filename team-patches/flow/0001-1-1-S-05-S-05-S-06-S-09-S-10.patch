@@ -1,0 +1,128 @@
+From 7f1b5435c7adc1cb75798de5735691f704587461 Mon Sep 17 00:00:00 2001
+From: Claude <noreply@anthropic.com>
+Date: Tue, 27 Oct 2026 07:59:04 +0000
+Subject: [PATCH 1/8] =?UTF-8?q?1-1:=20=EC=83=88=EB=A1=9C=EA=B3=A0=EC=B9=A8?=
+ =?UTF-8?q?=20=C2=B7=20=EB=92=A4=EB=A1=9C=20=EA=B0=80=EA=B8=B0=EB=A1=9C=20?=
+ =?UTF-8?q?=EB=93=A4=EC=96=B4=EC=98=A4=EB=A9=B4=20=ED=9D=B0=20=ED=99=94?=
+ =?UTF-8?q?=EB=A9=B4=EC=9D=B4=20=EB=82=A8=EB=8D=98=20=EA=B2=83=20=EA=B3=A0?=
+ =?UTF-8?q?=EC=B9=A8=20(S-05=20=C2=B7=20S-05=20=EC=9D=B4=EB=A6=84=20=C2=B7?=
+ =?UTF-8?q?=20S-06=20=C2=B7=20S-09=20=C2=B7=20S-10)?=
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+그리는 도중에 nav() 를 부르면 react-router 6 이 첫 그리기 중의 이동을 무시해서
+빈 화면만 남았다. 이동할 곳을 <Navigate replace /> 로 돌려준다.
+요소: S-05(/confirm), S-05 이름 짓기(/name), S-06(/joints), S-09(/story), S-10(/order)
+근거: 05 「7. 상태 처리 기준」 새로고침
+---
+ src/screens/S05Confirm.tsx | 4 ++--
+ src/screens/S05Name.tsx    | 4 ++--
+ src/screens/S06Joints.tsx  | 4 ++--
+ src/screens/S09Story.tsx   | 4 ++--
+ src/screens/S10Order.tsx   | 4 ++--
+ 5 files changed, 10 insertions(+), 10 deletions(-)
+
+diff --git a/src/screens/S05Confirm.tsx b/src/screens/S05Confirm.tsx
+index 26d28bc..34888b2 100644
+--- a/src/screens/S05Confirm.tsx
++++ b/src/screens/S05Confirm.tsx
+@@ -1,5 +1,5 @@
+ import { useState } from "react";
+-import { useNavigate } from "react-router-dom";
++import { Navigate, useNavigate } from "react-router-dom";
+ import Screen from "@/components/Screen";
+ import BigButton from "@/components/BigButton";
+ import CharacterPreview from "@/features/character/CharacterPreview";
+@@ -19,7 +19,7 @@ export default function S05Confirm() {
+   // 사진 올리기가 꺼져 있으면(F-SET-06 기본) 그림은 화면에서 그린 것이다
+   const { photo } = useWithAdult();
+ 
+-  if (!imageUrl || !keypoints) { nav("/upload", { replace: true }); return null; }
++  if (!imageUrl || !keypoints) return <Navigate to="/upload" replace />;
+   const motion = (level === 1 ? "wave" : MOTIONS[i % MOTIONS.length].id) as MotionId;
+ 
+   return (
+diff --git a/src/screens/S05Name.tsx b/src/screens/S05Name.tsx
+index 1969617..f556a11 100644
+--- a/src/screens/S05Name.tsx
++++ b/src/screens/S05Name.tsx
+@@ -1,5 +1,5 @@
+ import { useEffect, useRef, useState } from "react";
+-import { useNavigate } from "react-router-dom";
++import { Navigate, useNavigate } from "react-router-dom";
+ import Screen from "@/components/Screen";
+ import BigButton from "@/components/BigButton";
+ import CharacterPreview from "@/features/character/CharacterPreview";
+@@ -36,7 +36,7 @@ export default function S05Name() {
+   const lock = useRef(0);
+ 
+   useEffect(() => () => { stopListen.current?.abort(); stopSpeak(); }, []);
+-  if (!imageUrl || !keypoints) { nav("/upload", { replace: true }); return null; }
++  if (!imageUrl || !keypoints) return <Navigate to="/upload" replace />;
+ 
+   const names = NAMES.slice(0, LEVEL_CONFIG[level].choiceCount);
+ 
+diff --git a/src/screens/S06Joints.tsx b/src/screens/S06Joints.tsx
+index 0301e76..45063d3 100644
+--- a/src/screens/S06Joints.tsx
++++ b/src/screens/S06Joints.tsx
+@@ -1,5 +1,5 @@
+ import { useLayoutEffect, useRef, useState } from "react";
+-import { useNavigate } from "react-router-dom";
++import { Navigate, useNavigate } from "react-router-dom";
+ import Screen from "@/components/Screen";
+ import BigButton from "@/components/BigButton";
+ import CharacterCanvas from "@/features/character/CharacterCanvas";
+@@ -46,7 +46,7 @@ export default function S06Joints() {
+     return () => ro.disconnect();
+   }, [character, preview]);
+ 
+-  if (!imageUrl || !character || !keypoints) { nav("/upload", { replace: true }); return null; }
++  if (!imageUrl || !character || !keypoints) return <Navigate to="/upload" replace />;
+ 
+   const move = (e: React.PointerEvent) => {
+     const name = drag.current;
+diff --git a/src/screens/S09Story.tsx b/src/screens/S09Story.tsx
+index 2ed2fc6..adbbdc5 100644
+--- a/src/screens/S09Story.tsx
++++ b/src/screens/S09Story.tsx
+@@ -1,5 +1,5 @@
+ import { useEffect, useMemo, useRef, useState } from "react";
+-import { useNavigate } from "react-router-dom";
++import { Navigate, useNavigate } from "react-router-dom";
+ import Screen from "@/components/Screen";
+ import BigButton from "@/components/BigButton";
+ import { Scene } from "@/components/illust";
+@@ -25,7 +25,7 @@ export default function S09Story() {
+   const lines = useMemo(() => sentences(story?.text ?? ""), [story]);
+ 
+   useEffect(() => () => { stopSpeak(); audio.current?.pause(); }, []);
+-  if (!story) { nav("/", { replace: true }); return null; }
++  if (!story) return <Navigate to="/" replace />;
+ 
+   const stop = () => { stopSpeak(); audio.current?.pause(); setAt(null); };
+ 
+diff --git a/src/screens/S10Order.tsx b/src/screens/S10Order.tsx
+index 9b4fc54..98c003a 100644
+--- a/src/screens/S10Order.tsx
++++ b/src/screens/S10Order.tsx
+@@ -1,5 +1,5 @@
+ import { useEffect, useMemo, useRef, useState } from "react";
+-import { useNavigate } from "react-router-dom";
++import { Navigate, useNavigate } from "react-router-dom";
+ import Screen from "@/components/Screen";
+ import BigButton from "@/components/BigButton";
+ import { useSession } from "@/store/session";
+@@ -52,7 +52,7 @@ export default function S10Order() {
+     return () => { window.removeEventListener("pagehide", leave); leave(); };
+   }, []);
+ 
+-  if (!story) { nav("/", { replace: true }); return null; }
++  if (!story) return <Navigate to="/" replace />;
+   const used = new Set(slots.filter((v) => v !== null));
+   const filled = slots.every((v) => v !== null);
+ 
+-- 
+2.43.0
+

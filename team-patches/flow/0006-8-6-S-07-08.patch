@@ -1,0 +1,48 @@
+From 799d9a092815b7103cfae86d9621dbc0bccc932f Mon Sep 17 00:00:00 2001
+From: Claude <noreply@anthropic.com>
+Date: Tue, 27 Oct 2026 08:03:51 +0000
+Subject: [PATCH 6/8] =?UTF-8?q?8-6:=20=EB=93=A3=EB=8A=94=20=EC=A4=91?=
+ =?UTF-8?q?=EC=97=90=20=ED=99=94=EB=A9=B4=EC=9D=84=20=EB=96=A0=EB=82=98?=
+ =?UTF-8?q?=EB=A9=B4=20=E3=80=8C=EC=9E=98=20=EB=AA=BB=20=EB=93=A4=EC=97=88?=
+ =?UTF-8?q?=EC=96=B4=EC=9A=94=E3=80=8D=EA=B0=80=20=EB=93=A4=EB=A6=AC?=
+ =?UTF-8?q?=EB=8D=98=20=EA=B2=83=20=EA=B3=A0=EC=B9=A8=20(S-07-08)?=
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+말로 덧붙이기(S-07) · 말로 짓기(S-05 이름)를 듣는 중에 「카드 다시 고르기」 · 「다음」 ·
+「이름 없이 할래요」를 누르면 듣기를 끊는데, 끊긴 인식이 「소리 없음」 실패로
+돌아와 다음 화면에서 안내를 읽었다. 우리가 끊은 것이면(ctrl.signal.aborted) 조용히 끝낸다.
+두 파일 모두 catch 첫 줄 하나만 더했다. 어른이 말로 하기를 켰을 때만 생기는 일이다.
+---
+ src/screens/S05Name.tsx  | 1 +
+ src/screens/S07Steps.tsx | 1 +
+ 2 files changed, 2 insertions(+)
+
+diff --git a/src/screens/S05Name.tsx b/src/screens/S05Name.tsx
+index f556a11..91dec2e 100644
+--- a/src/screens/S05Name.tsx
++++ b/src/screens/S05Name.tsx
+@@ -61,6 +61,7 @@ export default function S05Name() {
+         if (n) { lock.current = 0; choose(n); } else throw new Error("no-speech");
+       })
+       .catch((e: Error) => {
++        if (ctrl.signal.aborted) return;   // 「다음」 등으로 떠나며 끊은 것은 실패가 아니다
+         const code = (e.message in HEARD_ERROR ? e.message : "failed") as ListenError;
+         setHeardError(code);
+         speak(HEARD_ERROR[code], muteAll);
+diff --git a/src/screens/S07Steps.tsx b/src/screens/S07Steps.tsx
+index 7d1635c..c73db68 100644
+--- a/src/screens/S07Steps.tsx
++++ b/src/screens/S07Steps.tsx
+@@ -85,6 +85,7 @@ export default function S07Steps() {
+         speak(sentenceFor(ask, text), muteAll);   // 아이 말이 들어간 문장을 바로 읽어 준다
+       })
+       .catch((e: Error) => {
++        if (ctrl.signal.aborted) return;   // 「다음」 등으로 떠나며 끊은 것은 실패가 아니다
+         const code = (e.message in HEARD_ERROR ? e.message : "failed") as ListenError;
+         setHeardError(code);
+         speak(HEARD_ERROR[code], muteAll);
+-- 
+2.43.0
+
