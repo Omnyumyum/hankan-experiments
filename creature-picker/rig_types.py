@@ -561,6 +561,19 @@ def build_long(mask, pts):
     return pins0, lambda t, H: sr.pose_body(pins0, t)
 
 
+WING_SOFT = 0.04  # 점 3개 날개 무게를 흐리는 폭 (그림 긴 변 비율, 가우스 시그마)
+
+
+def soft_in_mask(w, dom, sigma):
+    """dom 안에서만 흐리기 (바깥 0 이 섞여 가장자리 무게가 줄지 않게 나눠 준다). dom 밖은 0."""
+    if sigma <= 0:
+        return w
+    dm = dom.astype(np.float32)
+    num = cv2.GaussianBlur(w * dm, (0, 0), sigma)
+    den = cv2.GaussianBlur(dm, (0, 0), sigma)
+    return np.where(dom, num / np.maximum(den, 1e-6), 0).astype(np.float32)
+
+
 def build_wings(mask, pts):
     """날개마다 [뿌리 위, 뿌리 아래, 날개 끝] 점 3개. 뿌리 두 점을 잇는 선이 경첩이다.
     움직이는 정도(무게)는 그림 안 거리로 정한다: 날개 끝에 가까우면 1, 경첩에 가까우면 0.
@@ -609,6 +622,9 @@ def build_wings(mask, pts):
             r = np.where(ok, d_seg / np.maximum(d_seg + d_tip, 1e-6), 0.0)  # 0 = 경첩, 1 = 날개 끝
         # 경첩 바로 바깥부터 돌기 시작해 날개 끝까지 25% 지점부터 통째로 (가만히 있는 구간이 길면 어깨에서 꺾여 보인다)
         wmap = (belong * smooth((r - 0.03) / 0.22) * smooth(e_pix / 4.0)).astype(np.float32)
+        # 무게가 몇 px 안에서 0 → 1 로 바뀌면 경첩에서 먼 곳일수록 이웃 꼭짓점이 크게 엇갈려 삼각형이 뒤집혔다
+        # (QuickDraw 날개 뒤집힘 > 1% 는 모두 이 점 3개 방식에서 나왔다). 그림 안에서만 흐리게 해 바뀌는 폭을 넓힌다
+        wmap = soft_in_mask(wmap, dom, WING_SOFT * max(mask.shape))
         wmap = cv2.dilate(wmap, np.ones((5, 5), np.uint8))  # 윤곽선 위 꼭짓점도 값을 받게
         up = -1.0 if (tip - mid)[0] >= 0 else 1.0  # + 각은 오른쪽으로 뻗은 날개를 내린다
         wings.append({"a": a, "b": b, "tip": tip, "m": m, "mid": mid, "wmap": wmap, "up": up})
@@ -691,7 +707,8 @@ def wing_deformer(wings, style):
 
 def region_labels(d):
     """선으로 닫힌 칸 (페인트 통으로 채우는 칸). 색칠 공부 그림 · 윤곽선으로 그린 아이 그림에서 날개 · 몸 · 머리가 서로 다른 칸이 된다.
-    선이 끊긴 곳은 3px 까지 메운다. 그보다 크게 끊기면 칸이 이웃 칸과 합쳐진다 (그때는 점 3개 방식)."""
+    선이 끊긴 곳은 3px 까지 메우고, 더 큰 틈은 선 끝을 가까운 선에 이어(bridge_gaps) 새로 닫힌 칸만 더한다.
+    마스크가 안 채워진 열린 낙서는 여전히 칸이 안 생긴다 (그때는 점 3개 방식)."""
     if getattr(d, "_regions", None) is None:
         # 선은 결을 지운 그림에서 찾고 점 같은 작은 조각은 버린다: 크레파스 · 색연필 결의 어두운 점이 선으로 잡혀
         # 날개가 자잘한 칸으로 쪼개졌다 (안 고른 조각이 가만히 있어 날개가 얼룩덜룩하게 움직였다)
@@ -711,19 +728,91 @@ def region_labels(d):
         long_e = np.nonzero(st_e[:, cv2.CC_STAT_AREA] >= max(40, int(0.1 * max(d.mask.shape))))[0]
         color_edge = np.isin(lab_e, long_e[long_e > 0])
         ink = ink | color_edge
-        free = ((d.mask > 0) & ~ink).astype(np.uint8)
-        n, lab, st, _ = cv2.connectedComponentsWithStats(free, connectivity=4)
-        small = np.nonzero(st[:, cv2.CC_STAT_AREA] < 15)[0]
-        lab[np.isin(lab, small)] = 0
-        # 마스크는 선보다 2~3px 넓게 잡혀서, 그림 바깥 둘레에 선 바깥쪽 얇은 띠가 칸 하나로 생긴다.
-        # 이 띠를 칸으로 두면 날개 바깥 테두리 전체가 「몸에 붙은 곳」이 되어 테두리만 안 움직이고 번진다 → 선으로 친다
-        edge = (d.mask > 0) & (cv2.erode(d.mask, np.ones((3, 3), np.uint8)) == 0)
-        halo = np.unique(lab[edge])
-        halo = halo[halo > 0]
-        ink = ink | np.isin(lab, halo)
-        lab[np.isin(lab, halo)] = 0
-        d._regions, d._ink_r = lab, ink
+        lab, ink_l = _closed_regions(d.mask, ink)
+        # 닫히지 않은 선 낙서: 선 끝을 가까운 선에 이어 본다. 이어서 「새로」 생긴 칸만 더한다 —
+        # 이미 있던 칸은 그대로 둔다 (색칠 그림 · 윤곽 그림의 칸이 바뀌지 않게)
+        bridge = bridge_gaps(ink, d.mask)
+        if bridge.any():
+            lab_b, ink_b = _closed_regions(d.mask, ink | bridge)
+            n0 = int(lab.max())
+            for rid in set(np.unique(lab_b).tolist()) - {0}:
+                R = lab_b == rid
+                if (lab[R] == 0).mean() < 0.9:
+                    continue
+                R &= lab == 0
+                n0 += 1
+                lab[R] = n0
+            ink_l = (ink_l | (bridge & (d.mask > 0))) & ~(lab > 0)
+        d._regions, d._ink_r = lab, ink_l
     return d._regions, d._ink_r
+
+
+def _closed_regions(mask, ink):
+    free = ((mask > 0) & ~ink).astype(np.uint8)
+    n, lab, st, _ = cv2.connectedComponentsWithStats(free, connectivity=4)
+    small = np.nonzero(st[:, cv2.CC_STAT_AREA] < 15)[0]
+    lab[np.isin(lab, small)] = 0
+    # 마스크는 선보다 2~3px 넓게 잡혀서, 그림 바깥 둘레에 선 바깥쪽 얇은 띠가 칸 하나로 생긴다.
+    # 이 띠를 칸으로 두면 날개 바깥 테두리 전체가 「몸에 붙은 곳」이 되어 테두리만 안 움직이고 번진다 → 선으로 친다
+    edge = (mask > 0) & (cv2.erode(mask, np.ones((3, 3), np.uint8)) == 0)
+    halo = np.unique(lab[edge])
+    halo = halo[halo > 0]
+    ink = ink | np.isin(lab, halo)
+    lab[np.isin(lab, halo)] = 0
+    return lab, ink
+
+
+BRIDGE_MAX = 0.08  # 선 끝을 이을 수 있는 가장 먼 거리 (그림 긴 변 비율)
+
+
+def bridge_gaps(ink, mask):
+    """선 끝(뼈대 끝점)마다, 끝이 향하는 쪽(±60°)의 가까운 다른 선까지 잇는 짧은 선을 그린다.
+    「다른 선」= 선을 따라가면 멀리 돌아가거나 이어지지 않는 선 (자기 자신 바로 옆은 안 됨).
+    이은 선은 마스크 안에만 (그림 밖 종이를 가로지르지 않는다). 짧은 조각(눈 · 점)에서는 잇지 않는다."""
+    from skimage.morphology import skeletonize
+    H, W = ink.shape
+    out = np.zeros((H, W), bool)
+    D = BRIDGE_MAX * max(H, W)
+    sk = skeletonize(ink > 0)
+    nb = cv2.filter2D(sk.astype(np.uint8), -1, np.ones((3, 3), np.float32), borderType=cv2.BORDER_CONSTANT) - sk
+    ends = np.argwhere(sk & (nb == 1))
+    if len(ends) == 0 or len(ends) > 200:
+        return out
+    n_c, comp, st, _ = cv2.connectedComponentsWithStats(sk.astype(np.uint8), connectivity=8)
+    R = int(np.ceil(3 * D))
+    for y, x in ends:
+        if st[comp[y, x], cv2.CC_STAT_AREA] < 15:
+            continue
+        y0, y1, x0, x1 = max(0, y - R), min(H, y + R + 1), max(0, x - R), min(W, x + R + 1)
+        win = ink[y0:y1, x0:x1] > 0
+        # 끝이 향하는 쪽: 같은 뼈대 위 10px 안 점들의 가운데 → 끝
+        sy, sx = np.nonzero(sk[y0:y1, x0:x1] & (comp[y0:y1, x0:x1] == comp[y, x]))
+        near = (sy + y0 - y) ** 2 + (sx + x0 - x) ** 2 <= 100
+        v = np.array([x - (sx[near] + x0).mean(), y - (sy[near] + y0).mean()])
+        if np.linalg.norm(v) < 1:
+            continue
+        v /= np.linalg.norm(v)
+        geo, _ = MCP_Geometric(np.where(win, 1.0, np.inf)).find_costs([(y - y0, x - x0)])
+        ty, tx = np.nonzero(win)
+        dx, dy = tx + x0 - x, ty + y0 - y
+        e = np.hypot(dx, dy)
+        g = geo[ty, tx]
+        cos = (dx * v[0] + dy * v[1]) / np.maximum(e, 1e-6)
+        ok = (e > 2) & (e <= D) & (cos >= 0.5) & ~(g <= 2.5 * e + 10)
+        if not ok.any():
+            continue
+        score = np.where(ok, e * (2 - cos), np.inf)
+        j = int(np.argmin(score))
+        p, q = (int(x), int(y)), (int(tx[j] + x0), int(ty[j] + y0))
+        n = max(2, int(e[j]))
+        ly = np.linspace(p[1], q[1], n).round().astype(int)
+        lx = np.linspace(p[0], q[0], n).round().astype(int)
+        if (mask[ly, lx] > 0).mean() < 0.9:
+            continue
+        line = np.zeros((H, W), np.uint8)
+        cv2.line(line, p, q, 1, 3)
+        out |= line > 0
+    return out
 
 
 def region_at(d, x, y, r=6):
@@ -1100,7 +1189,7 @@ def snap_points_to_regions(d, mask, pts):
             rim_cache[r] = max(1, int((grown_cache[r] & (lab > 0) & (lab != r)).sum()))
         return grown_cache[r]
 
-    picked = set()
+    picked, per_wing = set(), []
     for w in pts.get("wings") or []:
         if len(w) < 3:
             continue
@@ -1151,7 +1240,12 @@ def snap_points_to_regions(d, mask, pts):
                     continue
                 seen.add(q)
                 todo.append(q)
-        picked |= seen
+        per_wing.append(seen)
+    # 양쪽 날개 끝에서 모두 닿은 칸은 몸이다 (옆모습 새 낙서: 몸 전체가 칸 하나라 양쪽 끝 점이 같은 칸에 들어가
+    # 몸통 통째로 날개가 됐다). 같은 뿌리를 쓰는 앞 · 뒤 날개(비스듬한 나비)는 끝이 서로 다른 칸이라 걸리지 않는다
+    for i, s in enumerate(per_wing):
+        others = set().union(*(t for j, t in enumerate(per_wing) if j != i))
+        picked |= s - others
     if not picked:
         return None
     return sorted(int(r) for r in picked)
