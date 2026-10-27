@@ -12,3 +12,8 @@ animal-monster/shape/
 animal-monster/quadruped/
 animal-monster/models/
 *.onnx
+
+# 키 파일은 절대 올리지 않는다
+.env
+**/.env
+*.key
