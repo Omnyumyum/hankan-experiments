@@ -51,12 +51,15 @@ def resample(contour, step):
     return np.stack([np.interp(at, s, cc[:, 0]), np.interp(at, s, cc[:, 1])], 1)
 
 
-def build_cdt_mesh(mask):
-    cs, _ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
+def build_cdt_mesh(mask, holes=False):
+    # holes: 안쪽 구멍 둘레도 고정 모서리로 넣어 구멍에 삼각형이 안 생기게 (긴 몸 똬리)
+    cs, _ = cv2.findContours(mask, cv2.RETR_CCOMP if holes else cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
     verts, edges, seen = [], [], {}
 
     def add(p):
         k = (round(p[0], 1), round(p[1], 1))
+        if holes:  # 가른 자리 끝에서 양쪽 둘레 점이 1px 안으로 붙으면 하나로: 아주 작은 삼각형이 양쪽 몸에 걸쳐 수십 배 늘어났다
+            k = (round(p[0] / 1.5) * 1.5, round(p[1] / 1.5) * 1.5)
         if k not in seen:
             seen[k] = len(verts)
             verts.append(k)
@@ -92,10 +95,10 @@ def build_cdt_mesh(mask):
     return v, tris, components(tris)
 
 
-def build_mesh(mask):
+def build_mesh(mask, holes=False):
     """반환: 꼭짓점, 삼각형, (덩어리, 삼각형별 덩어리), 쓴 방식."""
     try:
-        v, tris, comps = build_cdt_mesh(mask)
+        v, tris, comps = build_cdt_mesh(mask, holes)
         if len(tris) >= 8:
             return v, tris, comps, "cdt"
     except Exception:  # CDT 가 못 풀면 예전 격자 메시

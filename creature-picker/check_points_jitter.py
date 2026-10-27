@@ -7,6 +7,8 @@
 정답 점 확인용: out/jitter_truth.png
 
     venv/Scripts/python check_points_jitter.py           # R=10, N=8
+    venv/Scripts/python check_points_jitter.py --long    # 똬리 · 꼬인 뱀 그림(drawings/long, gen_long_cases.py)만
+똬리 그림은 자동 제안 점이 아니라 gen_long_cases.TRUTH 의 정답 점(머리 · 꼬리)을 쓰고, 자동 제안 점이 정답에서 얼마나 떨어졌는지도 적는다.
 """
 import argparse
 import base64
@@ -15,6 +17,7 @@ import cv2
 import numpy as np
 
 import check_wings as cw
+import gen_long_cases as gcl
 import rig_types as rt
 
 CASES = [
@@ -28,6 +31,7 @@ CASES = [
     ("long", "drawings/snake_line.png"),
     ("long", "drawings/worm.png"),
 ]
+LONG_CASES = [("long", cw.HERE / "drawings/long" / name) for name in gcl.CASES]  # 똬리 · 몸이 닿은 · 꼬인 뱀 (정답 점은 gcl.TRUTH)
 
 
 def frames(anim):
@@ -64,14 +68,26 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--r", type=float, default=10)
     ap.add_argument("--n", type=int, default=8)
+    ap.add_argument("--long", action="store_true", help="똬리 · 꼬인 뱀 그림만")
     args = ap.parse_args()
+    truth_pts = gcl.make(write=False)
     rng = np.random.default_rng(11)
     tiles, total, passed = [], 0, 0
     print(f"반경 {args.r}px · 그림마다 {args.n}번\n")
     print(f"{'그림':34s} {'종류':10s} 통과   어긋남(최대)  실패 이유")
-    for kind, rel in CASES:
-        d = rt.Drawing(rt.sr.load_image(rt.AM / rel))
+    for kind, rel in (LONG_CASES if args.long else CASES):
+        raw = rt.sr.load_image(rt.AM / rel)
+        d = rt.Drawing(raw)
         truth = rt.propose(d)["points"][kind]
+        name = getattr(rel, "name", "")
+        if name in truth_pts:  # 정답 점이 있으면 그것으로 (원래 그림 좌표 → 잘라 낸 그림 좌표)
+            f = cw.to_crop(d, raw)
+            auto = truth
+            truth = {k: list(f(v)) for k, v in truth_pts[name].items()}
+            def off(a, b):
+                return max(np.linalg.norm(np.subtract(auto[a], truth[b])) for a, b in ((a, b), ("tail" if a == "head" else "head", "tail" if b == "head" else "head"))) / max(d.mask.shape)
+            same, swap = off("head", "head"), off("head", "tail")
+            print(f"  {name}: 자동 제안 두 끝이 정답 두 끝에서 최대 {min(same, swap):.0%} (긴 변 대비)" + (" · 머리 · 꼬리 뒤바뀜" if swap < same else ""))
         tiles.append(draw_truth(d, kind, truth))
         base = rt.animate(d, kind, truth)
         F0 = frames(base)
@@ -101,11 +117,11 @@ def main():
                 ok += 1
         total += args.n
         passed += ok
-        print(f"{rel:34s} {kind:10s} {ok}/{args.n}   {worst:6.1%}       {'; '.join(f'{k} {v}' for k, v in why.items())}")
+        print(f"{str(rel)[-34:]:34s} {kind:10s} {ok}/{args.n}   {worst:6.1%}       {'; '.join(f'{k} {v}' for k, v in why.items())}")
     h = max(t.shape[0] for t in tiles)
-    cv2.imwrite(str(cw.HERE / "out/jitter_truth.png"),
+    cv2.imwrite(str(cw.HERE / ("out/jitter_truth_long.png" if args.long else "out/jitter_truth.png")),
                 np.hstack([cv2.copyMakeBorder(t, 0, h - t.shape[0], 0, 4, cv2.BORDER_CONSTANT, value=(255, 255, 255)) for t in tiles]))
-    print(f"\n전체 {passed}/{total} ({passed / total:.0%}) → 정답 점 확인: out/jitter_truth.png")
+    print(f"\n전체 {passed}/{total} ({passed / total:.0%}) → 정답 점 확인: out/jitter_truth{'_long' if args.long else ''}.png")
 
 
 if __name__ == "__main__":
