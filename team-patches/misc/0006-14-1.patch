@@ -1,0 +1,72 @@
+From 245b1de645626fe7df712de134fe5b454475044e Mon Sep 17 00:00:00 2001
+From: Claude <noreply@anthropic.com>
+Date: Tue, 27 Oct 2026 08:09:45 +0000
+Subject: [PATCH 6/6] =?UTF-8?q?14-1:=20=ED=94=84=EB=A1=A0=ED=8A=B8=20?=
+ =?UTF-8?q?=EA=B3=84=EC=95=BD=20=EB=AC=B8=EC=84=9C=EB=A5=BC=20=EC=A7=80?=
+ =?UTF-8?q?=EA=B8=88=20=EC=BD=94=EB=93=9C=20=C2=B7=20=EB=B0=B1=EC=97=94?=
+ =?UTF-8?q?=EB=93=9C=EC=97=90=20=EB=A7=9E=EC=B6=98=EB=8B=A4?=
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+요소 번호: S-15 · S-16 (로그인), S-12 · S-13 (목록 제목), S-08 (기다리는 시간).
+
+- docs/api-contract.md 1절: 「/auth/* 는 백엔드에 없다」 → 소셜 로그인은
+  백엔드 dev 에 있고(계약 2-7 · 2-8), 이메일 로그인만 없다.
+- 2절: 제목은 서버 book.title(계약 2-6)을 먼저 쓰고, 없을 때만
+  「{장소}에 간 날」을 만든다 (코드가 이미 그렇게 한다).
+- 2절 표와 api/index.ts 주석: 300초는 백엔드 로컬 .env.example 의
+  AI_TIMEOUT_SECONDS 와 같을 뿐이다. 배포 예시는 120, 코드 기본값은 60.
+- 로컬 판에서 더한 extras · 쪽마다 audio_url · animation_url 은 여기서 다루지 않는다.
+---
+ docs/api-contract.md | 6 +++---
+ src/api/index.ts     | 3 ++-
+ 2 files changed, 5 insertions(+), 4 deletions(-)
+
+diff --git a/docs/api-contract.md b/docs/api-contract.md
+index 1501123..4261047 100644
+--- a/docs/api-contract.md
++++ b/docs/api-contract.md
+@@ -33,7 +33,7 @@
+ | S-07 선택지 목록 | `src/features/story/choices.ts` | 계약 2-5 ⚠ 「선택지를 서버가 내려줄지」 미정 |
+ | 이야기 목록 (S-01·S-12) | `store/library.ts` (sessionStorage / localStorage) | 목록 엔드포인트 없음 |
+ | 어른 설정 (S-13) | `store/settings.ts` | 설정 엔드포인트 없음 |
+-| 로그인·회원가입 (S-15·S-16) | `src/api/auth.ts`가 `/api/v1/auth/*`를 부르지만 **백엔드에 없다**. 아래 4절이 프론트 제안 | 계약 4절 9번 「로그인/세션 없음 (비회원)」 |
++| 이메일 로그인·회원가입 (S-15·S-16) | `src/api/auth.ts`가 `/api/v1/auth/login` · `/auth/signup`을 부르지만 **백엔드에 없다** (4-3). 소셜 로그인(`POST /api/v1/auth/{provider}` · `GET /api/v1/auth/me`)은 백엔드 dev 에 있다 | 계약 2-7 · 2-8 |
+ 
+ ---
+ 
+@@ -116,14 +116,14 @@ E-01 문구는 여전히 프론트가 코드로 고른다 (`src/lib.ts` `ERROR_T
+   `long` 이면 응답에 `book`(제목 · 쪽마다 `stage` · `action` · `text` · `child_words` · `order_pages`)이 온다 (계약 2-6) → `Story.book`.
+   S-09 는 쪽을 넘기며 보고(`BookView`), 음성 파일은 하나라 재생 위치를 글자 수 비율로 쪽에 맞춘다. S-10 은 `order_pages` 쪽의 첫 문장 네 장
+ - 서버에는 선택지 **id가 아니라 라벨**을 보낸다 (계약이 자유 문자열 50자)
+-- 제목이 없어서 `「{장소}에 간 날」`을 프론트가 만든다 (S-12·S-13 목록용)
++- 제목은 서버 `book.title`(계약 2-6, 긴 이야기)을 먼저 쓴다. 없으면(짧은 이야기) `「{장소}에 간 날」`을 프론트가 만든다 (S-12·S-13 목록용)
+ 
+ ### 기다리는 시간
+ 
+ | 구간 | 프론트 제한 | 실측 (2026-09-29, 이 PC, CPU) |
+ |---|---|---|
+ | 분석 (S-04) | 30초 (`ANALYZE_LIMIT_MS`, S-04 타이머와 같다) | 17초. 게임이 CPU 40%를 쓰던 때라 부풀려진 값. 오전 단독 실측은 검출 2.1~2.6초 |
+-| 이야기 + MP4 (S-08) | 300초 (`STORY_LIMIT_MS`, 백엔드 AI 타임아웃과 같다) | 54초 |
++| 이야기 + MP4 (S-08) | 300초 (`STORY_LIMIT_MS`). 백엔드 로컬 `.env.example` 의 `AI_TIMEOUT_SECONDS`(300)에 맞췄다. 배포 `deploy/.env.prod.example` 은 120, 코드 기본값은 60 이라 배포에서는 백엔드가 먼저 `AI_TIMEOUT` 을 낸다 | 54초 |
+ 
+ ---
+ 
+diff --git a/src/api/index.ts b/src/api/index.ts
+index 3bd6848..40960cf 100644
+--- a/src/api/index.ts
++++ b/src/api/index.ts
+@@ -19,7 +19,8 @@ const POLL_MS = 1500;
+ /** 분석은 S-04 의 30초 타이머 안에서 끝나야 한다 */
+ const ANALYZE_LIMIT_MS = 30_000;
+ /** 이야기는 서버 렌더까지 30~40초 걸린다 (백엔드 프론트엔드-시작하기 3-5).
+- *  백엔드의 AI 타임아웃(300초)보다 길게 기다리지는 않는다 */
++ *  백엔드 로컬 .env.example 의 AI_TIMEOUT_SECONDS(300)보다 길게 기다리지는 않는다.
++ *  배포 값(120)이나 코드 기본값(60)은 더 짧아서 그때는 백엔드가 먼저 끝낸다 */
+ const STORY_LIMIT_MS = 300_000;
+ 
+ /** 화면이 E-01 문구를 고르는 코드를 싣고 던진다 */
+-- 
+2.43.0
+

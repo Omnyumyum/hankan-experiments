@@ -1,0 +1,88 @@
+From 9fcb381bfda322f0689c96938a9a3c6713c18031 Mon Sep 17 00:00:00 2001
+From: Claude <noreply@anthropic.com>
+Date: Tue, 27 Oct 2026 07:58:23 +0000
+Subject: [PATCH 1/6] =?UTF-8?q?0-1:=20=EB=B0=B0=ED=8F=AC=ED=95=9C=20?=
+ =?UTF-8?q?=ED=94=84=EB=A1=A0=ED=8A=B8=EA=B0=80=20=EB=B0=B1=EC=97=94?=
+ =?UTF-8?q?=EB=93=9C=20=EC=A3=BC=EC=86=8C=EB=A5=BC=20=EB=B0=9B=EA=B2=8C=20?=
+ =?UTF-8?q?=ED=95=9C=EB=8B=A4=20(VITE=5FAPI=5FBASE)?=
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+요소 번호: 화면 하나가 아니라 모든 서버 호출 (S-15C 로그인 돌아오기 포함).
+
+- 서버 주소가 "/api/v1" 로 고정이라, 프론트(Static Web Apps)와 백엔드(VM)가
+  따로 있는 배포에서는 서버를 찾지 못했다. 로컬은 vite 프록시라 됐다.
+- VITE_API_BASE 를 읽는다. 비어 있으면 지금처럼 "/api/v1".
+  이름은 백엔드 deploy/README.md 와 같다. 값은 /api/v1 까지 쓴다.
+- 로그인(auth.ts)도 같은 주소를 쓴다.
+---
+ .env.example      | 3 +++
+ src/api/auth.ts   | 4 ++--
+ src/api/index.ts  | 3 ++-
+ src/vite-env.d.ts | 2 ++
+ 4 files changed, 9 insertions(+), 3 deletions(-)
+
+diff --git a/.env.example b/.env.example
+index 20ceee6..8c9af1c 100644
+--- a/.env.example
++++ b/.env.example
+@@ -1,6 +1,9 @@
+ # mock | agent | finetuned
+ VITE_ENGINE=mock
+ 
++# 배포할 때만. 백엔드 주소를 /api/v1 까지 (예: https://api.example.com/api/v1). 비우면 vite 프록시
++VITE_API_BASE=
++
+ # 소셜 로그인 client id. 비어 있는 제공자는 mock 이 아닐 때 버튼을 숨긴다.
+ # 시크릿은 여기 두지 않는다 (백엔드 .env). Redirect URI: {origin}/auth/{kakao|google}/callback
+ # developers.kakao.com → 앱 키 → REST API 키
+diff --git a/src/api/auth.ts b/src/api/auth.ts
+index 82b0e6a..7084e74 100644
+--- a/src/api/auth.ts
++++ b/src/api/auth.ts
+@@ -1,4 +1,4 @@
+-import { ENGINE } from "./index";
++import { BASE, ENGINE } from "./index";
+ 
+ /* 소셜 로그인은 백엔드 `feat/social-login` 브랜치의 계약 2-7·2-8 을 따른다 (dev 에 합쳐지기 전).
+    이메일 로그인(`/auth/login` · `/auth/signup`)은 백엔드에 없다 — 프론트에만 남아 있다.
+@@ -14,7 +14,7 @@ const wait = (ms: number) => new Promise((r) => setTimeout(r, ms));
+ const useMock = ENGINE === "mock";
+ 
+ async function post<T>(path: string, body: unknown): Promise<T> {
+-  const r = await fetch(`/api/v1${path}`, {
++  const r = await fetch(`${BASE}${path}`, {
+     method: "POST",
+     headers: { "Content-Type": "application/json" },
+     body: JSON.stringify(body),
+diff --git a/src/api/index.ts b/src/api/index.ts
+index 83eb472..3bd6848 100644
+--- a/src/api/index.ts
++++ b/src/api/index.ts
+@@ -12,7 +12,8 @@ export const ENGINE = (import.meta.env.VITE_ENGINE ?? "mock") as
+ 
+ const useMock = ENGINE === "mock";
+ 
+-const BASE = "/api/v1";
++/** 배포에서는 백엔드가 다른 주소에 있다 (Static Web Apps 와 VM 이 따로). 비어 있으면 vite 프록시 */
++export const BASE = import.meta.env.VITE_API_BASE || "/api/v1";
+ /** 계약 2-2: 1~2초 간격으로 polling */
+ const POLL_MS = 1500;
+ /** 분석은 S-04 의 30초 타이머 안에서 끝나야 한다 */
+diff --git a/src/vite-env.d.ts b/src/vite-env.d.ts
+index b02c737..21735de 100644
+--- a/src/vite-env.d.ts
++++ b/src/vite-env.d.ts
+@@ -1,6 +1,8 @@
+ /// <reference types="vite/client" />
+ interface ImportMetaEnv {
+   readonly VITE_ENGINE?: "mock" | "agent" | "finetuned";
++  /** 백엔드 API 주소. `/api/v1` 까지 쓴다 (예: https://api.example.com/api/v1). 비우면 `/api/v1` (vite 프록시) */
++  readonly VITE_API_BASE?: string;
+   /** 소셜 로그인 client id. 공개돼도 되는 값이다 (시크릿은 백엔드에만 둔다) */
+   readonly VITE_KAKAO_CLIENT_ID?: string;
+   readonly VITE_GOOGLE_CLIENT_ID?: string;
+-- 
+2.43.0
+

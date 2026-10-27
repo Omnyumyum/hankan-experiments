@@ -1,0 +1,65 @@
+From db58998ffa77f729af8705df0955d437fc6950c8 Mon Sep 17 00:00:00 2001
+From: Claude <noreply@anthropic.com>
+Date: Tue, 27 Oct 2026 07:59:23 +0000
+Subject: [PATCH 3/6] =?UTF-8?q?2-2:=20S-01=20=C2=B7=20S-14=20=EC=86=90=20?=
+ =?UTF-8?q?=ED=9D=94=EB=93=9C=EB=8A=94=20=EC=82=BD=ED=99=94=EB=A5=BC=20?=
+ =?UTF-8?q?=EB=A9=88=EC=B6=98=EB=8B=A4=20(S-01-02)?=
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+요소 번호: S-01-02 캐릭터 인사(삽화 · 고정), S-14 삽화.
+
+- 05 2장 「장식용 움직임 없음」, S-01-02 는 「고정」인데 손이 계속 흔들렸다.
+  S-01 · S-14 에서 Friend 의 wave 를 뺐다. 손을 든 모습은 그대로다.
+- S-04 분석 대기는 예외라 그대로 흔든다.
+- 「움직임 줄이기」(prefers-reduced-motion)는 --dur 만 줄여서 끝없이 도는
+  손은 못 멈췄다. 이 설정이면 .wave-arm 을 멈추는 줄을 더했다 (S-04 포함).
+---
+ src/screens/S01Start.tsx   | 2 +-
+ src/screens/S14Welcome.tsx | 2 +-
+ src/styles/ui.css          | 2 ++
+ 3 files changed, 4 insertions(+), 2 deletions(-)
+
+diff --git a/src/screens/S01Start.tsx b/src/screens/S01Start.tsx
+index 6ab9046..009fde7 100644
+--- a/src/screens/S01Start.tsx
++++ b/src/screens/S01Start.tsx
+@@ -75,7 +75,7 @@ export default function S01Start() {
+       }
+     >
+       <div className="stage">
+-        <div className="illust-wrap"><Friend wave /></div>
++        <div className="illust-wrap"><Friend /></div>
+       </div>
+     </Screen>
+   );
+diff --git a/src/screens/S14Welcome.tsx b/src/screens/S14Welcome.tsx
+index e05c6c6..3d05c2e 100644
+--- a/src/screens/S14Welcome.tsx
++++ b/src/screens/S14Welcome.tsx
+@@ -20,7 +20,7 @@ export default function S14Welcome() {
+           : <BigButton go onClick={() => nav("/login")}>로그인</BigButton>
+       }>
+       <div className="stage">
+-        <div className="illust-wrap"><Friend wave /></div>
++        <div className="illust-wrap"><Friend /></div>
+       </div>
+ 
+       <h1 className="question" style={{ textAlign: "center" }}>
+diff --git a/src/styles/ui.css b/src/styles/ui.css
+index b83cf97..c0708a9 100644
+--- a/src/styles/ui.css
++++ b/src/styles/ui.css
+@@ -268,6 +268,8 @@
+ .illust-wrap { flex: 1; min-height: 0; display: flex; align-items: center; justify-content: center; padding: 16px; }
+ @keyframes wave { 0%, 100% { transform: rotate(0deg) } 50% { transform: rotate(-22deg) } }
+ .wave-arm { animation: wave 1.1s var(--ease) infinite; }
++/* 움직임 줄이기를 켰으면 손도 멈춘다 (--dur 만 줄이면 infinite 는 계속 돈다) */
++@media (prefers-reduced-motion: reduce) { .wave-arm { animation: none; } }
+ 
+ /* 길게 누르기 진행 고리 */
+ .round { position: relative; }
+-- 
+2.43.0
+

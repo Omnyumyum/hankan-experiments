@@ -1,0 +1,61 @@
+From 0582be7a1eaa070b3d823163d36746424881b893 Mon Sep 17 00:00:00 2001
+From: Claude <noreply@anthropic.com>
+Date: Tue, 27 Oct 2026 08:08:55 +0000
+Subject: [PATCH 5/6] =?UTF-8?q?11-1:=20S-10=20=EC=B9=B8=EC=9D=B4=20?=
+ =?UTF-8?q?=EC=A0=95=EB=8B=B5=20=EB=B2=88=ED=98=B8=EB=A5=BC=20=EB=93=9C?=
+ =?UTF-8?q?=EB=9F=AC=EB=82=B4=EC=A7=80=20=EC=95=8A=EA=B2=8C,=20=EC=B2=98?=
+ =?UTF-8?q?=EC=9D=8C=EB=B6=80=ED=84=B0=20=EC=A0=95=EB=8B=B5=EC=9C=BC?=
+ =?UTF-8?q?=EB=A1=9C=20=EC=84=9E=EC=9D=B4=EC=A7=80=20=EC=95=8A=EA=B2=8C=20?=
+ =?UTF-8?q?(S-10-02=20=C2=B7=20S-10-03)?=
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+- S-10-03: 놓은 칸이 「장면 3」처럼 정답 번호를 보여 줬다. 이제 놓은 카드의
+  문장을 보여 준다.
+- S-10-02: sort(() => Math.random() - 0.5) 로 섞어서 처음부터 정답 순서일
+  수 있었다 (2장이면 절반). 고르게 섞고, 정답 순서가 나오면 다시 섞는다.
+- S-10-05 틀렸을 때 말없이 비워지는 것은 05 표 그대로(「원위치로 돌아가고
+  다시 해 볼 수 있다. 부정적 표현을 쓰지 않는다」)라 두었다.
+  한마디나 소리를 더할지는 결정이 필요하다 (F-PLY-05).
+---
+ src/screens/S10Order.tsx | 14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
+
+diff --git a/src/screens/S10Order.tsx b/src/screens/S10Order.tsx
+index 9b4fc54..bae6e80 100644
+--- a/src/screens/S10Order.tsx
++++ b/src/screens/S10Order.tsx
+@@ -28,9 +28,18 @@ export default function S10Order() {
+   }, [story]);
+   const count = Math.min(level === 1 ? 2 : 4, lines.length);
+ 
++  // 섞은 결과가 처음부터 정답 순서면 다시 섞는다 (2장이면 절반이 그대로 맞는다)
+   const cards = useMemo(() => {
+     const src = lines.slice(0, count).map((text, index) => ({ index, text }));
+-    return [...src].sort(() => Math.random() - 0.5);
++    let out = src;
++    while (src.length > 1 && out.every((c, n) => c.index === n)) {
++      out = [...src];
++      for (let i = out.length - 1; i > 0; i--) {
++        const j = Math.floor(Math.random() * (i + 1));
++        [out[i], out[j]] = [out[j], out[i]];
++      }
++    }
++    return out;
+   }, [lines, count]);
+ 
+   const [slots, setSlots] = useState<(number | null)[]>(Array(count).fill(null));
+@@ -96,7 +105,8 @@ export default function S10Order() {
+                 setSlots(slots.map((x, m) => (m === n ? null : x)));
+               }
+             }}>
+-            {v === null ? n + 1 : `장면 ${v + 1}`}
++            {/* 놓은 카드는 그 문장으로 보인다. 「장면 3」처럼 쓰면 정답 번호가 드러난다 */}
++            {v === null ? n + 1 : <span className="hint" style={{ fontSize: "var(--t-label)", color: "var(--ink)" }}>{lines[v]}</span>}
+           </button>
+         ))}
+       </div>
+-- 
+2.43.0
+

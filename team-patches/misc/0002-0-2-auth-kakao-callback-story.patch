@@ -1,0 +1,39 @@
+From aef41c005674a1efbacd7b881c0b9d45a74e2db8 Mon Sep 17 00:00:00 2001
+From: Claude <noreply@anthropic.com>
+Date: Tue, 27 Oct 2026 07:58:42 +0000
+Subject: [PATCH 2/6] =?UTF-8?q?0-2:=20=EB=B0=B0=ED=8F=AC=EC=97=90=EC=84=9C?=
+ =?UTF-8?q?=20/auth/kakao/callback=20=C2=B7=20/story=20=EB=A1=9C=20?=
+ =?UTF-8?q?=EB=B0=94=EB=A1=9C=20=EB=93=A4=EC=96=B4=EC=99=80=EB=8F=84=20?=
+ =?UTF-8?q?=EC=95=B1=EC=9D=B4=20=EB=9C=A8=EA=B2=8C=20=ED=95=9C=EB=8B=A4?=
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+요소 번호: S-15C (소셜 로그인 돌아오기, /auth/{provider}/callback) 외 모든 경로.
+
+- Static Web Apps 는 모르는 경로를 404 로 돌려줄 수 있다. 카카오·구글은
+  로그인 뒤 /auth/{provider}/callback 으로 바로 돌아오므로 여기서 막힌다.
+- public/staticwebapp.config.json 을 더했다. 빌드하면 dist 맨 위에 들어간다.
+  화면 경로는 index.html 로 되돌리고, 그림·소리 폴더(assets, bg, brand,
+  icons, sfx)와 /api 는 되돌리지 않는다.
+- 404 가 실제로 나는지는 배포해 보지 않아 확인하지 못했다.
+---
+ public/staticwebapp.config.json | 6 ++++++
+ 1 file changed, 6 insertions(+)
+ create mode 100644 public/staticwebapp.config.json
+
+diff --git a/public/staticwebapp.config.json b/public/staticwebapp.config.json
+new file mode 100644
+index 0000000..17c9d53
+--- /dev/null
++++ b/public/staticwebapp.config.json
+@@ -0,0 +1,6 @@
++{
++  "navigationFallback": {
++    "rewrite": "/index.html",
++    "exclude": ["/assets/*", "/bg/*", "/brand/*", "/icons/*", "/sfx/*", "/api/*"]
++  }
++}
+-- 
+2.43.0
+
