@@ -253,12 +253,14 @@ def clean_photo(img, notes=None):
         return img
     # 깨끗한 그림이면 손대지 않는다: 종이가 사진을 채움 · 맨 종이 밝기가 고름 · 선이 진함 · 공책 줄 없음
     # (줄로 잡힌 것이 그림만큼 진하면 빗금 · 털 같은 그림 선이라 공책으로 치지 않는다)
-    bare = paper & (cv2.dilate(ink0, _disk(5)) == 0)
+    bare = paper & (cv2.dilate(ink, _disk(5)) == 0)
     if ruled and (rules0 & ink0).any() and (ink0 & (rules0 == 0)).any():
         ruled = np.median(dark[(rules0 & ink0) > 0]) < 0.6 * np.median(dark[(ink0 & (rules0 == 0)) > 0])
-    if pfrac > 0.97 and bare.sum() > 0.2 * bare.size and np.percentile(L[bare], 98) - np.percentile(L[bare], 2) < 15 \
-            and np.median((bgC - L)[ink > 0]) > 50 and not ruled:
-        return img
+    if pfrac > 0.97 and bare.sum() > 0.2 * bare.size and not ruled:
+        flat = np.percentile(L[bare], 95) - np.percentile(L[bare], 5)
+        # 맨 종이가 완전히 고르면 사진이 아니라 그린 파일이다. 아니면 종이가 고르고 선이 진해야 깨끗한 그림
+        if flat <= 3 or (flat < 15 and np.median((bgC - L)[(bgC - L > 25) & paper]) > 50):
+            return img
     # 5) 그림 하나 고르기: 가까운 선끼리 묶어 가장 큰 묶음(가운데일수록, 사진 테두리에 안 닿을수록 더 쳐줌) + 그 둘레 안의 묶음
     r = max(3, int(0.03 * size) | 1)
     n, gl, st, cent = cv2.connectedComponentsWithStats(cv2.dilate(ink, _disk(r)))
