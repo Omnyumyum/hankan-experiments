@@ -28,3 +28,33 @@
 {"combo": "8112", "fingerprint": "406ade0de28a", "verdict": "pass", "issues": []}
 {"combo": "8113", "fingerprint": "f83095ff4cb4", "verdict": "pass", "issues": []}
 {"combo": "8114", "fingerprint": "e5d4d782c43e", "verdict": "pass", "issues": []}
+{"combo": "8121", "fingerprint": "106e1bc2aa3e", "verdict": "pass", "issues": []}
+{"combo": "8122", "fingerprint": "8c7498473b06", "verdict": "pass", "issues": []}
+{"combo": "8123", "fingerprint": "4077db76b60c", "verdict": "pass", "issues": []}
+{"combo": "8124", "fingerprint": "69a848b0e17c", "verdict": "pass", "issues": []}
+{"combo": "8131", "fingerprint": "2203d125913e", "verdict": "pass", "issues": []}
+{"combo": "8132", "fingerprint": "aa00f836b442", "verdict": "pass", "issues": []}
+{"combo": "8133", "fingerprint": "ea4a6a7837fb", "verdict": "pass", "issues": []}
+{"combo": "8134", "fingerprint": "36a32cb546e3", "verdict": "pass", "issues": []}
+{"combo": "8141", "fingerprint": "bbee7fe2b839", "verdict": "pass", "issues": []}
+{"combo": "8142", "fingerprint": "030ae58bfe50", "verdict": "pass", "issues": []}
+{"combo": "8143", "fingerprint": "a246027034dd", "verdict": "pass", "issues": []}
+{"combo": "8144", "fingerprint": "e7007f8a1e43", "verdict": "pass", "issues": []}
+{"combo": "8211", "fingerprint": "cf593721c474", "verdict": "pass", "issues": []}
+{"combo": "8212", "fingerprint": "981e9e7d10d5", "verdict": "pass", "issues": []}
+{"combo": "8213", "fingerprint": "db0e17fdd9f4", "verdict": "pass", "issues": []}
+{"combo": "8214", "fingerprint": "ce7a82eb1b00", "verdict": "pass", "issues": []}
+{"combo": "8221", "fingerprint": "b694f5c9e385", "verdict": "check", "issues": [{"version": "short-characters", "type": "어색한 문장", "quote": "[주인공] “왜 울어?” 하고 물어도 친구가 울고 있었어요.", "why": "우는 친구가 나오기도 전에 '왜 울어?'를 먼저 물어서 앞뒤 순서가 꼬였어요."}]}
+{"combo": "8222", "fingerprint": "d6680fc5777d", "verdict": "check", "issues": [{"version": "long-characters", "type": "이름 자리", "quote": "친구 손이 따뜻해서 {이름}도 모르게 웃음이 났어요.", "why": "'나도 모르게'를 이름으로 바꿔 '○○도 모르게'가 되어 어색해요('저도 모르게'가 자연스러워요)."}]}
+{"combo": "8223", "fingerprint": "e7662533ff03", "verdict": "pass", "issues": []}
+{"combo": "8224", "fingerprint": "e3ac7580b628", "verdict": "pass", "issues": []}
+{"combo": "8231", "fingerprint": "c8a17b66e8eb", "verdict": "pass", "issues": []}
+{"combo": "8232", "fingerprint": "2ed3171d5fbc", "verdict": "pass", "issues": []}
+{"combo": "8233", "fingerprint": "7027faa853f3", "verdict": "pass", "issues": []}
+{"combo": "8234", "fingerprint": "21a017a9e80f", "verdict": "pass", "issues": []}
+{"combo": "8241", "fingerprint": "ed658c182b43", "verdict": "pass", "issues": []}
+{"combo": "8242", "fingerprint": "85385179fb1c", "verdict": "pass", "issues": []}
+{"combo": "8243", "fingerprint": "7c0ff81bda51", "verdict": "pass", "issues": []}
+{"combo": "8244", "fingerprint": "4e5cda34a210", "verdict": "pass", "issues": []}
+{"combo": "8311", "fingerprint": "4f0d6cb272b7", "verdict": "pass", "issues": []}
+{"combo": "8312", "fingerprint": "f782cd89358b", "verdict": "pass", "issues": []}
