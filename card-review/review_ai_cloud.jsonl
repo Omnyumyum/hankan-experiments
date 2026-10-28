@@ -1,0 +1,30 @@
+{"combo": "7323", "fingerprint": "cf2c32239b8b", "verdict": "pass", "issues": []}
+{"combo": "7324", "fingerprint": "5e7b3bbc2d57", "verdict": "pass", "issues": []}
+{"combo": "7331", "fingerprint": "96c51e0129bf", "verdict": "pass", "issues": []}
+{"combo": "7332", "fingerprint": "82f3ea742a1b", "verdict": "pass", "issues": []}
+{"combo": "7333", "fingerprint": "80e1ea5e2ca8", "verdict": "check", "issues": [{"version": "all", "type": "어색한 문장", "quote": "고리 별 옆에서 내 별이 깜빡깜빡 빛났어요", "why": "'내 별'이 무엇인지 앞에서 한 번도 나오지 않아 어디로 돌아가는 건지 아이가 알기 어려워요."}]}
+{"combo": "7334", "fingerprint": "d2c3394ec0f4", "verdict": "check", "issues": [{"version": "long-narration", "type": "어색한 문장", "quote": "내가 우주선 앞에 닿자 모두 기뻐했어요", "why": "주인공 혼자뿐인데 '모두'가 누구인지 나오지 않아 앞뒤가 안 맞아요(캐릭터 판도 같음)."}]}
+{"combo": "7341", "fingerprint": "9c74bd36c428", "verdict": "pass", "issues": []}
+{"combo": "7342", "fingerprint": "2019f6b188d7", "verdict": "pass", "issues": []}
+{"combo": "7343", "fingerprint": "a1fbfddfbf70", "verdict": "pass", "issues": []}
+{"combo": "7344", "fingerprint": "c69fef938177", "verdict": "check", "issues": [{"version": "long-narration", "type": "어색한 문장", "quote": "드디어 우리 작은 소행성이 보였어요", "why": "처음부터 작은 소행성 위를 걷고 있었는데 소행성이 다시 '보였다'고 해서 앞뒤가 안 맞아요."}]}
+{"combo": "7411", "fingerprint": "2abef32cf6f6", "verdict": "pass", "issues": []}
+{"combo": "7412", "fingerprint": "79a17460bcab", "verdict": "pass", "issues": []}
+{"combo": "7413", "fingerprint": "3b3ea130d6d3", "verdict": "pass", "issues": []}
+{"combo": "7414", "fingerprint": "b481498fb564", "verdict": "pass", "issues": []}
+{"combo": "7421", "fingerprint": "8195d94ebfdc", "verdict": "check", "issues": [{"version": "short-characters", "type": "어색한 문장", "quote": "해가 떴어요, {이름}{조사:는} [주인공] “와, 해다!” 했어요.", "why": "두 문장이 쉼표로 억지로 붙어 소리 내 읽으면 어색해요."}]}
+{"combo": "7422", "fingerprint": "b460837599d7", "verdict": "pass", "issues": []}
+{"combo": "7423", "fingerprint": "128180119758", "verdict": "pass", "issues": []}
+{"combo": "7424", "fingerprint": "4f2632209731", "verdict": "pass", "issues": []}
+{"combo": "7431", "fingerprint": "a637a39e0460", "verdict": "pass", "issues": []}
+{"combo": "7432", "fingerprint": "0087b3a1413b", "verdict": "check", "issues": [{"version": "long-characters", "type": "이름 자리", "quote": "깜깜한 길을 걸어온 발자국이 {이름}{조사:는} 참 자랑스러웠어요.", "why": "이름이 문장 한가운데 끼어 '발자국이 ○○는 자랑스러웠어요'로 읽혀 어색해요."}]}
+{"combo": "7433", "fingerprint": "f580fe81646c", "verdict": "pass", "issues": []}
+{"combo": "7434", "fingerprint": "75df6a74dd16", "verdict": "pass", "issues": []}
+{"combo": "7441", "fingerprint": "096a6418169f", "verdict": "pass", "issues": []}
+{"combo": "7442", "fingerprint": "1f320898970b", "verdict": "pass", "issues": []}
+{"combo": "7443", "fingerprint": "357e4c979f71", "verdict": "pass", "issues": []}
+{"combo": "7444", "fingerprint": "75824b095878", "verdict": "check", "issues": [{"version": "long-characters", "type": "어색한 문장", "quote": "[주인공] “해냈다! 가만히 기다리길” [주인공] “정말 잘했어.”", "why": "한 문장이 두 대사로 잘려 '기다리길'에서 끊겨 읽혀요."}]}
+{"combo": "8111", "fingerprint": "917de60302f2", "verdict": "pass", "issues": []}
+{"combo": "8112", "fingerprint": "406ade0de28a", "verdict": "pass", "issues": []}
+{"combo": "8113", "fingerprint": "f83095ff4cb4", "verdict": "pass", "issues": []}
+{"combo": "8114", "fingerprint": "e5d4d782c43e", "verdict": "pass", "issues": []}
