@@ -147,9 +147,10 @@ def _find_paper(sm):
     return cv2.resize(paper, (ww, hh), interpolation=cv2.INTER_LINEAR) > 127, frac
 
 
-def _rule_lines(ink, size):
+def _rule_lines(ink, size, dark):
     """공책 줄 · 모눈 · 종이 끝까지 가는 곧은 선 (1 = 줄). 둘째 값: 같은 방향 줄이 여럿(공책)인가."""
     rules = np.zeros_like(ink)
+    ink_dark = np.median(dark[ink > 0]) if ink.any() else 0
     ruled = False
     lines = cv2.HoughLinesP(ink * 255, 1, np.pi / 180, int(0.15 * size), minLineLength=int(0.3 * size), maxLineGap=int(0.015 * size))
     if lines is not None:
@@ -163,8 +164,14 @@ def _rule_lines(ink, size):
             off = np.sort(mx_[same] * np.sin(th_[i]) - my_[same] * np.cos(th_[i]))  # 선에 수직인 방향의 자리
             par = 1 + (np.diff(off) > 6).sum() >= 4  # 굵은 선 하나가 허프 선 여러 개로 나오는 것은 하나로 센다
             ruled |= bool(par)
-            if par or ln[i] > 0.45 * size:
-                x0, y0, x1, y1 = segs[i].astype(int)
+            x0, y0, x1, y1 = segs[i].astype(int)
+            if not par and ln[i] > 0.45 * size:  # 긴 선 하나: 그림 선보다 연할 때만 (종이 끝 · 여백 줄). 그림의 긴 선(말 목 · 별)은 남긴다
+                t = np.linspace(0, 1, int(ln[i]))
+                xs = np.clip(np.round(x0 + t * (x1 - x0)).astype(int), 0, ink.shape[1] - 1)
+                ys = np.clip(np.round(y0 + t * (y1 - y0)).astype(int), 0, ink.shape[0] - 1)
+                on = ink[ys, xs] > 0
+                par = on.any() and np.median(dark[ys, xs][on]) < 0.6 * ink_dark
+            if par:
                 cv2.line(rules, (x0, y0), (x1, y1), 1, 3)
     # 끊긴 줄(허프가 놓침): 가로(세로)로 긴 가는 선이 고른 간격으로 5개 넘게
     lk = max(9, int(0.06 * size))
@@ -221,8 +228,8 @@ def clean_photo(img, notes=None):
     if pm0.sum() > 50:
         sg = 0.06 * size
         wg = cv2.GaussianBlur(pm0.astype(np.float32), (0, 0), sg)
-        plab = cv2.GaussianBlur(lab * pm0[..., None], (0, 0), sg) / np.maximum(wg, 1e-4)[..., None]
-        plab = np.where((wg > 1e-3)[..., None], plab, np.median(lab[pm0], axis=0))
+        # 종이가 먼 곳은 종이 색 중앙값으로 부드럽게 넘어간다 (뚝 끊기면 그 경계가 새 선이 된다)
+        plab = (cv2.GaussianBlur(lab * pm0[..., None], (0, 0), sg) + 1e-2 * np.median(lab[pm0], axis=0)) / (wg + 1e-2)[..., None]
         fill = (np.hypot(lab[..., 1] - plab[..., 1], lab[..., 2] - plab[..., 2]) > 15) | (plab[..., 0] - L > 60)
         fill = cv2.morphologyEx(fill.astype(np.uint8), cv2.MORPH_OPEN, np.ones((3, 3), np.uint8))
         # 사진 테두리에 닿는 덩어리는 칠한 곳이 아니라 책상 · 그림자 · 배경이다
@@ -233,7 +240,7 @@ def clean_photo(img, notes=None):
         ink |= fill_in
     ink &= paper
     # 4) 공책 줄 (칠한 곳은 안 자른다. 줄보다 훨씬 진한 곳은 줄 위를 지나는 그림 선이라 남긴다)
-    rules, ruled = _rule_lines(ink0 & paper, size)
+    rules, ruled = _rule_lines(ink0 & paper, size, dark)
     rules[fill_in > 0] = 0
     if (rules & ink0).any():
         rd = np.median(dark[(rules & ink0) > 0])
@@ -275,8 +282,7 @@ def clean_photo(img, notes=None):
     fs = sm.astype(np.float32)
     sig = 0.04 * size
     wgt = cv2.GaussianBlur(pm, (0, 0), sig)
-    pcol = cv2.GaussianBlur(fs * pm[..., None], (0, 0), sig) / np.maximum(wgt, 1e-4)[..., None]
-    pcol = np.where((wgt > 1e-3)[..., None], pcol, np.median(fs[pm > 0], axis=0))
+    pcol = (cv2.GaussianBlur(fs * pm[..., None], (0, 0), sig) + 1e-2 * np.median(fs[pm > 0], axis=0)) / (wgt + 1e-2)[..., None]
     # 7) 고른 그림만 남기고 나머지는 종이 색. 어두운 선은 종이보다 적어도 80 어둡게, 나머지(칠한 곳)는 선 어두움 중앙값이 60 쯤 되게
     gain = float(np.clip(60 / max(1.0, np.median(dark[sel])), 1, 4))
     line = sel & ink_d
