@@ -24,7 +24,7 @@ SHOW = ["orig", "fill", "lined", "tilt", "eraser", "text", "mix_mild", "mix_heav
 
 
 def cell(img, gt, label):
-    pre = rt.paper_only(img) if hasattr(rt, "paper_only") else img
+    pre = rt.clean_photo(img) if hasattr(rt, "clean_photo") else rt.paper_only(img) if hasattr(rt, "paper_only") else img
     vis = pre.copy()
     try:
         d = rt.Drawing(img)

@@ -101,10 +101,225 @@ def paper_only(img, notes=None):
     return np.clip(np.where(m[..., None], img.astype(np.float32), est), 0, 255).astype(np.uint8)
 
 
+def _disk(k):
+    return cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (k, k))
+
+
+def _fill_holes(m):
+    ff = np.pad(m, 1)
+    cv2.floodFill(ff, None, (0, 0), 128)
+    m[ff[1:-1, 1:-1] == 0] = 255
+    return m
+
+
+def _find_paper(sm):
+    """작은 그림(긴 변 128px)에서 종이 영역을 찾는다. 못 믿겠으면 사진 전체를 종이로 본다."""
+    hh, ww = sm.shape[:2]
+    size = max(hh, ww)
+    s2 = 128 / size
+    big = cv2.morphologyEx(sm, cv2.MORPH_CLOSE, _disk(max(5, int(0.08 * size) | 1)))  # 그림 선을 지운 바탕
+    tiny = cv2.GaussianBlur(cv2.resize(big, (max(1, round(ww * s2)), max(1, round(hh * s2))), interpolation=cv2.INTER_AREA), (3, 3), 0)
+    th, tw = tiny.shape[:2]
+    # 그림자는 밝기만 바뀌고 색은 그대로 → 밝기 차이를 1/3 로 줄여서, 가운데 밝은 곳 여러 점부터 색이 천천히 바뀌는 데까지 흘려 채운다
+    tlab = cv2.cvtColor(tiny, cv2.COLOR_BGR2LAB).astype(np.float32)
+    tl = tlab[..., 0]
+    tq = np.dstack([tl / 3, tlab[..., 1], tlab[..., 2]]).astype(np.uint8)
+    cy0, cy1, cx0, cx1 = th // 4, th - th // 4, tw // 4, tw - tw // 4
+    cen = cv2.blur(tl, (5, 5))[cy0:cy1, cx0:cx1]
+    fm = np.zeros((th + 2, tw + 2), np.uint8)
+    cand = np.argwhere(cen >= cen.max() - 8)
+    for yy, xx in cand[:: max(1, len(cand) // 8)]:
+        if fm[yy + cy0 + 1, xx + cx0 + 1]:
+            continue
+        cv2.floodFill(tq, fm, (int(xx + cx0), int(yy + cy0)), 0, (3, 3, 3), (3, 3, 3), 8 | cv2.FLOODFILL_MASK_ONLY | (255 << 8))
+    paper = _fill_holes(cv2.morphologyEx(fm[1:-1, 1:-1], cv2.MORPH_CLOSE, _disk(5)))
+    frac = (paper > 0).mean()
+    ok = 0.05 <= frac
+    if ok and frac < 0.97:  # 종이로 믿으려면: 바깥보다 밝거나(책상) 바깥이 더 얼룩덜룩하고(무늬 천), 모양이 네모에 가까워야
+        pin, pout = paper > 0, paper == 0
+        raw = cv2.cvtColor(cv2.resize(sm, (tw, th), interpolation=cv2.INTER_AREA), cv2.COLOR_BGR2GRAY).astype(np.float32)
+        tex = np.abs(raw - cv2.blur(raw, (5, 5)))
+        ok = np.median(tl[pin]) - np.median(tl[pout]) > 15 or np.mean(tex[pout]) > 1.5 * np.mean(tex[pin])
+        ok = ok and pin.sum() >= 0.75 * cv2.contourArea(cv2.convexHull(cv2.findNonZero(paper)))
+    if not ok:
+        paper[:] = 255
+        frac = 1.0
+    else:
+        paper = cv2.erode(paper, _disk(3))  # 종이 가장자리 선 · 그림자 띠도 뺀다
+    return cv2.resize(paper, (ww, hh), interpolation=cv2.INTER_LINEAR) > 127, frac
+
+
+def _rule_lines(ink, size, dark):
+    """공책 줄 · 모눈 · 종이 끝까지 가는 곧은 선 (1 = 줄). 둘째 값: 같은 방향 줄이 여럿(공책)인가."""
+    rules = np.zeros_like(ink)
+    ink_dark = np.median(dark[ink > 0]) if ink.any() else 0
+    ruled = False
+    lines = cv2.HoughLinesP(ink * 255, 1, np.pi / 180, int(0.15 * size), minLineLength=int(0.3 * size), maxLineGap=int(0.015 * size))
+    if lines is not None:
+        segs = lines.reshape(-1, 4).astype(np.float32)
+        ang = np.degrees(np.arctan2(segs[:, 3] - segs[:, 1], segs[:, 2] - segs[:, 0])) % 180
+        ln = np.hypot(segs[:, 2] - segs[:, 0], segs[:, 3] - segs[:, 1])
+        th_ = np.radians(ang)
+        mx_, my_ = (segs[:, 0] + segs[:, 2]) / 2, (segs[:, 1] + segs[:, 3]) / 2
+        for i in range(len(segs)):  # 같은 방향 선이 서로 다른 자리에 4개 넘게 있거나, 사진 반쯤 되는 긴 선
+            same = np.abs((ang - ang[i] + 90) % 180 - 90) < 3
+            off = np.sort(mx_[same] * np.sin(th_[i]) - my_[same] * np.cos(th_[i]))  # 선에 수직인 방향의 자리
+            par = 1 + (np.diff(off) > 6).sum() >= 4  # 굵은 선 하나가 허프 선 여러 개로 나오는 것은 하나로 센다
+            ruled |= bool(par)
+            x0, y0, x1, y1 = segs[i].astype(int)
+            if not par and ln[i] > 0.45 * size:  # 긴 선 하나: 그림 선보다 연할 때만 (종이 끝 · 여백 줄). 그림의 긴 선(말 목 · 별)은 남긴다
+                t = np.linspace(0, 1, int(ln[i]))
+                xs = np.clip(np.round(x0 + t * (x1 - x0)).astype(int), 0, ink.shape[1] - 1)
+                ys = np.clip(np.round(y0 + t * (y1 - y0)).astype(int), 0, ink.shape[0] - 1)
+                on = ink[ys, xs] > 0
+                par = on.any() and np.median(dark[ys, xs][on]) < 0.6 * ink_dark
+            if par:
+                cv2.line(rules, (x0, y0), (x1, y1), 1, 3)
+    # 끊긴 줄(허프가 놓침): 가로(세로)로 긴 가는 선이 고른 간격으로 5개 넘게
+    lk = max(9, int(0.06 * size))
+    for ax, ker in ((1, np.ones((1, lk), np.uint8)), (0, np.ones((lk, 1), np.uint8))):
+        n, lab, st, cen = cv2.connectedComponentsWithStats(cv2.morphologyEx(ink, cv2.MORPH_OPEN, ker))
+        ext = st[:, 2] if ax == 1 else st[:, 3]
+        longs = [i for i in range(1, n) if ext[i] >= 0.2 * size and st[i, 4] / max(ext[i], 1) < 3.5]
+        if len(longs) < 5:
+            continue
+        gaps = np.diff(np.sort(cen[longs, 1 - ax]))
+        gaps = gaps[gaps > 3]
+        if len(gaps) >= 4 and np.std(gaps) < 0.35 * np.median(gaps):
+            rules[np.isin(lab, longs)] = 1
+            ruled = True
+    return rules, ruled
+
+
+def clean_photo(img, notes=None):
+    """종이 그림 사진을 스캔한 그림처럼 정리한다 (실제 아이 그림 사진 Meta 에서 마스크 실패 45%).
+    종이 밖 · 공책 줄 · 떨어진 다른 그림 · 글자를 종이 색으로 지우고, 연한 선은 진하게 한다.
+    깨끗한 그림(흰 종이를 꽉 채운 진한 선)은 그대로 돌려준다. 크기 · 좌표는 바꾸지 않는다.
+    판단은 긴 변 512px 로 줄인 그림에서 하고, 결과는 원래 크기로 만든다."""
+    img = paper_only(img, notes)
+    h, w = img.shape[:2]
+    s = min(1.0, 512 / max(h, w))
+    sm = cv2.resize(img, (round(w * s), round(h * s)), interpolation=cv2.INTER_AREA) if s < 1 else img
+    hh, ww = sm.shape[:2]
+    size = max(hh, ww)
+    lab = cv2.cvtColor(sm, cv2.COLOR_BGR2LAB).astype(np.float32)
+    L = lab[..., 0]
+    # 1) 선: 바탕(선 굵기보다 큰 닫기로 선을 지운 밝기)보다 어두운 곳 + 둘레와 색이 다른 곳. 그림자 · 조명은 바탕이 따라간다
+    k = max(5, int(0.025 * size) | 1)
+    bgC = cv2.blur(cv2.morphologyEx(L, cv2.MORPH_CLOSE, _disk(k)), (k, k))
+    # 선을 찾는 바탕은 중앙값(지우개 자국 · 그림자 경계처럼 넓고 연한 얼룩은 바탕이 된다). 단 닫기 바탕보다 25 넘게 어둡지는 않게
+    bgL = np.maximum(cv2.medianBlur(L.astype(np.uint8), k).astype(np.float32), bgC - 25)
+    dark = np.maximum(bgL - L, 0)
+    bga = cv2.medianBlur(lab[..., 1].astype(np.uint8), k)
+    bgb = cv2.medianBlur(lab[..., 2].astype(np.uint8), k)
+    chroma = np.hypot(lab[..., 1] - bga, lab[..., 2] - bgb)
+    noise = 1.48 * np.median(np.abs(dark - np.median(dark)))
+    ink_d = dark > max(7.0, 4 * noise)
+    ink0 = (ink_d | (chroma > 18)).astype(np.uint8)
+    # 2) 종이
+    paper, pfrac = _find_paper(sm)
+    # 3) 넓게 칠한 곳: 바탕 밝기에 묻혀 선으로 안 잡힌다(가운데가 빠져 그림이 조각남) → 종이 색과 색이 다르거나 아주 어두운 곳을 더한다
+    ink = ink0.copy()
+    fill_in = np.zeros_like(ink)
+    plab = None
+    pm0 = paper & (cv2.dilate(ink0, _disk(5)) == 0)
+    if pm0.sum() > 50:
+        pm0 &= np.linalg.norm(lab - np.median(lab[pm0], axis=0), axis=-1) < 20
+    if pm0.sum() > 50:
+        sg = 0.06 * size
+        wg = cv2.GaussianBlur(pm0.astype(np.float32), (0, 0), sg)
+        # 종이가 먼 곳은 종이 색 중앙값으로 부드럽게 넘어간다 (뚝 끊기면 그 경계가 새 선이 된다)
+        plab = (cv2.GaussianBlur(lab * pm0[..., None], (0, 0), sg) + 1e-2 * np.median(lab[pm0], axis=0)) / (wg + 1e-2)[..., None]
+        fill = (np.hypot(lab[..., 1] - plab[..., 1], lab[..., 2] - plab[..., 2]) > 15) | (plab[..., 0] - L > 60)
+        fill = cv2.morphologyEx(fill.astype(np.uint8), cv2.MORPH_OPEN, np.ones((3, 3), np.uint8))
+        # 사진 테두리에 닿는 덩어리는 칠한 곳이 아니라 책상 · 그림자 · 배경이다
+        nf, fl, fst, _ = cv2.connectedComponentsWithStats(fill)
+        edge = (fst[:, 0] <= 1) | (fst[:, 1] <= 1) | (fst[:, 0] + fst[:, 2] >= ww - 1) | (fst[:, 1] + fst[:, 3] >= hh - 1)
+        edge[0] = True
+        fill_in = ((~edge[fl]) & (ink0 == 0)).astype(np.uint8)
+        ink |= fill_in
+    ink &= paper
+    # 4) 공책 줄 (칠한 곳은 안 자른다. 줄보다 훨씬 진한 곳은 줄 위를 지나는 그림 선이라 남긴다)
+    rules, ruled = _rule_lines(ink0 & paper, size, dark)
+    rules0 = rules.copy()
+    rules[fill_in > 0] = 0
+    if (rules & ink0).any():
+        rd = np.median(dark[(rules & ink0) > 0])
+        rules[dark > max(1.6 * rd, rd + 15)] = 0
+    has_rules = rules.any()
+    ink[rules > 0] = 0
+    n, lab_i, st, _ = cv2.connectedComponentsWithStats(ink)
+    small = np.zeros(n, bool)
+    small[1:] = st[1:, cv2.CC_STAT_AREA] < max(4, 0.00005 * size * size)
+    ink[small[lab_i]] = 0
+    if not ink.any():
+        return img
+    # 깨끗한 그림이면 손대지 않는다: 종이가 사진을 채움 · 맨 종이 밝기가 고름 · 선이 진함 · 공책 줄 없음
+    # (줄로 잡힌 것이 그림만큼 진하면 빗금 · 털 같은 그림 선이라 공책으로 치지 않는다)
+    bare = paper & (cv2.dilate(ink, _disk(5)) == 0)
+    if ruled and (rules0 & ink0).any() and (ink0 & (rules0 == 0)).any():
+        ruled = np.median(dark[(rules0 & ink0) > 0]) < 0.6 * np.median(dark[(ink0 & (rules0 == 0)) > 0])
+    if pfrac > 0.97 and bare.sum() > 0.2 * bare.size and not ruled:
+        flat = np.percentile(L[bare], 95) - np.percentile(L[bare], 5)
+        # 맨 종이가 완전히 고르면 사진이 아니라 그린 파일이다. 아니면 종이가 고르고 선이 진해야 깨끗한 그림
+        if flat <= 3 or (flat < 15 and np.median((bgC - L)[(bgC - L > 25) & paper]) > 50):
+            return img
+    # 5) 그림 하나 고르기: 가까운 선끼리 묶어 가장 큰 묶음(가운데일수록, 사진 테두리에 안 닿을수록 더 쳐줌) + 그 둘레 안의 묶음
+    r = max(3, int(0.03 * size) | 1)
+    n, gl, st, cent = cv2.connectedComponentsWithStats(cv2.dilate(ink, _disk(r)))
+    cnt = np.bincount(gl[ink > 0], minlength=n).astype(np.float32)
+    dc = np.hypot(cent[:, 0] - ww / 2, cent[:, 1] - hh / 2) / size
+    touch = (st[:, 0] <= r) | (st[:, 1] <= r) | (st[:, 0] + st[:, 2] >= ww - r) | (st[:, 1] + st[:, 3] >= hh - r)
+    score = cnt * (1 - 0.6 * dc) * np.where(touch, 0.3, 1.0)
+    score[0] = -1
+    best = int(np.argmax(score))
+    x, y, bw, bh = st[best, :4]
+    mx, my = 0.15 * bw, 0.15 * bh
+    keep_g = [g for g in range(1, n) if x - mx <= cent[g, 0] <= x + bw + mx and y - my <= cent[g, 1] <= y + bh + my]
+    sel = np.isin(gl, keep_g) & (ink > 0)
+    region = _fill_holes(cv2.morphologyEx(sel.astype(np.uint8) * 255, cv2.MORPH_CLOSE, _disk(r)))
+    region = cv2.dilate(region, _disk(5))
+    # 6) 종이 색 (선 · 칠한 곳을 뺀 종이를 넓게 흐려서)
+    if plab is not None:
+        pm = (paper & (cv2.dilate(ink, _disk(5)) == 0) & (np.linalg.norm(lab - plab, axis=-1) < 15)).astype(np.float32)
+    else:
+        pm = (paper & (cv2.dilate(ink, _disk(5)) == 0) & (chroma < 12)).astype(np.float32)
+    if pm.sum() < 50:
+        pm = np.ones_like(pm)
+    fs = sm.astype(np.float32)
+    sig = 0.04 * size
+    wgt = cv2.GaussianBlur(pm, (0, 0), sig)
+    pcol = (cv2.GaussianBlur(fs * pm[..., None], (0, 0), sig) + 1e-2 * np.median(fs[pm > 0], axis=0)) / (wgt + 1e-2)[..., None]
+    # 7) 고른 그림만 남기고 나머지는 종이 색. 어두운 선은 종이보다 적어도 80 어둡게, 나머지(칠한 곳)는 선 어두움 중앙값이 60 쯤 되게
+    gain = float(np.clip(60 / max(1.0, np.median(dark[sel])), 1, 4))
+    line = sel & ink_d
+    if line.any():  # 그림 선보다 훨씬 연한 것(지우개 자국 · 비친 뒷면)은 진하게 하지 않는다
+        line &= dark >= 0.35 * np.median(dark[line])
+    # 가는 선(1~2px)은 shape_rig 의 3×3 열기에서 사라진다 → 한 겹 굵게
+    thin = cv2.morphologyEx(line.astype(np.uint8), cv2.MORPH_OPEN, np.ones((3, 3), np.uint8)).sum() < 0.5 * line.sum()
+    if thin:
+        line = cv2.dilate(line.astype(np.uint8), np.ones((3, 3), np.uint8)) > 0
+    pcol_f = cv2.resize(pcol, (w, h), interpolation=cv2.INTER_LINEAR)
+    keep = cv2.resize(region, (w, h), interpolation=cv2.INTER_LINEAR) > 127
+    line_f = cv2.resize(line.astype(np.uint8) * 255, (w, h), interpolation=cv2.INTER_LINEAR) > 127
+    if has_rules:
+        keep &= cv2.resize(rules * 255, (w, h), interpolation=cv2.INTER_LINEAR) <= 127
+    f = img.astype(np.float32)
+    if thin:
+        kk = max(3, int(round(1 / s)) | 1)
+        f = np.where(line_f[..., None], cv2.erode(img, np.ones((kk, kk), np.uint8)).astype(np.float32), f)
+    d = pcol_f - f
+    fac = np.where(line_f, np.clip(80 / np.maximum(d.mean(-1), 1), gain, 6), gain)
+    out = np.clip(np.where(keep[..., None], pcol_f - fac[..., None] * d, pcol_f), 0, 255).astype(np.uint8)
+    if notes is not None:
+        notes.append(f"사진 정리 (줄 {'지움' if has_rules else '없음'}, 선 진하게 ×{gain:.1f})")
+    return out
+
+
 class Drawing:
     def __init__(self, img):
         self.notes = []
-        img = paper_only(img, self.notes)
+        img = clean_photo(img, self.notes)
         self.crop, self.mask, self.alpha = sr.crop_and_mask(img, self.notes)
         g = cv2.cvtColor(self.crop, cv2.COLOR_BGR2GRAY)
         self.ink = cv2.adaptiveThreshold(g, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY_INV, 41, 9)
