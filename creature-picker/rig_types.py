@@ -238,6 +238,7 @@ def clean_photo(img, notes=None):
     ink &= paper
     # 4) 공책 줄 (칠한 곳은 안 자른다. 줄보다 훨씬 진한 곳은 줄 위를 지나는 그림 선이라 남긴다)
     rules, ruled = _rule_lines(ink0 & paper, size, dark)
+    rules0 = rules.copy()
     rules[fill_in > 0] = 0
     if (rules & ink0).any():
         rd = np.median(dark[(rules & ink0) > 0])
@@ -250,9 +251,13 @@ def clean_photo(img, notes=None):
     ink[small[lab_i]] = 0
     if not ink.any():
         return img
-    # 깨끗한 그림이면 손대지 않는다: 종이가 사진을 채움 · 밝기 고름 · 선이 진함 · 줄 없음
-    pl = bgC[paper]
-    if pfrac > 0.97 and np.percentile(pl, 98) - np.percentile(pl, 2) < 15 and np.median((bgC - L)[ink > 0]) > 50 and not ruled:
+    # 깨끗한 그림이면 손대지 않는다: 종이가 사진을 채움 · 맨 종이 밝기가 고름 · 선이 진함 · 공책 줄 없음
+    # (줄로 잡힌 것이 그림만큼 진하면 빗금 · 털 같은 그림 선이라 공책으로 치지 않는다)
+    bare = paper & (cv2.dilate(ink0, _disk(5)) == 0)
+    if ruled and (rules0 & ink0).any() and (ink0 & (rules0 == 0)).any():
+        ruled = np.median(dark[(rules0 & ink0) > 0]) < 0.6 * np.median(dark[(ink0 & (rules0 == 0)) > 0])
+    if pfrac > 0.97 and bare.sum() > 0.2 * bare.size and np.percentile(L[bare], 98) - np.percentile(L[bare], 2) < 15 \
+            and np.median((bgC - L)[ink > 0]) > 50 and not ruled:
         return img
     # 5) 그림 하나 고르기: 가까운 선끼리 묶어 가장 큰 묶음(가운데일수록, 사진 테두리에 안 닿을수록 더 쳐줌) + 그 둘레 안의 묶음
     r = max(3, int(0.03 * size) | 1)
