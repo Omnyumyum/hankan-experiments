@@ -148,15 +148,18 @@ def _find_paper(sm):
 
 
 def _rule_lines(ink, size):
-    """공책 줄 · 모눈 · 종이 끝까지 가는 곧은 선 (1 = 줄)."""
+    """공책 줄 · 모눈 · 종이 끝까지 가는 곧은 선 (1 = 줄). 둘째 값: 같은 방향 줄이 여럿(공책)인가."""
     rules = np.zeros_like(ink)
+    ruled = False
     lines = cv2.HoughLinesP(ink * 255, 1, np.pi / 180, int(0.15 * size), minLineLength=int(0.3 * size), maxLineGap=int(0.015 * size))
     if lines is not None:
         segs = lines.reshape(-1, 4).astype(np.float32)
         ang = np.degrees(np.arctan2(segs[:, 3] - segs[:, 1], segs[:, 2] - segs[:, 0])) % 180
         ln = np.hypot(segs[:, 2] - segs[:, 0], segs[:, 3] - segs[:, 1])
         for i in range(len(segs)):  # 같은 방향 선이 4개 넘게 있거나, 사진 반쯤 되는 긴 선
-            if (np.abs((ang - ang[i] + 90) % 180 - 90) < 3).sum() >= 4 or ln[i] > 0.45 * size:
+            par = (np.abs((ang - ang[i] + 90) % 180 - 90) < 3).sum() >= 4
+            ruled |= bool(par)
+            if par or ln[i] > 0.45 * size:
                 x0, y0, x1, y1 = segs[i].astype(int)
                 cv2.line(rules, (x0, y0), (x1, y1), 1, 3)
     # 끊긴 줄(허프가 놓침): 가로(세로)로 긴 가는 선이 고른 간격으로 5개 넘게
@@ -171,7 +174,8 @@ def _rule_lines(ink, size):
         gaps = gaps[gaps > 3]
         if len(gaps) >= 4 and np.std(gaps) < 0.35 * np.median(gaps):
             rules[np.isin(lab, longs)] = 1
-    return rules
+            ruled = True
+    return rules, ruled
 
 
 def clean_photo(img, notes=None):
@@ -224,15 +228,11 @@ def clean_photo(img, notes=None):
         ink |= fill_in
     ink &= paper
     # 4) 공책 줄 (칠한 곳은 안 자른다. 줄보다 훨씬 진한 곳은 줄 위를 지나는 그림 선이라 남긴다)
-    rules = _rule_lines(ink0 & paper, size)
+    rules, ruled = _rule_lines(ink0 & paper, size)
     rules[fill_in > 0] = 0
     if (rules & ink0).any():
         rd = np.median(dark[(rules & ink0) > 0])
-        rest = (ink0 > 0) & (rules == 0) & paper
-        if rest.any() and rd > 0.6 * np.median(dark[rest]):
-            rules[:] = 0  # 「줄」이 그림만큼 진하다 → 공책 줄이 아니라 그림의 곧은 선 (별 · 막대 다리)
-        else:
-            rules[dark > max(1.6 * rd, rd + 15)] = 0
+        rules[dark > max(1.6 * rd, rd + 15)] = 0
     has_rules = rules.any()
     ink[rules > 0] = 0
     n, lab_i, st, _ = cv2.connectedComponentsWithStats(ink)
@@ -243,7 +243,7 @@ def clean_photo(img, notes=None):
         return img
     # 깨끗한 그림이면 손대지 않는다: 종이가 사진을 채움 · 밝기 고름 · 선이 진함 · 줄 없음
     pl = bgL[paper]
-    if pfrac > 0.97 and np.percentile(pl, 98) - np.percentile(pl, 2) < 15 and np.median(dark[ink > 0]) > 50 and not has_rules:
+    if pfrac > 0.97 and np.percentile(pl, 98) - np.percentile(pl, 2) < 15 and np.median(dark[ink > 0]) > 50 and not ruled:
         return img
     # 5) 그림 하나 고르기: 가까운 선끼리 묶어 가장 큰 묶음(가운데일수록, 사진 테두리에 안 닿을수록 더 쳐줌) + 그 둘레 안의 묶음
     r = max(3, int(0.03 * size) | 1)
@@ -275,7 +275,7 @@ def clean_photo(img, notes=None):
     # 7) 고른 그림만 남기고 나머지는 종이 색. 어두운 선은 종이보다 적어도 80 어둡게, 나머지(칠한 곳)는 선 어두움 중앙값이 60 쯤 되게
     gain = float(np.clip(60 / max(1.0, np.median(dark[sel])), 1, 4))
     line = sel & ink_d
-    if line.any():  # 그림 선보다 훨씬 연한 것(지우개 자국 · 비친 뒷면)은 진하게 하지 않는다
+    if line.any() and "e" not in os.environ.get("PM_T", ""):  # 그림 선보다 훨씬 연한 것(지우개 자국 · 비친 뒷면)은 진하게 하지 않는다
         line &= dark >= 0.35 * np.median(dark[line])
     # 가는 선(1~2px)은 shape_rig 의 3×3 열기에서 사라진다 → 한 겹 굵게
     thin = cv2.morphologyEx(line.astype(np.uint8), cv2.MORPH_OPEN, np.ones((3, 3), np.uint8)).sum() < 0.5 * line.sum()
