@@ -58,3 +58,33 @@
 {"combo": "8244", "fingerprint": "4e5cda34a210", "verdict": "pass", "issues": []}
 {"combo": "8311", "fingerprint": "4f0d6cb272b7", "verdict": "pass", "issues": []}
 {"combo": "8312", "fingerprint": "f782cd89358b", "verdict": "pass", "issues": []}
+{"combo": "8313", "fingerprint": "d43259799a29", "verdict": "pass", "issues": []}
+{"combo": "8314", "fingerprint": "bb8fd8882c7c", "verdict": "check", "issues": [{"version": "all", "type": "고르지 않은 것", "quote": "“엄마!” 하고 불렀지만 내 목소리만 울렸어요.", "why": "카드에 없는 엄마가 처음부터 함께 동굴에 온 것처럼 나오고 결말에도 함께 있어요."}]}
+{"combo": "8321", "fingerprint": "18e7303df66b", "verdict": "pass", "issues": []}
+{"combo": "8322", "fingerprint": "3ffe102e72c7", "verdict": "pass", "issues": []}
+{"combo": "8323", "fingerprint": "d8d571fdc1a5", "verdict": "pass", "issues": []}
+{"combo": "8324", "fingerprint": "19df3c74d337", "verdict": "check", "issues": [{"version": "long-characters", "type": "어색한 문장", "quote": "{이름}{조사:는} \"우아, 동굴은 정말 신기해!\" 하고 감탄했어요.", "why": "1쪽·8쪽 대사만 [주인공] 표시 없이 곧은따옴표로 글 속에 들어가 있어 캐릭터 목소리로 읽을 때 다른 쪽과 다르게 처리될 수 있어요."}]}
+{"combo": "8331", "fingerprint": "319b40fc4328", "verdict": "pass", "issues": []}
+{"combo": "8332", "fingerprint": "2897edb99cf3", "verdict": "pass", "issues": []}
+{"combo": "8333", "fingerprint": "26c773163808", "verdict": "pass", "issues": []}
+{"combo": "8334", "fingerprint": "dfb404e09d7f", "verdict": "pass", "issues": []}
+{"combo": "8341", "fingerprint": "b66c65dc7c39", "verdict": "pass", "issues": []}
+{"combo": "8342", "fingerprint": "d02b0d8c0997", "verdict": "pass", "issues": []}
+{"combo": "8343", "fingerprint": "41b65e0bc6ab", "verdict": "pass", "issues": []}
+{"combo": "8344", "fingerprint": "0a0a4377eb6d", "verdict": "pass", "issues": []}
+{"combo": "8411", "fingerprint": "e8e74c7344c7", "verdict": "check", "issues": [{"version": "all", "type": "안전", "quote": "“바위야, 밤새 지켜 줘서 고마워.”", "why": "아이가 어른 없이 혼자 동굴 입구 바위 뒤에서 밤을 새우고 아침을 맞는 이야기라, 따라 하거나 불안하게 느낄 수 있어요."}]}
+{"combo": "8412", "fingerprint": "e14ede6211fa", "verdict": "pass", "issues": []}
+{"combo": "8413", "fingerprint": "7a9fc809c4e5", "verdict": "pass", "issues": []}
+{"combo": "8414", "fingerprint": "2c4f07034466", "verdict": "pass", "issues": []}
+{"combo": "8421", "fingerprint": "60ad67f4c5ad", "verdict": "check", "issues": [{"version": "long-narration", "type": "어색한 문장", "quote": "“어? 벌써 저녁이 되었나 봐.”", "why": "저녁이 되어 어두워졌다고 해 놓고 입구에 앉자마자 해가 떠서, 밤이 지난 건지 앞뒤가 안 맞아요(캐릭터 판도 같음)."}]}
+{"combo": "8422", "fingerprint": "86e83f1e991e", "verdict": "pass", "issues": []}
+{"combo": "8423", "fingerprint": "b966d65205bf", "verdict": "pass", "issues": []}
+{"combo": "8424", "fingerprint": "332a73ea5355", "verdict": "pass", "issues": []}
+{"combo": "8431", "fingerprint": "191866bf2e72", "verdict": "check", "issues": [{"version": "all", "type": "안전", "quote": "밖에는 작은 별들이 가득 떠 있었어요. … 얼마 뒤, 산 너머로 해가 떴어요.", "why": "아이가 어른 없이 혼자 밤에 동굴 입구에 앉아 아침까지 기다리는 이야기라, 따라 하거나 불안하게 느낄 수 있어요."}]}
+{"combo": "8432", "fingerprint": "baa760a0a86d", "verdict": "pass", "issues": []}
+{"combo": "8433", "fingerprint": "f960ee4844bc", "verdict": "check", "issues": [{"version": "long-narration", "type": "안전", "quote": "빛나는 돌들이 밤새 내 곁을 밝혀 주었어요.", "why": "어두워지자 밖으로 나가지 않고 동굴 더 안쪽으로 들어가 혼자 밤새 잠드는 결말이라 사람이 확인해야 해요(캐릭터 판도 같음)."}]}
+{"combo": "8434", "fingerprint": "3c7a3a26bfae", "verdict": "pass", "issues": []}
+{"combo": "8441", "fingerprint": "7e51b6895027", "verdict": "check", "issues": [{"version": "all", "type": "안전", "quote": "“해가 뜰 때까지 여기 있을 거야.”", "why": "해가 진 뒤 아이가 어른 없이 혼자 동굴에서 밤을 새우는 이야기라, 따라 하거나 불안하게 느낄 수 있어요."}]}
+{"combo": "8442", "fingerprint": "516a18ad030c", "verdict": "check", "issues": [{"version": "all", "type": "안전", "quote": "해가 지면서 동굴이 어두워졌어요.", "why": "밤이 되었는데 아이가 혼자 깜깜한 동굴 속을 계속 걷는 데서 끝나, 집에 돌아가거나 어른을 만나는 장면이 없어요."}]}
+{"combo": "8443", "fingerprint": "59710b5f8562", "verdict": "pass", "issues": []}
+{"combo": "8444", "fingerprint": "5364734ad54d", "verdict": "pass", "issues": []}
