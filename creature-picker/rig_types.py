@@ -156,8 +156,12 @@ def _rule_lines(ink, size):
         segs = lines.reshape(-1, 4).astype(np.float32)
         ang = np.degrees(np.arctan2(segs[:, 3] - segs[:, 1], segs[:, 2] - segs[:, 0])) % 180
         ln = np.hypot(segs[:, 2] - segs[:, 0], segs[:, 3] - segs[:, 1])
-        for i in range(len(segs)):  # 같은 방향 선이 4개 넘게 있거나, 사진 반쯤 되는 긴 선
-            par = (np.abs((ang - ang[i] + 90) % 180 - 90) < 3).sum() >= 4
+        th_ = np.radians(ang)
+        mx_, my_ = (segs[:, 0] + segs[:, 2]) / 2, (segs[:, 1] + segs[:, 3]) / 2
+        for i in range(len(segs)):  # 같은 방향 선이 서로 다른 자리에 4개 넘게 있거나, 사진 반쯤 되는 긴 선
+            same = np.abs((ang - ang[i] + 90) % 180 - 90) < 3
+            off = np.sort(mx_[same] * np.sin(th_[i]) - my_[same] * np.cos(th_[i]))  # 선에 수직인 방향의 자리
+            par = 1 + (np.diff(off) > 6).sum() >= 4  # 굵은 선 하나가 허프 선 여러 개로 나오는 것은 하나로 센다
             ruled |= bool(par)
             if par or ln[i] > 0.45 * size:
                 x0, y0, x1, y1 = segs[i].astype(int)
@@ -193,10 +197,11 @@ def clean_photo(img, notes=None):
     L = lab[..., 0]
     # 1) 선: 바탕(선 굵기보다 큰 닫기로 선을 지운 밝기)보다 어두운 곳 + 둘레와 색이 다른 곳. 그림자 · 조명은 바탕이 따라간다
     k = max(5, int(0.025 * size) | 1)
+    bgC = cv2.blur(cv2.morphologyEx(L, cv2.MORPH_CLOSE, _disk(k)), (k, k))
     if os.environ.get("PM_BG") == "median":
-        bgL = np.maximum(cv2.medianBlur(L.astype(np.uint8), k).astype(np.float32), cv2.blur(cv2.morphologyEx(L, cv2.MORPH_CLOSE, _disk(k)), (k, k)) - 25)
+        bgL = np.maximum(cv2.medianBlur(L.astype(np.uint8), k).astype(np.float32), bgC - 25)
     else:
-        bgL = cv2.blur(cv2.morphologyEx(L, cv2.MORPH_CLOSE, _disk(k)), (k, k))
+        bgL = bgC
     dark = np.maximum(bgL - L, 0)
     bga = cv2.medianBlur(lab[..., 1].astype(np.uint8), k)
     bgb = cv2.medianBlur(lab[..., 2].astype(np.uint8), k)
@@ -242,8 +247,8 @@ def clean_photo(img, notes=None):
     if not ink.any():
         return img
     # 깨끗한 그림이면 손대지 않는다: 종이가 사진을 채움 · 밝기 고름 · 선이 진함 · 줄 없음
-    pl = bgL[paper]
-    if pfrac > 0.97 and np.percentile(pl, 98) - np.percentile(pl, 2) < 15 and np.median(dark[ink > 0]) > 50 and not ruled:
+    pl = bgC[paper]
+    if pfrac > 0.97 and np.percentile(pl, 98) - np.percentile(pl, 2) < 15 and np.median((bgC - L)[ink > 0]) > 50 and not ruled:
         return img
     # 5) 그림 하나 고르기: 가까운 선끼리 묶어 가장 큰 묶음(가운데일수록, 사진 테두리에 안 닿을수록 더 쳐줌) + 그 둘레 안의 묶음
     r = max(3, int(0.03 * size) | 1)
