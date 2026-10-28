@@ -4,6 +4,8 @@
 !/README.md
 !/animal-monster/
 !/creature-picker/
+# 카드 이야기 다시 쓰기 브랜치에서만 (regen/dark-stories-1028)
+!/card-regen/
 **/venv/
 **/__pycache__/
 **/out/
