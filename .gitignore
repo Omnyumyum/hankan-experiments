@@ -4,6 +4,8 @@
 !/README.md
 !/animal-monster/
 !/creature-picker/
+# 카드 이야기 검토 브랜치에서만 (review/card-stories-1028)
+!/card-review/
 **/venv/
 **/__pycache__/
 **/out/
