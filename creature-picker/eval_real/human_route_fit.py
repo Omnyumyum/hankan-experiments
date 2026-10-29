@@ -69,15 +69,36 @@ def rates(df, human):
         out[g] = 1 - human[sub.index].mean()
     hg = [g for g in out if g.startswith("H")]
     ng = [g for g in out if g.startswith("N")]
-    out["H 잘못 거름(평균)"] = float(np.mean([out[g] for g in hg]))  # 그룹마다 같은 무게 (Meta 가 많다고 Meta 에 끌려가지 않게)
-    out["H 잘못 거름(최악)"] = max(out[g] for g in hg)
+    # 기준은 Meta 가 사람을 찾은 그림(found) 안에서 본다: 못 찾은 그림은 Meta 관절이 없어 사람 길 자체가 안 되므로 어떤 문턱도 못 살린다.
+    fr = {g: 1 - human[sub.index[sub.found == 1]].mean() for g, sub in df.groupby("grp") if g in hg}
+    out["H 잘못 거름(평균)"] = float(np.mean([fr[g] for g in hg]))  # 그룹마다 같은 무게 (Meta 가 많다고 Meta 에 끌려가지 않게)
+    out["H 잘못 거름(최악)"] = max(fr.values())
+    out["H 못 찾음 포함(평균)"] = float(np.mean([out[g] for g in hg]))
     out["N 거름(평균)"] = float(np.mean([out[g] for g in ng]))
     return out
 
 
 def sweep(df, score, ths):
-    base = df["found"] == 1
-    return [(t, rates(df, base & (score.fillna(-9) >= t))) for t in ths]
+    """rates 를 문턱 여러 개에 한꺼번에 (같은 값, 빠르게)."""
+    s = np.where(df["found"].values == 1, score.fillna(-9).values, -np.inf)
+    ths = np.asarray(ths)
+    rej, rejf = {}, {}
+    for g, idx in df.groupby("grp").indices.items():
+        v = s[idx]
+        rej[g] = (v[:, None] < ths[None]).mean(0)  # 「사람 아님」으로 보낸 비율
+        vf = v[df["found"].values[idx] == 1]
+        rejf[g] = (vf[:, None] < ths[None]).mean(0) if len(vf) else np.zeros(len(ths))
+    hg = [g for g in rej if g.startswith("H")]
+    ng = [g for g in rej if g.startswith("N")]
+    res = []
+    for i, t in enumerate(ths):
+        r = {g: rej[g][i] for g in rej}
+        r["H 잘못 거름(평균)"] = float(np.mean([rejf[g][i] for g in hg]))
+        r["H 잘못 거름(최악)"] = float(max(rejf[g][i] for g in hg))
+        r["H 못 찾음 포함(평균)"] = float(np.mean([rej[g][i] for g in hg]))
+        r["N 거름(평균)"] = float(np.mean([rej[g][i] for g in ng]))
+        res.append((float(t), r))
+    return res
 
 
 def pick(res, max_h, max_worst):
@@ -96,7 +117,10 @@ def main():
     ap.add_argument("--suffix", default="")
     ap.add_argument("--max_h", type=float, default=0.01)
     ap.add_argument("--max_worst", type=float, default=0.03)
+    ap.add_argument("--t_hi_mean17", type=float, nargs="*", default=[0.6, 0.65, 0.7])
+    ap.add_argument("--t_hi_logistic", type=float, nargs="*", default=[0.5, 0.6, 0.7])
     a = ap.parse_args()
+    a.t_hi = {"mean17": a.t_hi_mean17, "logistic": a.t_hi_logistic}
     from sklearn.linear_model import LogisticRegression
     from sklearn.tree import DecisionTreeClassifier, export_text
     hr = Path(a.hr)
@@ -202,6 +226,21 @@ def main():
         out[f"score_{name}"] = sc.round(4)
         rr = rates(chk, human[chk.index])
         print(f"  {name} ≥ {t}: " + fmt(rr, [g for g in groups if g in rr]) + f"  → H 평균 {rr['H 잘못 거름(평균)']:.1%} 최악 {rr['H 잘못 거름(최악)']:.1%} · N 거름 {rr['N 거름(평균)']:.1%}")
+    # 6. 세 갈래: 점수 < t_lo → 사람 아님 길, t_lo ≤ 점수 < t_hi → 어른에게 묻기, ≥ t_hi → 사람 길 (못 찾음은 언제나 사람 아님 길)
+    print("\n[세 갈래, 학습용 → 확인용] 그룹마다 사람 길 / 묻기 / 아님 길 비율")
+    for name in ["mean17", "logistic"]:
+        t_lo = best[name][0]
+        sc = pd.Series(models[name](df) if name in models else df[name].values, index=df.index).fillna(-9)
+        sc[df.found != 1] = -9
+        for t_hi in a.t_hi.get(name, []):
+            for sp in ("learn", "check"):
+                sub = df[df.split == sp]
+                s = sc[sub.index]
+                parts = []
+                for g, gi in sub.groupby("grp").groups.items():
+                    v = s[gi]
+                    parts.append(f"{g} {100 * (v >= t_hi).mean():.0f}/{100 * ((v >= t_lo) & (v < t_hi)).mean():.0f}/{100 * (v < t_lo).mean():.0f}")
+                print(f"  {name} t_lo {t_lo} t_hi {t_hi} {sp}: " + " · ".join(parts))
     keep = ["src", "cat", "label", "split", "id", "variant", "file", "grp", "det1", "det2", "n_found", "found"] + [f for f in FEATS if f not in ("det1", "det2")]
     keep += [c for c in out.columns if c.startswith(("human_", "score_"))]
     out[keep].round(4).to_csv(HERE / "human_route_features.csv", index=False, encoding="utf-8-sig")
