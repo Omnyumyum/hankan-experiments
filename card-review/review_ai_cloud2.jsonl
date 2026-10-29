@@ -28,3 +28,33 @@
 {"combo": "2433", "fingerprint": "103d2b4e38da", "verdict": "pass", "issues": []}
 {"combo": "2434", "fingerprint": "0a7dfe180ee7", "verdict": "pass", "issues": []}
 {"combo": "2441", "fingerprint": "14f379acd274", "verdict": "pass", "issues": []}
+{"combo": "2442", "fingerprint": "484f626a9686", "verdict": "pass", "issues": []}
+{"combo": "2443", "fingerprint": "f9dad661816d", "verdict": "pass", "issues": []}
+{"combo": "2444", "fingerprint": "4e39ee365e85", "verdict": "check", "issues": [{"version": "long-narration", "type": "이름 자리", "quote": "아빠 머리를 꼭 잡고 랄{이름} 콧노래를 불렀어요", "why": "나레이션 판인데 「랄랄라」의 「랄라」 자리에 이름 자리가 잘못 들어가 아이 이름이 이상하게 끼어들어요."}]}
+{"combo": "3411", "fingerprint": "dc6307efd836", "verdict": "pass", "issues": []}
+{"combo": "3412", "fingerprint": "aab317f6b53f", "verdict": "pass", "issues": []}
+{"combo": "3413", "fingerprint": "08aa466a41c3", "verdict": "pass", "issues": []}
+{"combo": "3414", "fingerprint": "4776fe93bbd7", "verdict": "pass", "issues": []}
+{"combo": "3421", "fingerprint": "a289858cb7f1", "verdict": "pass", "issues": []}
+{"combo": "3422", "fingerprint": "4744b8084900", "verdict": "pass", "issues": []}
+{"combo": "3423", "fingerprint": "b2e30a3b70c4", "verdict": "pass", "issues": []}
+{"combo": "3424", "fingerprint": "29d3b79c78f5", "verdict": "pass", "issues": []}
+{"combo": "3431", "fingerprint": "65dcb0df3269", "verdict": "pass", "issues": []}
+{"combo": "3432", "fingerprint": "c14644d3981b", "verdict": "pass", "issues": []}
+{"combo": "3433", "fingerprint": "b7e59d567b64", "verdict": "pass", "issues": []}
+{"combo": "3434", "fingerprint": "dc5aec5b7e7b", "verdict": "pass", "issues": []}
+{"combo": "3441", "fingerprint": "c930b763a4cc", "verdict": "pass", "issues": []}
+{"combo": "3442", "fingerprint": "275430fb87de", "verdict": "pass", "issues": []}
+{"combo": "3443", "fingerprint": "ea026a0f8dda", "verdict": "pass", "issues": []}
+{"combo": "3444", "fingerprint": "6f91c6017f5f", "verdict": "pass", "issues": []}
+{"combo": "4411", "fingerprint": "f05b663d4e5b", "verdict": "check", "issues": [{"version": "long-characters", "type": "이름 자리", "quote": "{이름}도 모르게 에취, 재채기가 나왔어요", "why": "「나도 모르게」를 이름으로 바꾸어 「○○도 모르게」가 되어서 어색해요."}]}
+{"combo": "4412", "fingerprint": "ad0653bfe5ae", "verdict": "pass", "issues": []}
+{"combo": "4413", "fingerprint": "94ae383b5071", "verdict": "pass", "issues": []}
+{"combo": "4414", "fingerprint": "40a6c1203d65", "verdict": "check", "issues": [{"version": "all", "type": "어색한 문장", "quote": "과일 가게 할머니가 손전등을 들고 상자를 들췄어요", "why": "이 할머니가 아이의 할머니인지 가게 주인인지 분명하지 않아, 가게 할머니를 따라 집에 가는 것처럼 읽힐 수 있어요."}]}
+{"combo": "4421", "fingerprint": "c8b49674a621", "verdict": "pass", "issues": []}
+{"combo": "4422", "fingerprint": "040fa92d8ab1", "verdict": "pass", "issues": []}
+{"combo": "4423", "fingerprint": "65a7155a2704", "verdict": "pass", "issues": []}
+{"combo": "4424", "fingerprint": "c9817aaec376", "verdict": "pass", "issues": []}
+{"combo": "4431", "fingerprint": "2393f508a6c7", "verdict": "pass", "issues": []}
+{"combo": "4432", "fingerprint": "58718b985ffb", "verdict": "pass", "issues": []}
+{"combo": "4433", "fingerprint": "bc6af6698bfc", "verdict": "pass", "issues": []}
