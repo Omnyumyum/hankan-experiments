@@ -1,0 +1,1 @@
+{"protagonist":"라라","characters":[{"name":"친구","type":"아이-여"}],"sentences":[[{"speaker":"나레이션","text":"{이름}{조사:는} 숲속 새 둥지 아래에 앉았어요."}],[{"speaker":"나레이션","text":"그런데 친구가 울고 있었어요."}],[{"speaker":"나레이션","text":"{이름}{조사:는} 친구 옆에서 기다려 줬어요."}],[{"speaker":"나레이션","text":"친구가"},{"speaker":"친구","text":"정말 고마워.","emotion":"기쁨"},{"speaker":"나레이션","text":"해서 모두 기뻐했어요."}]]}
