@@ -1,0 +1,1 @@
+{"protagonist": "라라", "characters": [], "sentences": [[{"speaker": "나레이션", "text": "라라는 우주선 식물 방에서 새싹을 돌보았어요."}], [{"speaker": "나레이션", "text": "잎을 세는 사이 우주선 안이 어두워졌어요."}], [{"speaker": "나레이션", "text": "라라는"}, {"speaker": "주인공", "text": "같이 가 줘요.", "emotion": "속삭임"}, {"speaker": "나레이션", "text": "하며 살금살금 걸어갔어요."}], [{"speaker": "나레이션", "text": "그때 식물 방 큰 창밖으로 해가 떴어요."}]]}

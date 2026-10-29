@@ -1,0 +1,1 @@
+{"protagonist": "라라", "characters": [], "sentences": [[{"speaker": "나레이션", "text": "라라는 우주 토성 고리 옆에서 얼음을 보았어요."}], [{"speaker": "나레이션", "text": "얼음을 세는 사이 토성 고리 옆이 어두워졌어요."}], [{"speaker": "나레이션", "text": "라라는 끈을 잡고 밝은 곳으로 달려갔어요."}], [{"speaker": "나레이션", "text": "라라는"}, {"speaker": "주인공", "text": "비춰 볼래요!", "emotion": "신남"}, {"speaker": "나레이션", "text": "하며 용기가 생겼어요."}]]}

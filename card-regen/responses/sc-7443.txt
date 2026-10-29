@@ -1,0 +1,1 @@
+{"protagonist": "라라", "characters": [], "sentences": [[{"speaker": "나레이션", "text": "라라는 우주 유성 길 옆 창가에 앉았어요."}], [{"speaker": "나레이션", "text": "유성을 기다리는 사이 유성 길이 어두워졌어요."}], [{"speaker": "나레이션", "text": "라라는 엄마 품에 기대어 가만히 기다렸어요."}], [{"speaker": "나레이션", "text": "라라는"}, {"speaker": "주인공", "text": "소원 빌래요.", "emotion": "속삭임"}, {"speaker": "나레이션", "text": "하다가 잠이 들었어요."}]]}

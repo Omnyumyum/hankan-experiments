@@ -1,0 +1,1 @@
+{"protagonist": "라라", "characters": [], "sentences": [[{"speaker": "나레이션", "text": "라라는 동굴 물방울이 떨어지는 곳을 걸었어요."}], [{"speaker": "나레이션", "text": "물방울 소리를 세다가 동굴 안이 어두워졌어요."}], [{"speaker": "나레이션", "text": "라라는 바위 아래 움푹한 곳에 숨었어요."}], [{"speaker": "나레이션", "text": "라라는"}, {"speaker": "주인공", "text": "비춰 볼래요!", "emotion": "신남"}, {"speaker": "나레이션", "text": "하며 용기가 생겼어요."}]]}

@@ -1,0 +1,1 @@
+{"protagonist": "라라", "characters": [], "sentences": [[{"speaker": "나레이션", "text": "라라는 우주 별 사이 별 마을에 도착했어요."}], [{"speaker": "나레이션", "text": "구경하는 사이 별 사이가 어두워졌어요."}], [{"speaker": "나레이션", "text": "라라는 할아버지와 살금살금 걸어갔어요."}], [{"speaker": "나레이션", "text": "라라는"}, {"speaker": "주인공", "text": "옆에 있을게.", "emotion": "다정"}, {"speaker": "나레이션", "text": "하고 누워 잠이 들었어요."}]]}
