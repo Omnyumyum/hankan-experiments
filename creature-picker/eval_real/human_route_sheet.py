@@ -2,7 +2,7 @@
 
     ../venv/bin/python -I eval_real/human_route_sheet.py --hr eval_real/data/hr --rule logistic --out eval_real/sheet_human_route.png
 줄마다 한 묶음: 사람인데 「사람 아님」으로 감 · 아님인데 사람 길로 감(점수 높은 순) · 아님을 잘 거름 · 애매(A). 확인용에서 무작위(seed 3).
-그림 위 점 · 선 = Meta 관절 13개(초록 = 점수 0.5 이상, 빨강 = 미만), 노란 상자 = 찾은 사람 상자. 제목: 카테고리 · 관절 평균 · 판정 점수.
+그림 위 점 · 선 = Meta 관절 13개(초록 = 점수 0.5 이상, 빨강 = 미만), 노란 상자 = 찾은 사람 상자. 제목: 카테고리 · 변환, j = 관절 평균(17개) · s = 판정 점수.
 """
 import argparse
 import sys
@@ -74,11 +74,11 @@ def main():
             img = jobs[tuple(r[k] for k in key)]
             if isinstance(img, tuple):
                 img, _ = kp.make(img[1], img[2], img[3])
-            t = [f"{r.cat[:14]} {r.variant[:6]}", f"j{r.mean13:.2f} s{r[f'score_{a.rule}']:.2f}" if r.found else "not found"]
+            t = [f"{r['cat'][:14]} {r['variant'][:6]}", f"j{r.mean17:.2f} s{r[f'score_{a.rule}']:.2f}" if r.found else "not found"]
             cells.append(cell(img, r, t))
         while len(cells) < a.n:
             cells.append(np.full((CELL + 34, CELL, 3), 255, np.uint8))
-        print(f"{name}: {len(sub)}장 중 {len(pick)}장 — " + ", ".join(f"{r.cat}#{r.id}" for _, r in pick.iterrows()))
+        print(f"{name}: {len(sub)}장 중 {len(pick)}장 — " + ", ".join(f"{r['cat']}#{r.id}" for _, r in pick.iterrows()))
         lines.append(np.hstack(cells))
     cv2.imwrite(a.out, np.vstack(lines))
 

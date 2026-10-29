@@ -37,7 +37,7 @@ def features(df):
             leg = [d(S["hip"], S["kne"]) + d(S["kne"], S["ank"]) for S in (L, R)]
             diag = float(np.hypot(bw, bh))
             f.update(
-                mean17=s.mean(), mean13=u.mean(), min13=u.min(), med13=float(np.median(u)),
+                mean17=s.mean(), mean13=u.mean(), min13=u.min(), max13=u.max(), med13=float(np.median(u)),
                 low13_05=int((u < 0.5).sum()), low13_03=int((u < 0.3).sum()),
                 mean_legs=s[11:17].mean(), mean_arms=s[5:11].mean(), min_legs=s[11:17].min(), min_arms=s[5:11].min(),
                 torso_rel=torso / diag, arm_rel=np.mean(arm) / diag, leg_rel=np.mean(leg) / diag,
@@ -58,7 +58,7 @@ def group(df):
     return df["label"] + "·" + df["src"] + v
 
 
-FEATS = ["mean17", "mean13", "min13", "med13", "low13_05", "mean_legs", "min_legs", "mean_arms", "min_arms", "leg_torso", "arm_torso",
+FEATS = ["mean17", "mean13", "min13", "max13", "med13", "low13_05", "mean_legs", "min_legs", "mean_arms", "min_arms", "leg_torso", "arm_torso",
          "arm_sym", "leg_sym", "upright", "head_up", "feet_down", "box_hw", "box_area", "mask_box", "kp_in_mask", "spread", "det1", "det2"]
 
 
@@ -128,7 +128,13 @@ def main():
                     if (hr / f"raw_{s}{a.suffix}.csv").exists()], ignore_index=True)
     df = features(df)
     df["grp"] = group(df)
-    learn = df[(df.split == "learn") & df.label.isin(["H", "N"])]
+    # Meta 그림 중 관절 평균 0.65 미만(+ 못 찾음)은 눈으로 다시 봤다 (human_route_meta_low_labels.csv). Meta 데모에 올라온 그림이라 동물 · 물건도 섞여 있다.
+    # N(사람 아님) · A(애매: 얼굴만 · 서 있는 동물 · 사람 몸 괴물)는 사람 묶음에서 빼서 따로 센다 — 보지 않은 0.65 이상에도 섞여 있을 수 있어 평균에는 안 넣는다.
+    eye = pd.read_csv(HERE / "human_route_meta_low_labels.csv", encoding="utf-8-sig").set_index("file")["eye"]
+    e = df["file"].map(eye)
+    df.loc[(df.src == "meta") & (e == "N"), ["label", "grp"]] = ["X", "X·meta-눈N"]
+    df.loc[(df.src == "meta") & (e == "A"), ["label", "grp"]] = ["A", "A·meta-눈A"]
+    learn = df[(df.split == "learn") & df.label.isin(["H", "N"])]  # X · A 는 기준 고르기에 안 씀
     print("장수:", df.groupby(["grp", "split"]).size().unstack(1).fillna(0).astype(int).to_string(), sep="\n")
     cols = ["found", "det1", "mean17", "mean13", "min13", "low13_05", "mean_legs", "leg_torso", "arm_sym", "leg_sym", "upright", "box_hw", "mask_box", "kp_in_mask"]
     print("\n학습용 신호 중앙값 (찾은 것만, found 는 평균):")
@@ -226,6 +232,19 @@ def main():
         out[f"score_{name}"] = sc.round(4)
         rr = rates(chk, human[chk.index])
         print(f"  {name} ≥ {t}: " + fmt(rr, [g for g in groups if g in rr]) + f"  → H 평균 {rr['H 잘못 거름(평균)']:.1%} 최악 {rr['H 잘못 거름(최악)']:.1%} · N 거름 {rr['N 거름(평균)']:.1%}")
+    # 5-2. 정해 둔 규칙 (학습용에서 고른 문턱을 그대로 적은 것) — 학습용 · 확인용 나란히
+    print("\n[정해 둔 규칙] 그룹마다 「사람 아님」으로 보낸 비율:  " + " | ".join(groups))
+    found = df["found"] == 1
+    fixed = {"지금: mean17 ≥ 0.35": found & (df.mean17 >= 0.35),
+             "권장 두 갈래: mean17 ≥ 0.26": found & (df.mean17 >= 0.26),
+             "mean17 ≥ 0.26 그리고 관절 하나라도 ≥ 0.5": found & (df.mean17 >= 0.26) & (df.max13 >= 0.5),
+             "mean17 ≥ 0.40 (Meta 만 1% 목표일 때)": found & (df.mean17 >= 0.40)}
+    for name, human in fixed.items():
+        for sp in ("learn", "check"):
+            sub = df[df.split == sp]
+            rr = rates(sub, human[sub.index])
+            print(f"  {name} {sp}: " + fmt(rr, [g for g in groups if g in rr]) + f"  → H 평균 {rr['H 잘못 거름(평균)']:.1%} 최악 {rr['H 잘못 거름(최악)']:.1%} · N 거름 {rr['N 거름(평균)']:.1%}")
+
     # 6. 세 갈래: 점수 < t_lo → 사람 아님 길, t_lo ≤ 점수 < t_hi → 어른에게 묻기, ≥ t_hi → 사람 길 (못 찾음은 언제나 사람 아님 길)
     print("\n[세 갈래, 학습용 → 확인용] 그룹마다 사람 길 / 묻기 / 아님 길 비율")
     for name in ["mean17", "logistic"]:
@@ -241,7 +260,18 @@ def main():
                     v = s[gi]
                     parts.append(f"{g} {100 * (v >= t_hi).mean():.0f}/{100 * ((v >= t_lo) & (v < t_hi)).mean():.0f}/{100 * (v < t_lo).mean():.0f}")
                 print(f"  {name} t_lo {t_lo} t_hi {t_hi} {sp}: " + " · ".join(parts))
-    keep = ["src", "cat", "label", "split", "id", "variant", "file", "grp", "det1", "det2", "n_found", "found"] + [f for f in FEATS if f not in ("det1", "det2")]
+    # 6-2. 권장 세 갈래 + 묻기 칸에서 상자가 아주 넓으면(가로 > 세로 ÷ 0.6) 사람 아님 길로 — 덧붙여 볼 수 있는 안 (학습용에서 0.6 을 봄)
+    sc = df["mean17"].where(df.found == 1, -9).fillna(-9)
+    for wide in (None, 0.6):
+        for sp in ("learn", "check"):
+            sub = df[df.split == sp]
+            v = sc[sub.index]
+            hum = v >= 0.65
+            no = (v < 0.26) | ((~hum) & (sub.box_hw < wide) if wide else False)
+            parts = [f"{g} {100 * hum[gi].mean():.0f}/{100 * (~hum[gi] & ~no[gi]).mean():.0f}/{100 * no[gi].mean():.0f}"
+                     for g, gi in sub.groupby("grp").groups.items()]
+            print(f"  권장 세 갈래 mean17 0.26 / 0.65{' + 넓은 상자 < %.1f' % wide if wide else ''} {sp}: " + " · ".join(parts))
+    keep =["src", "cat", "label", "split", "id", "variant", "file", "grp", "det1", "det2", "n_found", "found"] + [f for f in FEATS if f not in ("det1", "det2")]
     keep += [c for c in out.columns if c.startswith(("human_", "score_"))]
     out[keep].round(4).to_csv(HERE / "human_route_features.csv", index=False, encoding="utf-8-sig")
     return df
