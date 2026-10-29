@@ -1,0 +1,1 @@
+{"protagonist": "라라", "characters": [], "sentences": [[{"speaker": "나레이션", "text": "라라는 마을 버스 정류장에서 그림책을 읽었어요."}], [{"speaker": "나레이션", "text": "책을 다 읽었을 때 정류장이 어두워졌어요."}], [{"speaker": "나레이션", "text": "라라는 아빠 옆에 붙어 앉아 가만히 기다렸어요."}], [{"speaker": "나레이션", "text": "라라는"}, {"speaker": "주인공", "text": "안녕하세요!", "emotion": "신남"}, {"speaker": "나레이션", "text": "하고 인사하며 용기가 생겼어요."}]]}

@@ -1,0 +1,1 @@
+{"protagonist": "라라", "characters": [], "sentences": [[{"speaker": "나레이션", "text": "라라는 마을 놀이터 옆 길에서 줄넘기를 했어요."}], [{"speaker": "나레이션", "text": "백 번을 세는 사이 길이 어두워졌어요."}], [{"speaker": "나레이션", "text": "라라는"}, {"speaker": "주인공", "text": "저기다!", "emotion": "신남"}, {"speaker": "나레이션", "text": "하며 밝은 곳으로 달려갔어요."}], [{"speaker": "나레이션", "text": "경찰관 언니와 라라는 집에 무사히 돌아왔어요."}]]}

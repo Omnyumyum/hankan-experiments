@@ -1,0 +1,1 @@
+{"protagonist": "라라", "characters": [], "sentences": [[{"speaker": "나레이션", "text": "라라는 마을 우체통 옆에서 편지를 들었어요."}], [{"speaker": "나레이션", "text": "낑낑대는 사이 우체통 옆이 어두워졌어요."}], [{"speaker": "나레이션", "text": "라라는"}, {"speaker": "주인공", "text": "저기다!", "emotion": "신남"}, {"speaker": "나레이션", "text": "하며 밝은 곳으로 달려갔어요."}], [{"speaker": "나레이션", "text": "밤이 지나고 마을 위로 아침 해가 떴어요."}]]}
