@@ -118,3 +118,16 @@
 {"combo": "8411", "fingerprint": "595357714052", "verdict": "pass", "issues": []}
 {"combo": "8412", "fingerprint": "9bdf33edd30b", "verdict": "pass", "issues": []}
 {"combo": "8413", "fingerprint": "eafb31eee735", "verdict": "pass", "issues": []}
+{"combo": "8414", "fingerprint": "6eb8d370a11f", "verdict": "pass", "issues": []}
+{"combo": "8421", "fingerprint": "039e6a8393f4", "verdict": "pass", "issues": []}
+{"combo": "8422", "fingerprint": "901e0f7553a1", "verdict": "pass", "issues": []}
+{"combo": "8423", "fingerprint": "af2b6f0ccfa6", "verdict": "pass", "issues": []}
+{"combo": "8424", "fingerprint": "704acd6b504b", "verdict": "check", "issues": [{"version": "short-characters", "type": "어색한 문장", "quote": "엄마가 [엄마] “잘 왔구나!” 했어요, 무사히 돌아왔어요.", "why": "이미 돌아왔다는 엄마 말 뒤에 돌아왔다고 해서 순서가 거꾸로이고, 짧은 판에는 엄마가 처음 나와요."}]}
+{"combo": "8431", "fingerprint": "d3620253e710", "verdict": "pass", "issues": []}
+{"combo": "8432", "fingerprint": "39d0fc161fae", "verdict": "pass", "issues": []}
+{"combo": "8433", "fingerprint": "9cd97dabc616", "verdict": "pass", "issues": []}
+{"combo": "8434", "fingerprint": "b1ee562d5990", "verdict": "check", "issues": [{"version": "long-characters", "type": "이름 자리", "quote": "좁은 굴을 향해 천천히 자{이름}고 속삭였어요", "why": "「자라고」의 「라」 자리에 이름 자리가 잘못 들어가 아이 이름이 단어 한가운데 끼어들어요."}]}
+{"combo": "8441", "fingerprint": "a776d68bb3f1", "verdict": "pass", "issues": []}
+{"combo": "8442", "fingerprint": "adeb69bc7bd6", "verdict": "pass", "issues": []}
+{"combo": "8443", "fingerprint": "19b195285180", "verdict": "pass", "issues": []}
+{"combo": "8444", "fingerprint": "54715a3d3bd6", "verdict": "pass", "issues": []}
