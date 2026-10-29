@@ -1,0 +1,8 @@
+{"protagonist": "라라",
+ "characters": [{"name": "친구", "type": "아이-여"}],
+ "sentences": [
+  [{"speaker": "나레이션", "text": "라라는 놀이터 모래밭에서 두꺼비집을 만들었어요."}],
+  [{"speaker": "나레이션", "text": "그런데 모래밭 한쪽에서 친구가 울고 있었어요."}],
+  [{"speaker": "나레이션", "text": "라라는"}, {"speaker": "주인공", "text": "같이 찾아 줄게.", "emotion": "다정"}, {"speaker": "나레이션", "text": "하며 다가가서 도와줬어요."}],
+  [{"speaker": "나레이션", "text": "친구가"}, {"speaker": "친구", "text": "고마워. 같이 놀래?", "emotion": "기쁨"}, {"speaker": "나레이션", "text": "해서 둘은 친한 친구가 됐어요."}]
+ ]}

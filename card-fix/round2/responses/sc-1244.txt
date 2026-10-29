@@ -1,0 +1,8 @@
+{"protagonist": "라라",
+ "characters": [{"name": "친구", "type": "아이-여"}],
+ "sentences": [
+  [{"speaker": "나레이션", "text": "라라는 집 식탁에 과자를 두 개씩 놓았어요."}],
+  [{"speaker": "나레이션", "text": "그런데 문 앞에서 친구가 울고 있었어요."}],
+  [{"speaker": "나레이션", "text": "라라는"}, {"speaker": "주인공", "text": "천천히 해도 돼.", "emotion": "다정"}, {"speaker": "나레이션", "text": "하며 옆에서 기다려 줬어요."}],
+  [{"speaker": "나레이션", "text": "친구가"}, {"speaker": "친구", "text": "이제 괜찮아.", "emotion": "기쁨"}, {"speaker": "나레이션", "text": "하자 라라와 친구는 모두 기뻐했어요."}]
+ ]}
