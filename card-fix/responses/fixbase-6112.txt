@@ -1,0 +1,19 @@
+{"title":"파도 앞 동그란 모래 자국","protagonist":"나","characters":[],"pages":[
+{"page":1,"stage":"place","action":"walk","child_words":"","lines":[{"speaker":"나레이션","text":"철썩, 철썩! 나는 바다의 파도 앞에 서 있어요. 하얀 거품이 내 발가락 앞까지 왔다가 돌아갔어요. 모래 위에는 작은 조개껍데기들이 숨어 있었어요."}]},
+{"page":2,"stage":"problem","action":"run","child_words":"","lines":[{"speaker":"나레이션","text":"나는 파도를 따라 콩콩 뛰어다녔어요. 그러다 모래에 발이 쑥 빠져서 나는 그만 넘어졌어요. “앗!” 하고 내 입에서 소리가 나왔어요."}]},
+{"page":3,"stage":"problem","action":"idle","child_words":"","lines":[{"speaker":"나레이션","text":"얼굴도 옷도 온통 모래투성이가 됐어요. “에이, 속상해.” 눈물이 찔끔 날 것 같았어요. 그런데 그때, 파도가 나를 부르는 소리가 들렸어요!"}]},
+{"page":4,"stage":"action","action":"jump","child_words":"","lines":[{"speaker":"나레이션","text":"나는 벌떡 일어나 옷을 툭툭 털고 달려갔어요. 작은 파도가 모래밭 끝까지 찰랑 밀려오고 있었거든요. “기다려, 파도야!”"}]},
+{"page":5,"stage":"action","action":"run","child_words":"","lines":[{"speaker":"나레이션","text":"한 걸음, 또 한 걸음, 모래를 밟으며 달렸어요. 발밑에서 사각사각 소리가 났어요. “이번엔 안 넘어질 거야!” 가슴이 두근두근 뛰었어요."}]},
+{"page":6,"stage":"result","action":"jump","child_words":"","lines":[{"speaker":"나레이션","text":"파도가 내 발을 간질이자 웃음이 났어요. 찰랑찰랑 물이 발등을 살살 두드렸어요. “히히, 간지러워!”"}]},
+{"page":7,"stage":"result","action":"dance","child_words":"","lines":[{"speaker":"나레이션","text":"나는 파도랑 술래잡기를 하며 깔깔 웃었어요. 파도가 오면 도망가고, 파도가 가면 쫓아갔어요. 모래투성이 옷도 이제 하나도 속상하지 않았어요."}]},
+{"page":8,"stage":"result","action":"idle","child_words":"","lines":[{"speaker":"나레이션","text":"내 발자국이 모래 위에 꼬불꼬불 이어졌어요. 넘어졌던 자리에는 동그란 모래 자국이 남아 있었어요. 그 자국을 보니 또 키득키득 웃음이 났어요."}]}],
+"order_pages":[1,2,4,6],
+"scene":{"character_sheet":{},"pages":[
+{"page":1,"hero_on_page":true,"characters":[],"background":"A calm sandy beach in the late morning with gentle white waves rolling onto the shore. Small seashells lie scattered on the smooth sand and the sea sparkles softly in the distance."},
+{"page":2,"hero_on_page":true,"characters":[],"background":"The same sandy beach by the waves, with soft footprints running along the wet sand and a small dent where someone has just tumbled. Light, cheerful seaside mood."},
+{"page":3,"hero_on_page":true,"characters":[],"background":"A quiet stretch of beach with scattered sand on the ground near the waterline, as if someone just fell softly. A small gentle wave slides toward the shore."},
+{"page":4,"hero_on_page":true,"characters":[],"background":"A small gentle wave sliding up onto the shallow edge of the shore with white foam, sand flying lightly in the air near the shoreline. Energetic and bright beach atmosphere."},
+{"page":5,"hero_on_page":true,"characters":[],"background":"A long line of fresh footprints across the sand leading toward the shallow edge of the waves. Lively, hopeful mood by the calm sea."},
+{"page":6,"hero_on_page":true,"characters":[],"background":"Shallow, gentle foamy water lapping over the wet sand at the very edge of the sea. Playful and happy seaside mood."},
+{"page":7,"hero_on_page":true,"characters":[],"background":"Small playful waves sliding up and back along the shore, leaving shiny wet patches on the sand. Joyful, bouncy beach atmosphere in the afternoon."},
+{"page":8,"hero_on_page":true,"characters":[],"background":"A peaceful beach with a winding trail of footprints across the sand and a round dent in the sand where someone fell earlier. Soft, warm, happy mood by the gentle waves."}]}}

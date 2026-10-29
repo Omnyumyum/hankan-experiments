@@ -1,0 +1,19 @@
+{"title":"버섯 따라 시냇가로","protagonist":"나","characters":[],"pages":[
+{"page":1,"stage":"place","action":"idle","child_words":"","lines":[{"speaker":"나레이션","text":"숲 속 시냇가에 맑은 물이 졸졸 흘러요."},{"speaker":"나레이션","text":"물가에는 동그란 돌들이 나란히 놓여 있어요."},{"speaker":"나레이션","text":"나는 둥근 돌에 앉아 물소리를 들었어요."}]},
+{"page":2,"stage":"problem","action":"run","child_words":"","lines":[{"speaker":"나레이션","text":"노란 나비 한 마리가 팔랑팔랑 날아갔어요."},{"speaker":"나레이션","text":"“기다려!” 나는 나비를 따라 나무 사이로 갔어요."},{"speaker":"나레이션","text":"그러다 그만 나는 길을 잃었어요."}]},
+{"page":3,"stage":"problem","action":"idle","child_words":"","lines":[{"speaker":"나레이션","text":"둘레에는 키 큰 나무만 가득했어요."},{"speaker":"나레이션","text":"“시냇가가 어디였지?” 가슴이 콩닥콩닥 뛰었어요."},{"speaker":"나레이션","text":"나는 걸음을 멈추고 생각했어요. “천천히 살펴보자.”"}]},
+{"page":4,"stage":"action","action":"walk","child_words":"","lines":[{"speaker":"나레이션","text":"나는 숨을 크게 쉬고 주위를 살피며 걸었어요."},{"speaker":"나레이션","text":"귀를 쫑긋 세우니 멀리서 작은 소리가 났어요."},{"speaker":"나레이션","text":"한 걸음, 또 한 걸음 천천히 걸었어요."}]},
+{"page":5,"stage":"action","action":"walk","child_words":"","lines":[{"speaker":"나레이션","text":"나무 밑에 알록달록한 버섯이 보였어요."},{"speaker":"나레이션","text":"“아까 이 버섯 옆을 지나왔어!”"},{"speaker":"나레이션","text":"나는 용기를 내서 소리 나는 쪽으로 갔어요."}]},
+{"page":6,"stage":"result","action":"run","child_words":"","lines":[{"speaker":"나레이션","text":"나뭇가지 사이로 시냇물이 반짝반짝 보였어요."},{"speaker":"나레이션","text":"“찾았다!” 나는 시냇가로 달려갔어요."},{"speaker":"나레이션","text":"휴, 나는 마음이 놓였어요."}]},
+{"page":7,"stage":"result","action":"jump","child_words":"","lines":[{"speaker":"나레이션","text":"처음 앉았던 둥근 돌이 그대로 있었어요."},{"speaker":"나레이션","text":"나는 너무 기뻐서 폴짝 뛰었어요."},{"speaker":"나레이션","text":"물에 손을 넣으니 찰방찰방 시원했어요."}]},
+{"page":8,"stage":"result","action":"dance","child_words":"","lines":[{"speaker":"나레이션","text":"노란 나비가 돌 위에 살랑 내려앉았어요."},{"speaker":"나레이션","text":"“이번엔 여기서 같이 놀자.”"},{"speaker":"나레이션","text":"나는 물소리를 들으며 빙그레 웃었어요."}]}],
+"order_pages":[1,2,4,6],
+"scene":{"character_sheet":{},"pages":[
+{"page":1,"hero_on_page":true,"characters":[],"background":"A calm clear stream in a green forest with round smooth stones along the bank, gentle daytime light and a peaceful mood."},
+{"page":2,"hero_on_page":true,"characters":[],"background":"Between tall forest trees near the stream, a small yellow butterfly flutters away deeper into the woods, playful daytime mood."},
+{"page":3,"hero_on_page":true,"characters":[],"background":"Deep inside the forest surrounded by many tall trees with no path in sight, soft daytime light, a slightly worried but gentle mood."},
+{"page":4,"hero_on_page":true,"characters":[],"background":"A quiet forest floor with ferns and fallen leaves between tall trees, daytime, a careful and hopeful mood."},
+{"page":5,"hero_on_page":true,"characters":[],"background":"Colorful mushrooms growing under a big tree in the forest, a faint glimpse of open space ahead, daytime, hopeful mood."},
+{"page":6,"hero_on_page":true,"characters":[],"background":"Tree branches opening up to reveal a sparkling clear stream in the forest, daytime, joyful and relieved mood."},
+{"page":7,"hero_on_page":true,"characters":[],"background":"The forest stream bank with a big round stone and clear cool water flowing gently, daytime, happy mood."},
+{"page":8,"hero_on_page":true,"characters":[],"background":"A small yellow butterfly resting on a round stone by the peaceful forest stream, daytime, warm and cozy mood."}]}}

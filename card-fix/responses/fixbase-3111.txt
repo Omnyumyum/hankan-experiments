@@ -1,0 +1,19 @@
+{"title":"물통 들고 간 쉬는 시간","protagonist":"나","characters":[],"pages":[
+{"page":1,"stage":"place","action":"walk","child_words":"","lines":[{"speaker":"나레이션","text":"학교 교실 칠판 옆 시계가 째깍째깍 움직였어요."},{"speaker":"나레이션","text":"쉬는 시간이라 나는 물통을 들고 일어났어요."},{"speaker":"나레이션","text":"물을 먹고 얼른 돌아와야 해요."}]},
+{"page":2,"stage":"problem","action":"run","child_words":"","lines":[{"speaker":"나레이션","text":"물을 마시고 복도를 콩콩 서두르다가 나는 그만 넘어졌어요."},{"speaker":"나레이션","text":"헐렁한 실내화가 발에서 쑥 빠졌거든요."},{"speaker":"나레이션","text":"쿵! 엉덩방아를 찧었어요."}]},
+{"page":3,"stage":"problem","action":"idle","child_words":"","lines":[{"speaker":"나레이션","text":"깜짝 놀라서 가슴이 콩닥콩닥했어요."},{"speaker":"나레이션","text":"“어떡하지? 깜짝 놀랐네.” 나는 입술을 꼭 물었어요."},{"speaker":"나레이션","text":"나는 숨을 한 번 크게 쉬었어요."}]},
+{"page":4,"stage":"action","action":"run","child_words":"","lines":[{"speaker":"나레이션","text":"나는 벌떡 일어났어요."},{"speaker":"나레이션","text":"그리고 바지를 툭툭 털고 달려갔어요."},{"speaker":"나레이션","text":"“괜찮아, 나는 할 수 있어!”"}]},
+{"page":5,"stage":"action","action":"run","child_words":"","lines":[{"speaker":"나레이션","text":"한 걸음, 또 한 걸음 교실까지 달렸어요."},{"speaker":"나레이션","text":"실내화가 타다닥 즐거운 소리를 냈어요."},{"speaker":"나레이션","text":"드디어 우리 반 교실 문이 보였어요."}]},
+{"page":6,"stage":"result","action":"idle","child_words":"","lines":[{"speaker":"나레이션","text":"교실에 들어오니 금방 괜찮아졌어요."},{"speaker":"나레이션","text":"콩닥거리던 가슴도 이제 차분해졌어요."},{"speaker":"나레이션","text":"“휴, 다행이다!” 나는 숨을 후우 내쉬었어요."}]},
+{"page":7,"stage":"result","action":"idle","child_words":"","lines":[{"speaker":"나레이션","text":"나는 내 자리에 쏙 앉았어요."},{"speaker":"나레이션","text":"공책을 펴고 연필을 사각사각 움직였어요."},{"speaker":"나레이션","text":"넘어졌던 일은 벌써 다 잊어버렸어요."}]},
+{"page":8,"stage":"result","action":"dance","child_words":"","lines":[{"speaker":"나레이션","text":"창밖에서 나뭇잎이 살랑살랑 흔들렸어요."},{"speaker":"나레이션","text":"나도 의자에 앉아 어깨를 들썩들썩 흔들었어요."},{"speaker":"나레이션","text":"넘어져도 다시 일어난 내가 조금 멋져 보였어요."}]}],
+"order_pages":[1,2,4,6],
+"scene":{"character_sheet":{},"pages":[
+{"page":1,"hero_on_page":true,"characters":[],"background":"An elementary school classroom during break time, with rows of desks and chairs, a chalkboard, and a round clock on the wall beside it. A water bottle sits on one of the desks."},
+{"page":2,"hero_on_page":true,"characters":[],"background":"The school hallway near a water fountain with a smooth shiny floor, a small loose indoor slipper lying on the floor. Soft morning light, a gentle surprised mood."},
+{"page":3,"hero_on_page":true,"characters":[],"background":"A quiet corner of the school hallway with a window and a potted plant, soft warm light. A gentle, slightly worried but hopeful mood."},
+{"page":4,"hero_on_page":true,"characters":[],"background":"The school hallway stretching ahead toward classroom doors, bright and open. Energetic, brave mood with a little dust sparkling in the air."},
+{"page":5,"hero_on_page":true,"characters":[],"background":"The end of the school hallway with a friendly classroom door coming into view, shoe cubbies along the wall. Lively, hurrying morning mood."},
+{"page":6,"hero_on_page":true,"characters":[],"background":"Inside a cozy elementary classroom with rows of small desks and chairs, a green chalkboard, and big windows. Relieved, peaceful mood."},
+{"page":7,"hero_on_page":true,"characters":[],"background":"A close view of a classroom desk with an open notebook and a pencil, small plants on the windowsill. Calm, focused, happy mood."},
+{"page":8,"hero_on_page":true,"characters":[],"background":"A cheerful classroom by the window, green leaves swaying on a tree outside, warm soft light filling the room. Joyful, proud mood."}]}}

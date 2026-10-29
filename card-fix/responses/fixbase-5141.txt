@@ -1,0 +1,19 @@
+{"title":"이끼 낀 나무 다리","protagonist":"나","characters":[],"pages":[
+{"page":1,"stage":"place","action":"walk","child_words":"","lines":[{"speaker":"나레이션","text":"숲속 나무 다리 아래로 시냇물이 졸졸 흘러요. 다리 옆에는 키 큰 나무들이 줄지어 서 있어요. 나는 “다리 끝에는 뭐가 있을까?” 하고 설렜어요."}]},
+{"page":2,"stage":"problem","action":"idle","child_words":"","lines":[{"speaker":"나레이션","text":"한 걸음, 또 한 걸음 나무 다리를 건너갔어요. 그런데 다리 위의 미끄러운 이끼를 밟았어요. 꽈당! 나는 그만 넘어졌어요."}]},
+{"page":3,"stage":"problem","action":"idle","child_words":"","lines":[{"speaker":"나레이션","text":"엉덩방아를 찧어서 깜짝 놀랐어요. “어이쿠, 어떡하지?” 나는 눈을 끔뻑였어요. 그런데 그때, 어디선가 노랫소리가 들렸어요!"}]},
+{"page":4,"stage":"action","action":"idle","child_words":"","lines":[{"speaker":"나레이션","text":"나는 잠깐 쉬며 기다렸어요. 나무 위에서 새들이 짹짹 노래했어요. “괜찮아, 천천히 쉬자.” 나는 혼잣말을 했어요."}]},
+{"page":5,"stage":"action","action":"idle","child_words":"","lines":[{"speaker":"나레이션","text":"다리 난간 옆에 앉아 숨을 후우 내쉬었어요. 바람이 살랑살랑 불어와 볼을 간질였어요. 조금만, 또 조금만 기다렸어요."}]},
+{"page":6,"stage":"result","action":"jump","child_words":"","lines":[{"speaker":"나레이션","text":"어느새 놀란 마음이 금방 괜찮아졌어요. 나는 천천히 일어서서 기지개를 쭉 켰어요. “이제 아무렇지도 않아!”"}]},
+{"page":7,"stage":"result","action":"walk","child_words":"","lines":[{"speaker":"나레이션","text":"이번에는 이끼를 피해 사뿐사뿐 걸었어요. 나무 다리 끝까지 무사히 건넜어요. 그곳에는 노란 꽃들이 가득 피어 있었어요."}]},
+{"page":8,"stage":"result","action":"idle","child_words":"","lines":[{"speaker":"나레이션","text":"나는 꽃 옆에 앉아 찰랑찰랑 반짝이는 물을 봤어요. 뒤돌아보니 나무 다리가 웃는 것 같았어요. 내 마음도 꽃처럼 활짝 피었어요."}]}],
+"order_pages":[1,2,4,6],
+"scene":{"character_sheet":{},"pages":[
+{"page":1,"hero_on_page":true,"characters":[],"background":"A small wooden footbridge over a gently flowing stream in a green forest, tall trees lining both sides, bright and calm daytime, a curious and exciting mood."},
+{"page":2,"hero_on_page":true,"characters":[],"background":"The middle of a wooden forest bridge with soft green moss patches on the planks, tall trees around, a sudden surprised mood."},
+{"page":3,"hero_on_page":true,"characters":[],"background":"A mossy wooden bridge in a quiet forest, gentle light through the leaves, a slightly worried but soft mood, small birds singing on a branch far above."},
+{"page":4,"hero_on_page":true,"characters":[],"background":"A peaceful forest seen from a wooden bridge, little birds singing on tree branches, soft leaves and calm daytime, a resting and gentle mood."},
+{"page":5,"hero_on_page":true,"characters":[],"background":"The middle of a wooden bridge in the forest beside its low wooden railing, a soft breeze moving the leaves and grass, calm stream below, a quiet waiting mood."},
+{"page":6,"hero_on_page":true,"characters":[],"background":"A wooden forest bridge in cheerful daytime, leaves swaying lightly, the stream sparkling below, a happy and relieved mood."},
+{"page":7,"hero_on_page":true,"characters":[],"background":"The far end of a wooden bridge opening onto a forest patch full of yellow flowers, mossy planks behind, a bright and joyful mood."},
+{"page":8,"hero_on_page":true,"characters":[],"background":"A cozy spot beside yellow flowers next to a sparkling forest stream, the wooden bridge visible in the background, warm and happy peaceful mood."}]}}

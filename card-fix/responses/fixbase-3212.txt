@@ -1,0 +1,19 @@
+{"title":"크레파스 상자와 노란 꽃","protagonist":"나","characters":[{"name":"친구","type":"아이-여"}],"pages":[
+{"page":1,"stage":"place","action":"walk","child_words":"","lines":[{"speaker":"나레이션","text":"우리 학교 운동장에는 커다란 철봉이 서 있어요."},{"speaker":"나레이션","text":"나는 모래 위를 사뿐사뿐 걸어서 교실로 갔어요."},{"speaker":"나레이션","text":"오늘은 그림 그리는 날이라 마음이 설레요."}]},
+{"page":2,"stage":"problem","action":"idle","child_words":"","lines":[{"speaker":"나레이션","text":"그림 시간이 끝나고 쉬는 시간이 되었어요."},{"speaker":"나레이션","text":"교실 뒤쪽에서 훌쩍훌쩍 소리가 들렸어요."},{"speaker":"나레이션","text":"친구가 울고 있었어요."}]},
+{"page":3,"stage":"problem","action":"idle","child_words":"","lines":[{"speaker":"나레이션","text":"친구 발밑에 크레파스가 와르르 쏟아져 있었어요."},{"speaker":"나레이션","text":"몇 개는 똑 부러져 있었어요."},{"speaker":"나레이션","text":"“어떡하지?” 나는 걱정이 되어 잠깐 망설였어요."},{"speaker":"나레이션","text":"그런데 그때, 내 발이 먼저 움직였어요!"}]},
+{"page":4,"stage":"action","action":"walk","child_words":"","lines":[{"speaker":"나레이션","text":"한 걸음, 또 한 걸음 성큼성큼 걸어갔어요."},{"speaker":"나레이션","text":"나는 친구에게 다가가서 도와줬어요."},{"speaker":"나레이션","text":"“울지 마. 내가 같이 주워 줄게.”"}]},
+{"page":5,"stage":"action","action":"run","child_words":"","lines":[{"speaker":"나레이션","text":"데굴데굴 굴러간 크레파스도 하나씩 주웠어요."},{"speaker":"나레이션","text":"“부러진 건 내 크레파스랑 같이 쓰자.”"},{"speaker":"나레이션","text":"친구가 눈물을 닦으며 고개를 끄덕였어요."}]},
+{"page":6,"stage":"result","action":"idle","child_words":"","lines":[{"speaker":"나레이션","text":"친구가 방긋 웃으며 나를 바라봤어요."},{"speaker":"나레이션","text":"“고마워. 정말 고마워.”"},{"speaker":"나레이션","text":"나는 친구에게 고맙다는 말을 들었어요."}]},
+{"page":7,"stage":"result","action":"dance","child_words":"","lines":[{"speaker":"나레이션","text":"내 볼이 발그레 뜨거워졌어요."},{"speaker":"나레이션","text":"기분이 좋아서 웃음이 자꾸자꾸 났어요."},{"speaker":"나레이션","text":"우리는 크레파스 상자를 함께 꼭 닫았어요."}]},
+{"page":8,"stage":"result","action":"idle","child_words":"","lines":[{"speaker":"나레이션","text":"친구가 종이 위에 노란 꽃을 사각사각 그렸어요."},{"speaker":"나레이션","text":"“이 꽃은 너 줄게.”"},{"speaker":"나레이션","text":"나는 너무 기뻐서 꽃 그림을 두 손으로 꼭 안았어요."}]}],
+"order_pages":[1,2,4,6],
+"scene":{"character_sheet":{"친구":"a little girl with short black bob hair, a yellow T-shirt and blue skirt"},"pages":[
+{"page":1,"hero_on_page":true,"characters":[],"background":"An empty school playground in the morning with a tall metal chin-up bar, sandy ground with small footprints, and the school building in the back."},
+{"page":2,"hero_on_page":true,"characters":[{"name":"친구","slot":"right-middle"}],"background":"Inside a cozy classroom during break time, desks and a chalkboard, 친구 standing at the back of the room crying softly with hands near her eyes."},
+{"page":3,"hero_on_page":true,"characters":[{"name":"친구","slot":"right-middle"}],"background":"Classroom floor with many colorful crayons scattered around 친구's feet, a few broken in half, 친구 looking down sadly."},
+{"page":4,"hero_on_page":true,"characters":[{"name":"친구","slot":"right-middle"}],"background":"Warm classroom scene with scattered crayons on the floor, 친구 looking up with teary eyes as someone approaches kindly."},
+{"page":5,"hero_on_page":true,"characters":[{"name":"친구","slot":"right-middle"}],"background":"Classroom floor with crayons rolling across, 친구 crouching and wiping her tears while gathering crayons into an open crayon box, gentle hopeful mood."},
+{"page":6,"hero_on_page":true,"characters":[{"name":"친구","slot":"right-middle"}],"background":"Bright classroom, 친구 smiling warmly and holding a tidy crayon box, soft happy light."},
+{"page":7,"hero_on_page":true,"characters":[{"name":"친구","slot":"right-middle"}],"background":"Cheerful classroom, 친구 closing the lid of a crayon box with a big smile, joyful playful mood."},
+{"page":8,"hero_on_page":true,"characters":[{"name":"친구","slot":"right-middle"}],"background":"Classroom desk with paper and crayons, 친구 holding out a drawing of a big yellow flower as a gift, warm and gentle mood."}]}}

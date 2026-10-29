@@ -1,0 +1,19 @@
+{"title":"모래 묻은 신발의 모험","protagonist":"나","characters":[{"name":"어른","type":"어른-여"}],"pages":[
+{"page":1,"stage":"place","action":"walk","child_words":"","lines":[{"speaker":"나레이션","text":"나는 학교 운동장 철봉에 매달려 혼자 놀았어요. 발밑의 모래가 신발 속으로 자꾸 들어왔어요. 목이 말라서 나는 물을 마시러 콩콩 건물 안으로 뛰어갔어요."}]},
+{"page":2,"stage":"problem","action":"idle","child_words":"","lines":[{"speaker":"나레이션","text":"물을 마시고 빙글빙글 둘러보니 복도가 다 똑같아 보였어요."},{"speaker":"나레이션","text":"“이쪽이었나? 아니, 저쪽이었나?”"},{"speaker":"나레이션","text":"나는 그만 학교 안에서 길을 잃었어요."}]},
+{"page":3,"stage":"problem","action":"idle","child_words":"","lines":[{"speaker":"나레이션","text":"가슴이 두근두근 뛰고 눈물이 날 것 같았어요."},{"speaker":"나레이션","text":"“괜찮아, 천천히 찾아보자.” 나는 혼잣말을 했어요."},{"speaker":"나레이션","text":"그런데 그때, 좋은 생각이 떠올랐어요!"}]},
+{"page":4,"stage":"action","action":"walk","child_words":"","lines":[{"speaker":"나레이션","text":"나는 주위를 살피며 천천히 걸었어요."},{"speaker":"나레이션","text":"문마다 기웃기웃 안을 들여다보았어요."},{"speaker":"나레이션","text":"음악실도 아니고, 과학실도 아니었어요."}]},
+{"page":5,"stage":"action","action":"walk","child_words":"","lines":[{"speaker":"나레이션","text":"한 걸음, 또 한 걸음, 나는 계단 옆까지 걸어갔어요."},{"speaker":"나레이션","text":"무섭지만 꾹 참고 용기를 냈어요."},{"speaker":"나레이션","text":"그때 또각또각 발소리가 가까이 들려왔어요."}]},
+{"page":6,"stage":"result","action":"idle","child_words":"","lines":[{"speaker":"나레이션","text":"“길을 잃었니? 걱정 마.” 다정한 목소리였어요."},{"speaker":"나레이션","text":"옆 반 선생님이 내 등을 토닥토닥 해 주었어요."},{"speaker":"나레이션","text":"그리고 나를 교실까지 데려다 줬어요."}]},
+{"page":7,"stage":"result","action":"walk","child_words":"","lines":[{"speaker":"나레이션","text":"우리는 나란히 사뿐사뿐 복도를 걸었어요."},{"speaker":"나레이션","text":"잡은 손이 따뜻해서 하나도 무섭지 않았어요."},{"speaker":"나레이션","text":"저 앞에 우리 반 문이 보였어요."}]},
+{"page":8,"stage":"result","action":"jump","child_words":"","lines":[{"speaker":"나레이션","text":"드르륵, 나는 교실 문을 열었어요."},{"speaker":"나레이션","text":"내 책상이 그 자리에서 나를 기다리고 있었어요."},{"speaker":"나레이션","text":"“고맙습니다!” 나는 꾸벅 인사하고 방긋 웃었어요."}]}],
+"order_pages":[1,2,4,6],
+"scene":{"character_sheet":{"어른":"a kind adult woman teacher with short black hair, round glasses, and a soft green cardigan"},"pages":[
+{"page":1,"hero_on_page":true,"characters":[],"background":"An empty elementary school playground in the daytime, with sandy ground, a row of metal pull-up bars, and a small slide. The entrance of the school building stands open in the distance."},
+{"page":2,"hero_on_page":true,"characters":[],"background":"A long school corridor where every classroom door looks the same, hallways stretching in two directions. Quiet, slightly confusing mood."},
+{"page":3,"hero_on_page":true,"characters":[],"background":"A quiet, empty school hallway corner with rows of identical doors and shoe lockers. Gentle, worried but hopeful mood."},
+{"page":4,"hero_on_page":true,"characters":[],"background":"A school hallway with half-open doors showing a music room with a piano and a science room with plants and beakers. Curious, careful mood."},
+{"page":5,"hero_on_page":true,"characters":[],"background":"A school hallway beside a wide staircase, soft light coming through the windows. Brave, expectant mood."},
+{"page":6,"hero_on_page":true,"characters":[{"name":"어른","slot":"right-middle"}],"background":"A school hallway beside the staircase where 어른 bends down gently with a warm smile, offering a hand. Safe, comforting mood."},
+{"page":7,"hero_on_page":true,"characters":[{"name":"어른","slot":"right-middle"}],"background":"A long school hallway where 어른 walks along holding a hand out, a classroom door visible ahead. Warm, peaceful mood."},
+{"page":8,"hero_on_page":true,"characters":[{"name":"어른","slot":"right-middle"}],"background":"An open classroom door showing neat rows of small desks and chairs, with 어른 standing by the door smiling. Happy, relieved mood."}]}}

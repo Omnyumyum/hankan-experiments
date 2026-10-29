@@ -1,0 +1,19 @@
+{"title":"벽에 걸린 노란 고양이","protagonist":"나","characters":[],"pages":[
+{"page":1,"stage":"place","action":"walk","child_words":"","lines":[{"speaker":"나레이션","text":"우리 학교 교실에서 나는 색연필을 내려놓았어요. 목이 너무 말라서 입술이 바싹바싹했어요. 나는 물을 마시러 혼자 교실 문을 나섰어요."}]},
+{"page":2,"stage":"problem","action":"idle","child_words":"","lines":[{"speaker":"나레이션","text":"물을 꿀꺽꿀꺽 마시고 돌아서니 복도가 다 똑같아 보였어요. “어? 우리 교실이 어디였지?” 나는 그만 길을 잃었어요."}]},
+{"page":3,"stage":"problem","action":"walk","child_words":"","lines":[{"speaker":"나레이션","text":"이쪽 복도도, 저쪽 복도도 처음 보는 곳 같았어요. 가슴이 두근두근 뛰었어요. 그런데 그때, 좋은 생각이 떠올랐어요!"}]},
+{"page":4,"stage":"action","action":"idle","child_words":"","lines":[{"speaker":"나레이션","text":"“길을 잃으면 움직이지 말자.” 나는 그 자리에서 기다렸어요. 벽에 등을 착 붙이고 숨을 크게 쉬었어요."}]},
+{"page":5,"stage":"action","action":"idle","child_words":"","lines":[{"speaker":"나레이션","text":"기다리는 동안 두리번두리번 벽을 둘러보았어요. 그런데 저기, 낯익은 그림 하나가 보였어요! 내가 그린 노란 고양이였어요."}]},
+{"page":6,"stage":"result","action":"jump","child_words":"","lines":[{"speaker":"나레이션","text":"“맞아! 내 그림이 붙은 복도 끝에 우리 교실이 있었지!” 나는 기뻐서 제자리에서 폴짝 뛰었어요. 노란 고양이 덕분에 나는 길을 찾았어요."}]},
+{"page":7,"stage":"result","action":"walk","child_words":"","lines":[{"speaker":"나레이션","text":"그림이 붙은 복도 끝으로 한 걸음, 또 한 걸음 사뿐사뿐 걸었어요. 그러자 드디어 우리 교실 문이 보였어요."}]},
+{"page":8,"stage":"result","action":"dance","child_words":"","lines":[{"speaker":"나레이션","text":"나는 문을 드르륵 열고 내 자리에 쏙 앉았어요. 복도 끝 노란 고양이에게 속으로 말했어요. “고마워, 내 고양이야.”"}]}],
+"order_pages":[1,2,4,6],
+"scene":{"character_sheet":{},"pages":[
+{"page":1,"hero_on_page":true,"characters":[],"background":"An empty elementary school classroom during the day, with rows of small wooden desks and a box of colored pencils left on one desk. The classroom door stands open, showing a glimpse of the hallway beyond."},
+{"page":2,"hero_on_page":true,"characters":[],"background":"An empty school hallway that splits into several identical-looking corridors in the daytime, giving a slightly puzzling but calm feeling."},
+{"page":3,"hero_on_page":true,"characters":[],"background":"A crossroads of long, quiet school hallways with rows of closed classroom doors, soft daylight from the windows, and a curious, slightly worried mood."},
+{"page":4,"hero_on_page":true,"characters":[],"background":"A calm spot by a hallway wall inside an elementary school in the daytime, with soft light and a peaceful, patient mood."},
+{"page":5,"hero_on_page":true,"characters":[],"background":"A school hallway wall covered with children's drawings, where one drawing of a cute yellow cat stands out brightly among the others, in a warm, hopeful mood."},
+{"page":6,"hero_on_page":true,"characters":[],"background":"Close view of the school hallway wall with the yellow cat drawing glowing softly, in a joyful and relieved atmosphere."},
+{"page":7,"hero_on_page":true,"characters":[],"background":"A friendly school hallway in the daytime, with a line of children's drawings leading toward a classroom door at the end and a warm, happy feeling."},
+{"page":8,"hero_on_page":true,"characters":[],"background":"A cozy elementary school classroom in the daytime with small desks and chairs and the door slightly open to the hallway, in a warm, comforting mood."}]}}

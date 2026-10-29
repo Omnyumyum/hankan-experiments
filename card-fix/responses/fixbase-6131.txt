@@ -1,0 +1,19 @@
+{"title":"분홍 조개와 모래 발자국","protagonist":"나","characters":[],"pages":[
+{"page":1,"stage":"place","action":"walk","child_words":"","lines":[{"speaker":"나레이션","text":"바다의 모래사장에 하얀 파도가 밀려왔어요. 파도가 철썩, 거품을 남기고 돌아갔어요. 나는 맨발로 사각사각 모래를 밟았어요. 발가락이 간질간질해서 웃음이 났어요."}]},
+{"page":2,"stage":"problem","action":"run","child_words":"","lines":[{"speaker":"나레이션","text":"저기 분홍 조개껍데기가 보였어요. 나는 콩콩 조개 쪽으로 뛰어갔어요. 젖은 모래에 발이 쭉 미끄러졌어요. 나는 그만 넘어졌어요."}]},
+{"page":3,"stage":"problem","action":"idle","child_words":"","lines":[{"speaker":"나레이션","text":"무릎에 모래가 잔뜩 묻었어요. 나는 깜짝 놀라 눈을 끔뻑였어요. “다시 걸을 수 있을까?” 나는 숨을 후우 크게 쉬었어요. “그래, 천천히 일어나 보자.”"}]},
+{"page":4,"stage":"action","action":"walk","child_words":"","lines":[{"speaker":"나레이션","text":"나는 툭툭 모래를 털고 일어났어요. 그리고 천천히 다시 걸었어요. 한 걸음, 또 한 걸음."}]},
+{"page":5,"stage":"action","action":"walk","child_words":"","lines":[{"speaker":"나레이션","text":"이번에는 단단한 모래만 꾹꾹 밟았어요. “천천히 가면 괜찮아.” 마음속에 작은 용기가 생겼어요."}]},
+{"page":6,"stage":"result","action":"jump","child_words":"","lines":[{"speaker":"나레이션","text":"놀란 마음이 금방 괜찮아졌어요. 나는 제자리에서 깡충 뛰어 보았어요. “이제 아무렇지도 않아!”"}]},
+{"page":7,"stage":"result","action":"idle","child_words":"","lines":[{"speaker":"나레이션","text":"아까 본 조개껍데기가 반짝 빛났어요. 나는 조개를 살며시 집어 들었어요. 분홍 줄무늬가 정말 예뻤어요."}]},
+{"page":8,"stage":"result","action":"dance","child_words":"","lines":[{"speaker":"나레이션","text":"조개를 귀에 대니 쏴아 소리가 들렸어요. 모래 위에 내 발자국이 또박또박 이어져 있었어요. 나는 조개를 꼭 쥐고 배시시 웃었어요."}]}],
+"order_pages":[1,2,4,6],
+"scene":{"character_sheet":{},"pages":[
+{"page":1,"hero_on_page":true,"characters":[],"background":"A wide sandy beach by the sea in the late morning, gentle white waves rolling onto the shore leaving foam. Seashells and soft footprints scattered on the warm sand, calm and cheerful mood."},
+{"page":2,"hero_on_page":true,"characters":[],"background":"Wet shiny sand near the water's edge on a bright beach, a small pink seashell lying a little way ahead. Light, playful mood."},
+{"page":3,"hero_on_page":true,"characters":[],"background":"A quiet spot on the wet sand near the waves, soft clouds in the blue sky. A slightly worried but gentle mood."},
+{"page":4,"hero_on_page":true,"characters":[],"background":"A calm sandy beach with small waves in the distance and a fresh line of footprints starting on the sand. Hopeful, gentle mood."},
+{"page":5,"hero_on_page":true,"characters":[],"background":"Firm, smooth sand along the beach with a careful trail of footprints, seagulls flying far over the sea. Brave and steady mood."},
+{"page":6,"hero_on_page":true,"characters":[],"background":"A bright, open beach with sparkling sea water and soft sand. Happy, relieved mood."},
+{"page":7,"hero_on_page":true,"characters":[],"background":"Close view of the sandy shore where a pretty pink striped seashell glimmers on the sand, gentle waves behind. Delighted mood."},
+{"page":8,"hero_on_page":true,"characters":[],"background":"The beach in soft afternoon light with a long trail of footprints across the sand and calm waves by the shore. Warm, peaceful mood."}]}}

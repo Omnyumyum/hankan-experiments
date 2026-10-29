@@ -1,0 +1,19 @@
+{"title":"나무 다리 위의 기다림","protagonist":"나","characters":[{"name":"친구","type":"아이-남"}],"pages":[
+{"page":1,"stage":"place","action":"walk","child_words":"","lines":[{"speaker":"나레이션","text":"나는 숲속 나무 다리 위를 천천히 걸었어요."},{"speaker":"나레이션","text":"다리 아래로 맑은 시냇물이 졸졸 흘렀어요."},{"speaker":"나레이션","text":"커다란 나무들 사이에 서니 마음이 설렜어요."}]},
+{"page":2,"stage":"problem","action":"idle","child_words":"","lines":[{"speaker":"나레이션","text":"그런데 다리 끝에서 친구가 울고 있었어요."},{"speaker":"나레이션","text":"흑흑, 작은 울음소리가 들려왔어요."},{"speaker":"나레이션","text":"나는 깜짝 놀라서 걸음을 멈췄어요."}]},
+{"page":3,"stage":"problem","action":"walk","child_words":"","lines":[{"speaker":"나레이션","text":"친구 눈에서 눈물이 뚝뚝 떨어졌어요."},{"speaker":"나레이션","text":"“왜 울어?” 물어도 친구는 대답이 없었어요."},{"speaker":"나레이션","text":"나는 걱정이 됐어요. 그래서 곁에 있어 주기로 했어요."}]},
+{"page":4,"stage":"action","action":"idle","child_words":"","lines":[{"speaker":"나레이션","text":"나는 친구 옆에 살며시 앉아 기다려 줬어요."},{"speaker":"나레이션","text":"“나 여기 있을게.” 하고 작게 말했어요."},{"speaker":"나레이션","text":"그러고는 아무 말 없이 가만히 있었어요."}]},
+{"page":5,"stage":"action","action":"idle","child_words":"","lines":[{"speaker":"나레이션","text":"바람이 솔솔 불어와 나뭇잎을 흔들었어요."},{"speaker":"나레이션","text":"조금, 또 조금, 시간이 흘러갔어요."},{"speaker":"나레이션","text":"나는 용기를 내어 끝까지 기다렸어요."}]},
+{"page":6,"stage":"result","action":"idle","child_words":"","lines":[{"speaker":"나레이션","text":"드디어 친구 눈물이 그쳤어요."},{"speaker":"나레이션","text":"친구가 코를 훌쩍이며 고개를 들었어요."},{"speaker":"나레이션","text":"“기다려 줘서 고마워.” 친구가 말했어요."}]},
+{"page":7,"stage":"result","action":"idle","child_words":"","lines":[{"speaker":"나레이션","text":"친구가 나를 보고 방긋 웃었어요."},{"speaker":"나레이션","text":"나도 기뻐서 가슴이 콩닥콩닥 뛰었어요."},{"speaker":"나레이션","text":"우리는 함께 시냇물을 내려다봤어요."}]},
+{"page":8,"stage":"result","action":"idle","child_words":"","lines":[{"speaker":"나레이션","text":"시냇물 위로 나뭇잎 하나가 동동 떠갔어요."},{"speaker":"나레이션","text":"“저기 봐, 작은 배 같아!” 친구가 말했어요."},{"speaker":"나레이션","text":"나는 나무 다리 위에서 친구랑 같이 웃었어요."}]}],
+"order_pages":[1,2,4,6],
+"scene":{"character_sheet":{"친구":"a small boy with short brown hair, wearing a yellow T-shirt and green shorts"},"pages":[
+{"page":1,"hero_on_page":true,"characters":[],"background":"A small wooden bridge over a clear, gentle stream in a green forest with tall trees and soft leaves. Calm, peaceful daytime mood."},
+{"page":2,"hero_on_page":true,"characters":[{"name":"친구","slot":"right-middle"}],"background":"The far end of the wooden bridge in the forest, where 친구 sits crying quietly. Daytime, quiet and slightly sad mood."},
+{"page":3,"hero_on_page":true,"characters":[{"name":"친구","slot":"right-middle"}],"background":"On the wooden bridge in the forest, 친구 sits hugging his knees with tears on his cheeks. Soft daylight through the trees, gentle worried mood."},
+{"page":4,"hero_on_page":true,"characters":[{"name":"친구","slot":"right-middle"}],"background":"On the wooden bridge over the stream, 친구 sits quietly with his head down. Calm forest, gentle and caring mood."},
+{"page":5,"hero_on_page":true,"characters":[{"name":"친구","slot":"right-middle"}],"background":"A soft breeze moves the green leaves around the wooden bridge while 친구 sits still and calm. Quiet, patient forest mood."},
+{"page":6,"hero_on_page":true,"characters":[{"name":"친구","slot":"right-middle"}],"background":"On the wooden bridge, 친구 lifts his head, his tears gone, and looks relieved. Bright forest light, hopeful mood."},
+{"page":7,"hero_on_page":true,"characters":[{"name":"친구","slot":"right-middle"}],"background":"On the wooden bridge, 친구 smiles and looks down at the sparkling stream. Warm, happy forest mood."},
+{"page":8,"hero_on_page":true,"characters":[{"name":"친구","slot":"right-middle"}],"background":"A single leaf floats down the stream under the wooden bridge while 친구 laughs and points at it. Cheerful, cozy forest mood."}]}}

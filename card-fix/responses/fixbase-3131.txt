@@ -1,0 +1,19 @@
+{"title":"꼭 묶은 리본 신발 끈","protagonist":"나","characters":[],"pages":[
+{"page":1,"stage":"place","action":"walk","child_words":"","lines":[{"speaker":"나레이션","text":"우리 학교 교실에는 아직 아무도 오지 않았어요. 나는 내 자리에 가방을 털썩 내려놓았어요. 오늘은 그림 그리는 날이라 마음이 들떴어요. 나는 물통에 물을 채우러 교실 밖으로 나갔어요."}]},
+{"page":2,"stage":"problem","action":"run","child_words":"","lines":[{"speaker":"나레이션","text":"신이 나서 복도를 달리다 신발 끈을 밟았어요."},{"speaker":"나레이션","text":"꽈당! 나는 그만 넘어졌어요."},{"speaker":"나레이션","text":"“어이쿠!” 소리가 저절로 나왔어요."}]},
+{"page":3,"stage":"problem","action":"idle","child_words":"","lines":[{"speaker":"나레이션","text":"깜짝 놀라서 가슴이 콩닥콩닥했어요."},{"speaker":"나레이션","text":"“괜찮아, 할 수 있어.” 나는 작게 말했어요."},{"speaker":"나레이션","text":"그런데 그때였어요! 좋은 생각이 떠올랐어요."}]},
+{"page":4,"stage":"action","action":"walk","child_words":"","lines":[{"speaker":"나레이션","text":"나는 먼저 신발 끈을 꼭꼭 묶었어요."},{"speaker":"나레이션","text":"그리고 일어나서 천천히 다시 걸었어요."},{"speaker":"나레이션","text":"한 걸음, 또 한 걸음, 사뿐사뿐 걸었어요."}]},
+{"page":5,"stage":"action","action":"walk","child_words":"","lines":[{"speaker":"나레이션","text":"이번에는 뛰지 않고 발밑을 잘 보았어요."},{"speaker":"나레이션","text":"나는 수돗가에서 물통에 물을 졸졸 채웠어요."},{"speaker":"나레이션","text":"콩콩, 작은 발소리가 복도에 울렸어요."},{"speaker":"나레이션","text":"“천천히 가니까 괜찮네.” 나는 빙그레 웃었어요."}]},
+{"page":6,"stage":"result","action":"idle","child_words":"","lines":[{"speaker":"나레이션","text":"놀란 마음은 금방 괜찮아졌어요."},{"speaker":"나레이션","text":"옷을 툭툭 털어 보니 아무렇지도 않았어요."},{"speaker":"나레이션","text":"“이제 괜찮다!” 나는 힘이 쑥 났어요."}]},
+{"page":7,"stage":"result","action":"jump","child_words":"","lines":[{"speaker":"나레이션","text":"드디어 우리 교실 문 앞에 도착했어요."},{"speaker":"나레이션","text":"드르륵, 나는 교실 문을 활짝 열었어요."},{"speaker":"나레이션","text":"책상 위에서 크레파스가 나를 기다렸어요."}]},
+{"page":8,"stage":"result","action":"idle","child_words":"","lines":[{"speaker":"나레이션","text":"나는 자리에 앉아 크레파스를 꺼냈어요."},{"speaker":"나레이션","text":"쓱쓱, 하얀 종이에 신발 끈을 그렸어요."},{"speaker":"나레이션","text":"꼭 묶인 리본 모양 끈을 보니 웃음이 났어요."}]}],
+"order_pages":[1,2,4,6],
+"scene":{"character_sheet":{},"pages":[
+{"page":1,"hero_on_page":true,"characters":[],"background":"An empty elementary school classroom early in the day, with rows of small desks and chairs and a backpack resting on one desk. The classroom door stands open to a quiet hallway."},
+{"page":2,"hero_on_page":true,"characters":[],"background":"The same school hallway with a shiny smooth floor, a small backpack lying on the floor nearby. A sudden, slightly surprised mood."},
+{"page":3,"hero_on_page":true,"characters":[],"background":"A quiet corner of the school hallway near a window, soft light falling on the floor. A gentle, thoughtful mood."},
+{"page":4,"hero_on_page":true,"characters":[],"background":"The long school hallway stretching ahead, rows of classroom doors on one side. A hopeful, brave mood."},
+{"page":5,"hero_on_page":true,"characters":[],"background":"The school hallway with a small sink for washing hands and potted green plants along the wall, soft light on the floor. A calm and steady mood."},
+{"page":6,"hero_on_page":true,"characters":[],"background":"A cozy spot in the school hallway beside a window with small flower pots on the sill. A relieved, happy mood."},
+{"page":7,"hero_on_page":true,"characters":[],"background":"An open classroom door seen from the hallway, inside are small wooden desks with boxes of crayons on top. A bright, welcoming mood."},
+{"page":8,"hero_on_page":true,"characters":[],"background":"Inside a warm classroom, a wooden desk with a white sheet of paper and colorful crayons scattered on it. A joyful, peaceful mood."}]}}

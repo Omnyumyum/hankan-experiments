@@ -1,0 +1,19 @@
+{"title":"빈 식판과 교실 구석","protagonist":"나","characters":[{"name":"친구","type":"아이-여"}],"pages":[
+{"page":1,"stage":"place","action":"walk","child_words":"","lines":[{"speaker":"나레이션","text":"학교 급식실에서 나는 식판을 다 비웠어요."},{"speaker":"나레이션","text":"식판 놓는 자리에 차곡차곡 올려 두었어요."},{"speaker":"나레이션","text":"그리고 혼자서 교실로 돌아갔어요."}]},
+{"page":2,"stage":"problem","action":"idle","child_words":"","lines":[{"speaker":"나레이션","text":"그런데 교실 구석에서 훌쩍훌쩍 소리가 났어요. 책상에 엎드려서 친구가 울고 있었어요. 내 마음이 걱정으로 콩닥콩닥 뛰었어요."}]},
+{"page":3,"stage":"problem","action":"walk","child_words":"","lines":[{"speaker":"나레이션","text":"나는 살금살금 친구에게 다가갔어요. “괜찮아?” 하고 작은 목소리로 물었어요. 친구는 고개만 저으며 계속 울었어요. 나는 어떻게 하면 좋을까요?"}]},
+{"page":4,"stage":"action","action":"idle","child_words":"","lines":[{"speaker":"나레이션","text":"나는 친구 옆에 앉아서 기다려 줬어요. 의자가 끼익 작은 소리를 냈어요. “괜찮아, 나 여기 있을게.” 하고 말했어요."}]},
+{"page":5,"stage":"action","action":"idle","child_words":"","lines":[{"speaker":"나레이션","text":"시계 바늘이 째깍째깍 천천히 돌아갔어요. 나는 기다리고, 또 기다렸어요. 조금도 서두르지 않고 친구 곁에 있었어요."}]},
+{"page":6,"stage":"result","action":"idle","child_words":"","lines":[{"speaker":"나레이션","text":"한참 뒤에 드디어 친구 눈물이 그쳤어요. 친구가 소매로 눈을 쓱쓱 닦았어요. “옆에 있어 줘서 고마워.” 친구가 작게 말했어요."}]},
+{"page":7,"stage":"result","action":"jump","child_words":"","lines":[{"speaker":"나레이션","text":"빨개진 눈으로 친구가 방긋 웃었어요. 그 웃음을 보니 나도 정말 기뻤어요. 나는 나도 모르게 폴짝 뛰었어요."}]},
+{"page":8,"stage":"result","action":"idle","child_words":"","lines":[{"speaker":"나레이션","text":"우리는 나란히 앉아 창밖을 바라보았어요. 내 마음이 몽글몽글 간지러웠어요. 친구 옆자리가 오늘따라 참 포근했어요."}]}],
+"order_pages":[1,2,4,6],
+"scene":{"character_sheet":{"친구":"a seven-year-old girl with short black bob hair, wearing a yellow hoodie and blue pants"},"pages":[
+{"page":1,"hero_on_page":true,"characters":[],"background":"An empty school cafeteria just after lunchtime, with long tables and benches and a neat stack of empty meal trays on the tray return counter. A doorway at the side leads out toward the hallway."},
+{"page":2,"hero_on_page":true,"characters":[{"name":"친구","slot":"right-middle"}],"background":"A quiet corner of the school classroom during the day. 친구 is sitting at a desk with her head down on her arms, crying softly."},
+{"page":3,"hero_on_page":true,"characters":[{"name":"친구","slot":"right-middle"}],"background":"The same quiet classroom corner with soft daylight from the windows. 친구 is still sitting at her desk, shaking her head and crying."},
+{"page":4,"hero_on_page":true,"characters":[{"name":"친구","slot":"right-middle"}],"background":"Inside the classroom, an empty chair has been pulled up next to the desk. 친구 sits with her head lowered, still sad, in a gentle and calm mood."},
+{"page":5,"hero_on_page":true,"characters":[{"name":"친구","slot":"right-middle"}],"background":"A peaceful classroom with a simple round wall clock without numbers. 친구 sits quietly at her desk as time passes slowly."},
+{"page":6,"hero_on_page":true,"characters":[{"name":"친구","slot":"right-middle"}],"background":"The classroom feels softer and warmer. 친구 has stopped crying and is wiping her eyes with her sleeve."},
+{"page":7,"hero_on_page":true,"characters":[{"name":"친구","slot":"right-middle"}],"background":"The bright, cheerful classroom. 친구 smiles shyly with slightly red eyes."},
+{"page":8,"hero_on_page":true,"characters":[{"name":"친구","slot":"right-middle"}],"background":"Two small desks are pushed close together by the classroom window, with a warm and peaceful feeling. 친구 sits calmly and looks out the window."}]}}
