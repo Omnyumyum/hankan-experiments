@@ -1,0 +1,8 @@
+{"protagonist": "라라",
+ "characters": [{"name": "친구", "type": "아이-여"}],
+ "sentences": [
+  [{"speaker": "나레이션", "text": "라라는 마을 공원 분수 옆을 따라 걸었어요."}],
+  [{"speaker": "나레이션", "text": "큰 나무 아래에서 친구가 울고 있었어요."}],
+  [{"speaker": "나레이션", "text": "라라는"}, {"speaker": "주인공", "text": "모자가 걸렸어요!", "emotion": "놀람"}, {"speaker": "나레이션", "text": "하며 어른에게 달려갔어요."}],
+  [{"speaker": "나레이션", "text": "친구가"}, {"speaker": "친구", "text": "우리 같이 놀래?", "emotion": "기쁨"}, {"speaker": "나레이션", "text": "해서 둘은 친한 친구가 됐어요."}]
+ ]}

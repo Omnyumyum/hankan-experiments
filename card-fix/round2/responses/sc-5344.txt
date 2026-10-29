@@ -1,0 +1,8 @@
+{"protagonist": "라라",
+ "characters": [{"name": "엄마 새", "type": "작은 동물"}],
+ "sentences": [
+  [{"speaker": "나레이션", "text": "라라는 숲 속 새 둥지 아래에 서 있었어요."}],
+  [{"speaker": "나레이션", "text": "나비를 따라 걷다가 라라는 길을 잃었어요."}],
+  [{"speaker": "나레이션", "text": "라라는"}, {"speaker": "주인공", "text": "조금만 더 가자!", "emotion": "신남"}, {"speaker": "나레이션", "text": "하며 표지판으로 달려갔어요."}],
+  [{"speaker": "나레이션", "text": "엄마 새가"}, {"speaker": "엄마 새", "text": "어서 와, 반가워!", "emotion": "기쁨"}, {"speaker": "나레이션", "text": "하며 모두 기뻐했어요."}]
+ ]}

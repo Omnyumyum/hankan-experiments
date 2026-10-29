@@ -1,0 +1,8 @@
+{"protagonist": "라라",
+ "characters": [],
+ "sentences": [
+  [{"speaker": "나레이션", "text": "라라는 숲속 새 둥지 아래에서 위를 봤어요."}],
+  [{"speaker": "나레이션", "text": "둥지만 보며 걷다가 라라는 넘어졌어요."}],
+  [{"speaker": "나레이션", "text": "라라는"}, {"speaker": "주인공", "text": "천천히 숨 쉬자.", "emotion": "속삭임"}, {"speaker": "나레이션", "text": "하며 잠깐 쉬며 기다렸어요."}],
+  [{"speaker": "나레이션", "text": "라라에게 아기 다람쥐 친구가 생겼어요."}]
+ ]}
