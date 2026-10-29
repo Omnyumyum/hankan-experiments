@@ -1,0 +1,1 @@
+{"protagonist": "라라", "characters": [], "sentences": [[{"speaker": "나레이션", "text": "라라는"}, {"speaker": "주인공", "text": "꼭대기까지 갈래!", "emotion": "신남"}, {"speaker": "나레이션", "text": "하며 정글짐을 잡았어요."}], [{"speaker": "나레이션", "text": "세 번째 칸에서 놀이터가 어두워졌어요."}], [{"speaker": "나레이션", "text": "라라는 내려와서 밝은 곳으로 달려갔어요."}], [{"speaker": "나레이션", "text": "구름이 비켜나고 놀이터 위로 해가 떴어요."}]]}

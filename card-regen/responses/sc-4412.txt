@@ -1,0 +1,1 @@
+{"protagonist": "라라", "characters": [], "sentences": [[{"speaker": "나레이션", "text": "라라는 마을 골목길에서 사방치기를 했어요."}], [{"speaker": "나레이션", "text": "돌을 던졌을 때 골목길이 어두워졌어요."}], [{"speaker": "나레이션", "text": "라라는 골목길 커다란 화분 뒤에 숨었어요."}], [{"speaker": "나레이션", "text": "라라는"}, {"speaker": "주인공", "text": "안녕, 고양이야.", "emotion": "속삭임"}, {"speaker": "나레이션", "text": "하며 용기가 생겼어요."}]]}

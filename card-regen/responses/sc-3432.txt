@@ -1,0 +1,1 @@
+{"protagonist": "라라", "characters": [], "sentences": [[{"speaker": "나레이션", "text": "라라는 학교 운동장에 손바닥 도장을 찍었어요."}], [{"speaker": "나레이션", "text": "도장을 찍는 사이 운동장이 어두워졌어요."}], [{"speaker": "나레이션", "text": "라라는 선생님과 살금살금 걸어갔어요."}], [{"speaker": "나레이션", "text": "라라는"}, {"speaker": "주인공", "text": "안녕, 고슴도치야.", "emotion": "속삭임"}, {"speaker": "나레이션", "text": "하며 용기가 생겼어요."}]]}

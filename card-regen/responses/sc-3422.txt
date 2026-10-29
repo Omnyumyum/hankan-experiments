@@ -1,0 +1,1 @@
+{"protagonist": "라라", "characters": [], "sentences": [[{"speaker": "나레이션", "text": "라라는 학교 음악실에서 실로폰을 쳤어요."}], [{"speaker": "나레이션", "text": "작은 별을 치는데 음악실이 어두워졌어요."}], [{"speaker": "나레이션", "text": "라라는 채를 들고 밝은 곳으로 달려갔어요."}], [{"speaker": "나레이션", "text": "라라는"}, {"speaker": "주인공", "text": "끝까지 칠래요!", "emotion": "신남"}, {"speaker": "나레이션", "text": "하며 용기가 생겼어요."}]]}

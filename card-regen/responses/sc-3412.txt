@@ -1,0 +1,1 @@
+{"protagonist": "라라", "characters": [], "sentences": [[{"speaker": "나레이션", "text": "라라는 학교 운동장에서 빨간 공을 찼어요."}], [{"speaker": "나레이션", "text": "공을 몰고 가는 사이 운동장이 어두워졌어요."}], [{"speaker": "나레이션", "text": "라라는 구령대 계단 아래에 쏙 숨었어요."}], [{"speaker": "나레이션", "text": "라라는"}, {"speaker": "주인공", "text": "한 골만 넣을래요!", "emotion": "신남"}, {"speaker": "나레이션", "text": "하며 용기가 생겼어요."}]]}

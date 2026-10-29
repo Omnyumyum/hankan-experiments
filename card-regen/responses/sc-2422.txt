@@ -1,0 +1,1 @@
+{"protagonist": "라라", "characters": [], "sentences": [[{"speaker": "나레이션", "text": "라라는 놀이터 벤치에서 코코아를 마셨어요."}], [{"speaker": "나레이션", "text": "놀다 보니 놀이터가 어두워졌어요."}], [{"speaker": "나레이션", "text": "라라는 가로등 아래 밝은 곳으로 달려갔어요."}], [{"speaker": "나레이션", "text": "라라는"}, {"speaker": "주인공", "text": "장갑 가져올래요!", "emotion": "신남"}, {"speaker": "나레이션", "text": "하며 용기가 생겼어요."}]]}
