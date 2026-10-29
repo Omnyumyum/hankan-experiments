@@ -5,7 +5,8 @@
             Meta segment() 마스크 · 누른 점(tap_segment_eval.taps 와 같은 점) · 종이 상자
        ../venv/bin/python -I eval_real/box_eval.py base --set tap_learn [--margins 0,0.08,0.2] [--procs 4]
   2) sam  : MobileSAM(clean_photo 그림 입력, TAP_SEGMENT 에서 고른 것)으로 누름 후보 — 사진 전체 · 상자 안 각각
-       ../venv/bin/python -I eval_real/box_eval.py sam --set tap_learn
+       ../venv/bin/python -I eval_real/box_eval.py sam --set tap_learn [--keys 파일]
+       (qd_check 5400장은 누름 결과가 쓰이는 그림 — 누름을 묻거나 자동 마스크가 틀린 그림 — 만 --keys 로 돌렸다)
   3) score: box_score.py 가 읽는다.
 묶음 (--set):
   nh_learn · nh_check   — 사람이 아닌 그림 (box_nonhuman_labels.csv, 파일 이름 md5 첫 글자 짝 = learn · 홀 = check)
@@ -262,6 +263,9 @@ def sam_job(job):
 
 def run_sam(a):
     base = pickle.load(gzip.open(cpath(a.set, "base"), "rb"))
+    if a.keys:  # 이 그림들만 (누름이 쓰이는 그림만 돌려 시간을 줄일 때)
+        keep = set(open(a.keys).read().split())
+        base = [b for b in base if b["key"] in keep]
     its = {it["key"]: it for it in items(a.set)}
     t0 = time.time()
     rows = []
@@ -283,6 +287,7 @@ def main():
     ap.add_argument("--margins", default="0,0.08,0.2")
     ap.add_argument("--procs", type=int, default=4)
     ap.add_argument("--threads", type=int, default=1)
+    ap.add_argument("--keys", default="", help="sam: 이 파일에 적힌 key 의 그림만")
     a = ap.parse_args()
     {"base": run_base, "sam": run_sam}[a.mode](a)
 

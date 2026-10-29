@@ -56,6 +56,12 @@ def one(job):
             r["enc_box"] = s.get("enc_box", 0.0)
             c, _ = s["full"]["dbox"]
             r["sam_agree_now"] = max(iou(unpack(x), full) for x in c)
+    if not s:  # 누름 후보를 안 만든 그림 (누름도 안 묻고 자동도 맞은 그림) — 누름 결과가 쓰이지 않으므로 자동 결과로 채운다
+        r["tap_full@now"] = r["iou_now"]
+        for m in (0.1, 0.2):
+            if f"box{m}" in r:
+                r[f"tap_prompt@{m}"] = r[f"tap_crop@{m}"] = r[f"tap_full@{m}"] = r[f"box{m}"]
+        r["no_sam"] = True
     return r
 
 
