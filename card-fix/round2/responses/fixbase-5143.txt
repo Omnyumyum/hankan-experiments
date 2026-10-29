@@ -1,0 +1,23 @@
+{"title": "옹달샘 가는 숲속 오솔길", "protagonist": "나", "characters": [],
+ "pages": [
+  {"page": 1, "stage": "place", "action": "walk", "child_words": "", "lines": [{"speaker": "나레이션", "text": "숲의 덤불 옆에 빨간 열매가 대롱대롱 매달려 있었어요."}, {"speaker": "나레이션", "text": "나는 숲속 옹달샘까지 가 보려고 길을 나섰어요."}, {"speaker": "나레이션", "text": "“옹달샘 물은 얼마나 맑을까?”"}, {"speaker": "나레이션", "text": "내 마음이 콩닥콩닥 설레었어요."}]},
+  {"page": 2, "stage": "problem", "action": "run", "child_words": "", "lines": [{"speaker": "나레이션", "text": "나는 신이 나서 오솔길을 달려갔어요."}, {"speaker": "나레이션", "text": "그러다 길에 나온 나무뿌리에 발이 탁 걸렸어요."}, {"speaker": "나레이션", "text": "나는 그만 넘어졌어요."}]},
+  {"page": 3, "stage": "problem", "action": "idle", "child_words": "", "lines": [{"speaker": "나레이션", "text": "나는 깜짝 놀라서 눈이 동그래졌어요."}, {"speaker": "나레이션", "text": "“옹달샘까지 아직 멀었는데 어쩌지?”"}, {"speaker": "나레이션", "text": "나는 걱정이 되었어요. 그래서 잠깐 쉬어 가기로 했어요."}]},
+  {"page": 4, "stage": "action", "action": "idle", "child_words": "", "lines": [{"speaker": "나레이션", "text": "나는 큰 바위에 앉아 잠깐 쉬며 기다렸어요."}, {"speaker": "나레이션", "text": "그때 어디선가 졸졸 물소리가 들려왔어요."}, {"speaker": "나레이션", "text": "“옹달샘이 가까이 있나 봐!”"}]},
+  {"page": 5, "stage": "action", "action": "idle", "child_words": "", "lines": [{"speaker": "나레이션", "text": "바람이 살랑살랑 불어 나뭇잎이 흔들렸어요."}, {"speaker": "나레이션", "text": "놀란 마음이 조금씩 가라앉았어요."}, {"speaker": "나레이션", "text": "“이제 다시 걸을 수 있겠어.”"}, {"speaker": "나레이션", "text": "나는 용기를 내어 천천히 일어났어요."}]},
+  {"page": 6, "stage": "result", "action": "walk", "child_words": "", "lines": [{"speaker": "나레이션", "text": "나는 발밑을 보며 사뿐사뿐 걸었어요."}, {"speaker": "나레이션", "text": "한 걸음, 또 한 걸음 가려던 곳까지 갔어요."}, {"speaker": "나레이션", "text": "바로 숲속 옹달샘이었어요!"}]},
+  {"page": 7, "stage": "result", "action": "jump", "child_words": "", "lines": [{"speaker": "나레이션", "text": "옹달샘 물이 반짝반짝 빛나고 있었어요."}, {"speaker": "나레이션", "text": "물속에 동글동글한 조약돌이 다 보였어요."}, {"speaker": "나레이션", "text": "“우와, 정말 맑다!” 나는 깡충 뛰었어요."}]},
+  {"page": 8, "stage": "result", "action": "idle", "child_words": "", "lines": [{"speaker": "나레이션", "text": "나는 두 손을 모아 차가운 물을 떠 보았어요."}, {"speaker": "나레이션", "text": "손바닥 위에서 물이 찰랑찰랑 흔들렸어요."}, {"speaker": "나레이션", "text": "물에 비친 내 얼굴이 활짝 웃고 있었어요."}]}
+ ],
+ "order_pages": [1, 2, 4, 6],
+ "scene": {"character_sheet": {},
+  "pages": [
+   {"page": 1, "hero_on_page": true, "characters": [], "background": "A green forest beside a leafy bush with bright red berries hanging from its branches, a narrow dirt path leading deeper into the trees in the daytime. Calm, cheerful, adventurous mood."},
+   {"page": 2, "hero_on_page": true, "characters": [], "background": "A winding forest path with a thick tree root sticking out across the ground, tall trees on both sides in the daytime. Lively mood with a small sense of surprise."},
+   {"page": 3, "hero_on_page": true, "characters": [], "background": "A quiet spot on the forest path near a tree root, soft moss on the ground and tall trunks around in the daytime. Gentle, slightly worried but safe mood."},
+   {"page": 4, "hero_on_page": true, "characters": [], "background": "A large smooth rock by the forest path, ferns and small flowers around it, a hint of shimmering water far between the trees in the daytime. Restful, hopeful mood."},
+   {"page": 5, "hero_on_page": true, "characters": [], "background": "The forest around the large rock with leaves swaying in a soft breeze, light green treetops overhead in the daytime. Peaceful, calm, encouraging mood."},
+   {"page": 6, "hero_on_page": true, "characters": [], "background": "The forest path opening into a small clearing where a little clear spring pond appears among stones and ferns in the daytime. Bright, joyful mood of arrival."},
+   {"page": 7, "hero_on_page": true, "characters": [], "background": "A small clear forest spring with sparkling water and round pebbles visible at the bottom, surrounded by moss and flowers in the daytime. Delightful, wondrous mood."},
+   {"page": 8, "hero_on_page": true, "characters": [], "background": "Close view of the clear forest spring with gentle ripples on the water, mossy stones and ferns around it in the daytime. Warm, happy, peaceful mood."}
+  ]}}

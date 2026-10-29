@@ -1,0 +1,23 @@
+{"title": "거실 한가운데 블록 성", "protagonist": "나", "characters": [],
+ "pages": [
+  {"page": 1, "stage": "place", "action": "walk", "child_words": "", "lines": [{"speaker": "나레이션", "text": "우리 집 거실 바닥에 내가 쌓던 성이 서 있어요."}, {"speaker": "나레이션", "text": "아직 절반밖에 못 쌓아서 키가 내 무릎만 해요."}, {"speaker": "나레이션", "text": "나는 벌떡 일어나 더 쌓을 조각을 찾으러 갔어요."}]},
+  {"page": 2, "stage": "problem", "action": "walk", "child_words": "", "lines": [{"speaker": "나레이션", "text": "블록을 가지러 가다가 나는 그만 넘어졌어요."}, {"speaker": "나레이션", "text": "바닥에 굴러다니던 공을 밟고 말았거든요."}, {"speaker": "나레이션", "text": "데굴데굴, 공은 저쪽으로 굴러갔어요."}]},
+  {"page": 3, "stage": "problem", "action": "idle", "child_words": "", "lines": [{"speaker": "나레이션", "text": "나는 깜짝 놀라 눈을 동그랗게 떴어요."}, {"speaker": "나레이션", "text": "“어이쿠, 깜짝 놀랐네.”"}, {"speaker": "나레이션", "text": "그런데 그때, 다 못 쌓은 성이 눈에 들어왔어요!"}]},
+  {"page": 4, "stage": "action", "action": "run", "child_words": "", "lines": [{"speaker": "나레이션", "text": "나는 옷을 툭툭 털고 달려갔어요."}, {"speaker": "나레이션", "text": "“괜찮아, 나는 할 수 있어!”"}, {"speaker": "나레이션", "text": "블록 상자 앞에 쏙 앉으니 용기가 났어요."}]},
+  {"page": 5, "stage": "action", "action": "idle", "child_words": "", "lines": [{"speaker": "나레이션", "text": "한 칸, 또 한 칸 블록을 차곡차곡 쌓았어요."}, {"speaker": "나레이션", "text": "달그락달그락 블록 소리가 즐겁게 났어요."}, {"speaker": "나레이션", "text": "성이 높아질수록 마음이 두근두근 설레었어요."}]},
+  {"page": 6, "stage": "result", "action": "jump", "child_words": "", "lines": [{"speaker": "나레이션", "text": "놀랐던 마음은 금방 괜찮아졌어요."}, {"speaker": "나레이션", "text": "“어? 이제 아무렇지도 않아!”"}, {"speaker": "나레이션", "text": "나는 폴짝 일어나 마지막 블록을 들었어요."}]},
+  {"page": 7, "stage": "result", "action": "idle", "child_words": "", "lines": [{"speaker": "나레이션", "text": "성 꼭대기에 블록을 살며시 올렸어요."}, {"speaker": "나레이션", "text": "성이 흔들흔들하다가 딱 멈췄어요."}, {"speaker": "나레이션", "text": "“와, 드디어 다 됐다!”"}]},
+  {"page": 8, "stage": "result", "action": "dance", "child_words": "", "lines": [{"speaker": "나레이션", "text": "나는 곰 인형을 성 맨 앞에 앉혀 주었어요."}, {"speaker": "나레이션", "text": "거실 한가운데 내 성이 우뚝 서 있어요."}, {"speaker": "나레이션", "text": "나는 성을 보며 빙그레 웃었어요."}]}
+ ],
+ "order_pages": [1, 2, 4, 6],
+ "scene": {"character_sheet": {},
+  "pages": [
+   {"page": 1, "hero_on_page": true, "characters": [], "background": "A cozy living room interior with a half-built colorful toy block castle standing in the middle of the floor near a sofa."},
+   {"page": 2, "hero_on_page": true, "characters": [], "background": "The same cozy living room floor with colorful toy blocks and a small ball rolling away on the floor. A sudden, surprised but gentle mood."},
+   {"page": 3, "hero_on_page": true, "characters": [], "background": "The cozy living room with a half-built toy block castle standing in the middle of the floor, the teddy bear on the sofa nearby. A quiet, hopeful mood."},
+   {"page": 4, "hero_on_page": true, "characters": [], "background": "The cozy living room with an open toy block box beside the half-built block castle on a soft rug. An energetic, brave mood."},
+   {"page": 5, "hero_on_page": true, "characters": [], "background": "The living room floor where a colorful toy block castle is growing taller, blocks neatly stacked. A happy, excited mood."},
+   {"page": 6, "hero_on_page": true, "characters": [], "background": "The cozy living room with a tall colorful toy block castle almost finished, one last block lying beside it. A bright, relieved mood."},
+   {"page": 7, "hero_on_page": true, "characters": [], "background": "A finished tall colorful toy block castle standing proudly on the living room floor, slightly wobbly but steady. A joyful, proud mood."},
+   {"page": 8, "hero_on_page": true, "characters": [], "background": "The cozy living room with the finished toy block castle and the teddy bear sitting in front of it like a guard. A warm, peaceful and happy mood."}
+  ]}}

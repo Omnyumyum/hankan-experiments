@@ -1,0 +1,23 @@
+{"title": "시장 과일 상자와 사과", "protagonist": "나", "characters": [{"name": "할머니", "type": "어른-여"}],
+ "pages": [
+  {"page": 1, "stage": "place", "action": "idle", "child_words": "", "lines": [{"speaker": "나레이션", "text": "마을 시장 우리 할머니 과일 가게에 빨간 사과가 수북이 쌓여 있었어요. 나는 사과를 하나씩 닦아 반들반들 윤을 냈어요. 가게 앞에는 노란 참외 바구니도 놓여 있었어요."}]},
+  {"page": 2, "stage": "problem", "action": "idle", "child_words": "", "lines": [{"speaker": "나레이션", "text": "사과를 다 닦기도 전에 시장이 어두워졌어요. 해가 지고 가게들이 하나둘 불을 껐어요. 시장 지붕 아래 길이 깜깜하게 변했어요."}]},
+  {"page": 3, "stage": "problem", "action": "idle", "child_words": "", "lines": [{"speaker": "나레이션", "text": "그때 옆 가게에서 드르륵 쾅, 큰 소리가 났어요! 나는 무슨 소리인지 몰라 깜짝 놀랐어요. 사과를 꼭 쥐고 몸을 잔뜩 움츠렸어요."}]},
+  {"page": 4, "stage": "action", "action": "walk", "child_words": "", "lines": [{"speaker": "나레이션", "text": "나는 과일 상자 뒤에 쪼그려 숨었어요. 상자 틈에서 달콤한 귤 냄새가 났어요. 또 큰 소리가 이어져 가슴이 콩닥거렸어요."}]},
+  {"page": 5, "stage": "action", "action": "idle", "child_words": "", "lines": [{"speaker": "나레이션", "text": "“우리 강아지, 사과 상자 뒤에 있었구나.” 과일 가게를 하시는 우리 할머니가 손전등을 들고 상자를 들췄어요. “옆 가게 문 닫는 소리에 놀랐구나.”"}]},
+  {"page": 6, "stage": "result", "action": "walk", "child_words": "", "lines": [{"speaker": "나레이션", "text": "나는 할머니 손을 잡고 우리 집으로 무사히 돌아왔어요. 할머니 장바구니에서 사과가 달그락 흔들렸어요. 집 안에 들어서자 따뜻한 불빛이 반겼어요."}]},
+  {"page": 7, "stage": "result", "action": "idle", "child_words": "", "lines": [{"speaker": "나레이션", "text": "할머니가 내가 닦은 사과를 깎아 주었어요. 사각사각, 사과 껍질이 길게 이어졌어요. “우리 강아지가 닦은 사과라 더 달다.”"}]},
+  {"page": 8, "stage": "result", "action": "idle", "child_words": "", "lines": [{"speaker": "나레이션", "text": "나는 사과 한 조각을 할머니 입에 쏙 넣어 드렸어요. 할머니가 눈을 감고 “음, 맛있다” 하고 웃었어요. 우리 집 안이 새콤달콤한 사과 향기로 가득했어요."}]}
+ ],
+ "order_pages": [1, 3, 4, 6],
+ "scene": {"character_sheet": {"할머니": "a grandmother who runs a fruit stall, with short gray curly hair, a red apron, arm sleeves and a warm wrinkly smile"},
+  "pages": [
+   {"page": 1, "hero_on_page": true, "characters": [], "background": "A village market fruit stall in the late afternoon with a heap of shiny red apples and a basket of yellow melons."},
+   {"page": 2, "hero_on_page": true, "characters": [], "background": "The covered village market at dusk, shops turning their lights off one by one and the walkway under the roof growing dark."},
+   {"page": 3, "hero_on_page": true, "characters": [], "background": "The dim market at night, a neighboring shop's metal shutter halfway down, apples glowing softly on the fruit stall."},
+   {"page": 4, "hero_on_page": true, "characters": [], "background": "Behind stacked wooden fruit boxes full of oranges in the dark market, a thin line of light between the boxes."},
+   {"page": 5, "hero_on_page": true, "characters": [{"name": "할머니", "slot": "right-middle"}], "background": "The fruit stall at night, the fruit stall grandmother lifting a box aside with a flashlight and a warm smile."},
+   {"page": 6, "hero_on_page": true, "characters": [{"name": "할머니", "slot": "right-middle"}], "background": "The open front door of a cozy home at night with warm light inside, the grandmother walking in holding hands and a shopping bag of apples."},
+   {"page": 7, "hero_on_page": true, "characters": [{"name": "할머니", "slot": "right-middle"}], "background": "A warm home kitchen table at night, the grandmother peeling a red apple in one long curly strip."},
+   {"page": 8, "hero_on_page": true, "characters": [{"name": "할머니", "slot": "right-middle"}], "background": "The cozy home at night, a plate of apple slices on the table and the grandmother laughing with eyes closed."}
+  ]}}

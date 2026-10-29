@@ -1,0 +1,23 @@
+{"title": "베란다 블록 성과 새 친구", "protagonist": "나", "characters": [{"name": "친구", "type": "아이-여"}],
+ "pages": [
+  {"page": 1, "stage": "place", "action": "idle", "child_words": "", "lines": [{"speaker": "나레이션", "text": "우리 집 베란다에는 작은 화분이 나란히 놓여 있어요."}, {"speaker": "나레이션", "text": "나는 화분 옆 바닥에 앉아 블록 상자를 열었어요."}, {"speaker": "나레이션", "text": "블록이 와르르 쏟아지자 높은 성을 만들고 싶어졌어요."}]},
+  {"page": 2, "stage": "problem", "action": "run", "child_words": "", "lines": [{"speaker": "나레이션", "text": "딩동! 현관에서 종소리가 울렸어요."}, {"speaker": "나레이션", "text": "나는 신이 나서 현관 쪽으로 뛰었어요."}, {"speaker": "나레이션", "text": "쿵! 블록에 발이 걸려 나는 그만 넘어졌어요."}]},
+  {"page": 3, "stage": "problem", "action": "idle", "child_words": "", "lines": [{"speaker": "나레이션", "text": "나는 깜짝 놀라 눈을 끔뻑였어요."}, {"speaker": "나레이션", "text": "“어이쿠, 그래도 누군지 궁금한데.”"}, {"speaker": "나레이션", "text": "그런데 그때였어요!"}, {"speaker": "나레이션", "text": "문밖에서 “안녕하세요?” 하는 작은 목소리가 들렸어요."}]},
+  {"page": 4, "stage": "action", "action": "run", "child_words": "", "lines": [{"speaker": "나레이션", "text": "나는 무릎을 툭툭 털고 현관으로 달려갔어요."}, {"speaker": "나레이션", "text": "한 걸음, 또 한 걸음, 마음이 콩닥콩닥 뛰었어요."}, {"speaker": "나레이션", "text": "“엄마, 누가 왔어요!”"}]},
+  {"page": 5, "stage": "action", "action": "walk", "child_words": "", "lines": [{"speaker": "나레이션", "text": "엄마가 먼저 누구인지 보고 문을 열어 주셨어요."}, {"speaker": "나레이션", "text": "끼익, 문 앞에 나만 한 여자아이가 서 있었어요."}, {"speaker": "나레이션", "text": "“나 옆집에 이사 왔어. 쿠키 같이 먹을래?”"}]},
+  {"page": 6, "stage": "result", "action": "wave", "child_words": "", "lines": [{"speaker": "나레이션", "text": "그날 나에게 새 친구가 생겼어요."}, {"speaker": "나레이션", "text": "친구가 방긋 웃으며 우리 집에 들어왔어요."}, {"speaker": "나레이션", "text": "“와, 블록이다! 나도 블록 정말 좋아해!”"}]},
+  {"page": 7, "stage": "result", "action": "idle", "child_words": "", "lines": [{"speaker": "나레이션", "text": "우리는 거실 바닥에 앉아 블록을 쌓았어요."}, {"speaker": "나레이션", "text": "달그락달그락, 빨간 블록 하나, 파란 블록 하나."}, {"speaker": "나레이션", "text": "친구가 “우리 같이 하니까 더 재밌다!” 하고 웃었어요."}]},
+  {"page": 8, "stage": "result", "action": "dance", "child_words": "", "lines": [{"speaker": "나레이션", "text": "드디어 우리 키만 한 성이 우뚝 섰어요."}, {"speaker": "나레이션", "text": "내 발에 걸렸던 블록은 성 꼭대기에 올렸어요."}, {"speaker": "나레이션", "text": "친구와 손을 잡고 성 둘레를 빙글 돌았어요."}, {"speaker": "나레이션", "text": "친구랑 같이 쌓은 성이라 더 반짝여 보였어요."}]}
+ ],
+ "order_pages": [1, 2, 4, 6],
+ "scene": {"character_sheet": {"친구": "a cheerful little girl with short black bob hair and a yellow hairpin, wearing a mint green dress"},
+  "pages": [
+   {"page": 1, "hero_on_page": true, "characters": [], "background": "A small home balcony in the daytime with a row of little potted plants along the railing, and colorful toy blocks scattered across the tiled floor next to an open toy box."},
+   {"page": 2, "hero_on_page": true, "characters": [], "background": "The same cozy living room with toy blocks on the floor, the front door visible at the far end of a short hallway, a lively and surprised moment."},
+   {"page": 3, "hero_on_page": true, "characters": [], "background": "The living room floor near the hallway with a few toy blocks lying around, the closed front door in the distance, a quiet and curious mood."},
+   {"page": 4, "hero_on_page": true, "characters": [], "background": "The short home hallway leading to the closed front door, shoes neatly lined up by the entrance, an excited and hopeful mood."},
+   {"page": 5, "hero_on_page": true, "characters": [{"name": "친구", "slot": "right-middle"}], "background": "The front door of the home slightly open, 친구 standing at the doorway holding a small basket of cookies and smiling shyly, a bright and friendly mood."},
+   {"page": 6, "hero_on_page": true, "characters": [{"name": "친구", "slot": "right-middle"}], "background": "The entrance of the cozy home, 친구 stepping inside with a big smile and pointing toward the toy blocks in the living room, a happy welcoming mood."},
+   {"page": 7, "hero_on_page": true, "characters": [{"name": "친구", "slot": "right-bottom"}], "background": "The living room floor with red and blue toy blocks being stacked, 친구 sitting on the floor and laughing happily, a playful and caring mood."},
+   {"page": 8, "hero_on_page": true, "characters": [{"name": "친구", "slot": "right-middle"}], "background": "A tall colorful toy block castle standing proudly in the cozy living room, 친구 holding hands and dancing around it, a joyful and warm mood."}
+  ]}}

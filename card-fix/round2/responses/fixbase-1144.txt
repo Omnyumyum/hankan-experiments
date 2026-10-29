@@ -1,0 +1,23 @@
+{"title": "식탁 위 블록 성과 참새", "protagonist": "나", "characters": [{"name": "참새", "type": "동물"}],
+ "pages": [
+  {"page": 1, "stage": "place", "action": "walk", "child_words": "", "lines": [{"speaker": "나레이션", "text": "나는 우리 집 식탁에 앉아 블록 성을 쌓았어요."}, {"speaker": "나레이션", "text": "블록이 식탁 위에서 달그락달그락 소리를 냈어요."}, {"speaker": "나레이션", "text": "“오늘은 제일 높은 성을 만들 거야!”"}, {"speaker": "나레이션", "text": "그런데 식탁 위 블록을 벌써 다 써 버렸어요."}]},
+  {"page": 2, "stage": "problem", "action": "run", "child_words": "", "lines": [{"speaker": "나레이션", "text": "블록을 더 가지러 바쁘게 걸어갔어요."}, {"speaker": "나레이션", "text": "그런데 바닥에 있던 블록에 발이 걸렸어요."}, {"speaker": "나레이션", "text": "쿵! 나는 그만 넘어졌어요."}]},
+  {"page": 3, "stage": "problem", "action": "idle", "child_words": "", "lines": [{"speaker": "나레이션", "text": "“어이쿠!” 나는 깜짝 놀랐어요."}, {"speaker": "나레이션", "text": "블록 성도 와르르 무너져 버렸어요."}, {"speaker": "나레이션", "text": "나는 이제 어떻게 해야 할지 몰랐어요."}]},
+  {"page": 4, "stage": "action", "action": "idle", "child_words": "", "lines": [{"speaker": "나레이션", "text": "나는 소파에 앉아 잠깐 쉬며 기다렸어요."}, {"speaker": "나레이션", "text": "폭신한 쿠션을 꼭 껴안았어요."}, {"speaker": "나레이션", "text": "“조금만 쉬면 괜찮아질 거야.”"}]},
+  {"page": 5, "stage": "action", "action": "idle", "child_words": "", "lines": [{"speaker": "나레이션", "text": "한 숨, 또 한 숨, 천천히 숨을 쉬었어요."}, {"speaker": "나레이션", "text": "놀란 마음이 조금씩 가라앉았어요."}, {"speaker": "나레이션", "text": "그런데 그때였어요! 창밖에서 짹짹 소리가 났어요."}]},
+  {"page": 6, "stage": "result", "action": "walk", "child_words": "", "lines": [{"speaker": "나레이션", "text": "작은 참새가 창가에 폴짝 내려앉았어요."}, {"speaker": "나레이션", "text": "“안녕? 너도 여기서 쉬러 왔니?”"}, {"speaker": "나레이션", "text": "그렇게 나에게 새 친구가 생겼어요."}]},
+  {"page": 7, "stage": "result", "action": "dance", "child_words": "", "lines": [{"speaker": "나레이션", "text": "나는 참새에게 블록 성 이야기를 해 줬어요."}, {"speaker": "나레이션", "text": "참새는 날개를 파닥파닥 흔들었어요."}, {"speaker": "나레이션", "text": "나는 참새에게 “너도 재미있구나!” 하고 깔깔 웃었어요."}]},
+  {"page": 8, "stage": "result", "action": "jump", "child_words": "", "lines": [{"speaker": "나레이션", "text": "나는 무너진 블록 성을 다시 쌓았어요."}, {"speaker": "나레이션", "text": "한 칸, 또 한 칸, 성이 쑥쑥 높아졌어요."}, {"speaker": "나레이션", "text": "성 꼭대기에는 참새가 앉을 자리도 만들었어요."}]}
+ ],
+ "order_pages": [1, 2, 4, 6],
+ "scene": {"character_sheet": {"참새": "a small round brown sparrow with a cream belly, tiny black eyes and short tail feathers"},
+  "pages": [
+   {"page": 1, "hero_on_page": true, "characters": [], "background": "A wooden dining table in a cozy home during the day, with a half-built castle of colorful toy blocks on top and an empty chair pulled up to it. A few more blocks lie scattered on the floor leading away from the table."},
+   {"page": 2, "hero_on_page": true, "characters": [], "background": "The same cozy living room, a few toy blocks lying on the floor in the walking path, the block castle in the background. A sudden, surprised moment."},
+   {"page": 3, "hero_on_page": true, "characters": [], "background": "The cozy living room with the block castle fallen into a messy pile of colorful blocks on the rug. A quiet, slightly sad mood."},
+   {"page": 4, "hero_on_page": true, "characters": [], "background": "A soft sofa with fluffy cushions in the cozy living room, scattered blocks on the rug nearby. Calm, gentle resting mood."},
+   {"page": 5, "hero_on_page": true, "characters": [], "background": "The living room seen from the sofa, an open window with flower pots on the sill and green leaves of a tree outside. Peaceful mood with a hint of curiosity."},
+   {"page": 6, "hero_on_page": true, "characters": [{"name": "참새", "slot": "right-middle"}], "background": "An open living room window with flower pots on the sill, 참새 has just landed on the windowsill and tilts its head curiously. Bright, friendly mood."},
+   {"page": 7, "hero_on_page": true, "characters": [{"name": "참새", "slot": "right-middle"}], "background": "The cozy living room by the open window, 참새 flutters its wings happily on the windowsill above colorful blocks on the rug. Joyful, playful mood."},
+   {"page": 8, "hero_on_page": true, "characters": [{"name": "참새", "slot": "right-middle"}], "background": "A new tall block castle on the living room rug with a small perch at the top, 참새 watching cheerfully from the nearby windowsill. Warm, happy mood."}
+  ]}}

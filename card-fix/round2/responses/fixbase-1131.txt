@@ -1,0 +1,23 @@
+{"title": "벽시계가 지켜본 한 걸음", "protagonist": "나", "characters": [],
+ "pages": [
+  {"page": 1, "stage": "place", "action": "walk", "child_words": "", "lines": [{"speaker": "나레이션", "text": "우리 집 거실에서 벽시계가 똑딱똑딱 울려요. 거실 끝에는 내가 쌓다 만 블록 탑이 있어요. 나는 블록 탑까지 걸어가 보고 싶었어요."}]},
+  {"page": 2, "stage": "problem", "action": "idle", "child_words": "", "lines": [{"speaker": "나레이션", "text": "양말을 신고 콩콩 걷다가 나는 그만 넘어졌어요."}, {"speaker": "나레이션", "text": "반들반들한 바닥에서 양말이 쭉 밀렸거든요."}, {"speaker": "나레이션", "text": "“어이쿠!” 나는 깜짝 놀랐어요."}]},
+  {"page": 3, "stage": "problem", "action": "idle", "child_words": "", "lines": [{"speaker": "나레이션", "text": "나는 바닥에 털썩 앉아서 숨을 골랐어요."}, {"speaker": "나레이션", "text": "“다시 일어날 수 있을까?” 걱정이 되었어요."}, {"speaker": "나레이션", "text": "그런데 그때, 좋은 생각이 떠올랐어요!"}]},
+  {"page": 4, "stage": "action", "action": "walk", "child_words": "", "lines": [{"speaker": "나레이션", "text": "“그래, 서두르지 말고 천천히 가면 돼!”"}, {"speaker": "나레이션", "text": "나는 소파를 꼭 잡고 살금살금 일어났어요."}, {"speaker": "나레이션", "text": "그리고 나는 천천히 다시 걸었어요."}]},
+  {"page": 5, "stage": "action", "action": "walk", "child_words": "", "lines": [{"speaker": "나레이션", "text": "한 걸음, 또 한 걸음, 사뿐사뿐 발을 놓았어요."}, {"speaker": "나레이션", "text": "이번에는 발이 바닥에 딱 붙어 있었어요."}, {"speaker": "나레이션", "text": "“잘하고 있어!” 나는 나에게 살짝 말했어요."}]},
+  {"page": 6, "stage": "result", "action": "idle", "child_words": "", "lines": [{"speaker": "나레이션", "text": "놀랐던 마음은 금방 괜찮아졌어요."}, {"speaker": "나레이션", "text": "두근거리던 가슴이 스르르 가라앉았어요."}, {"speaker": "나레이션", "text": "“이제 다시 씩씩해졌어!” 나는 활짝 웃었어요."}]},
+  {"page": 7, "stage": "result", "action": "walk", "child_words": "", "lines": [{"speaker": "나레이션", "text": "나는 양말을 벗고 맨발로 거실을 또박또박 걸었어요."}, {"speaker": "나레이션", "text": "소파 위 곰 인형도 같이 웃는 것 같았어요."}]},
+  {"page": 8, "stage": "result", "action": "dance", "child_words": "", "lines": [{"speaker": "나레이션", "text": "블록 탑이 거실 끝에서 나를 기다리고 있었어요."}, {"speaker": "나레이션", "text": "나는 빨간 블록 하나를 꼭대기에 쏙 올렸어요."}, {"speaker": "나레이션", "text": "“우아, 내 탑이 아까보다 더 높아졌다!”"}]}
+ ],
+ "order_pages": [1, 2, 4, 6],
+ "scene": {"character_sheet": {},
+  "pages": [
+   {"page": 1, "hero_on_page": true, "characters": [], "background": "A cozy home living room with a round clock hanging on the wall, a small potted plant on the windowsill, and a half-built colorful block tower at the far end of the open floor."},
+   {"page": 2, "hero_on_page": true, "characters": [], "background": "The same cozy living room with a shiny smooth wooden floor, the sofa and teddy bear in the back. A small surprised moment, gentle and not scary."},
+   {"page": 3, "hero_on_page": true, "characters": [], "background": "The cozy living room seen from low on the floor, the sofa nearby and the block tower across the room. Quiet, slightly worried but soft mood."},
+   {"page": 4, "hero_on_page": true, "characters": [], "background": "The cozy living room with the soft sofa close by to hold onto, the block tower waiting across the floor. Hopeful and brave mood."},
+   {"page": 5, "hero_on_page": true, "characters": [], "background": "The cozy living room with a clear path across the wooden floor toward the block tower. Calm, careful and encouraging mood."},
+   {"page": 6, "hero_on_page": true, "characters": [], "background": "The cozy living room in bright daytime light, the teddy bear on the sofa and the block tower nearby. Relieved and happy mood."},
+   {"page": 7, "hero_on_page": true, "characters": [], "background": "The middle of the cozy living room with open space on the floor, a pair of small socks set neatly by the sofa, the teddy bear on the sofa looking cheerful. Joyful, playful mood."},
+   {"page": 8, "hero_on_page": true, "characters": [], "background": "A tall colorful block tower in the cozy living room with a red block placed on the very top. Proud, warm and happy mood."}
+  ]}}
