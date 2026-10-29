@@ -4,6 +4,8 @@
 !/README.md
 !/animal-monster/
 !/creature-picker/
+# 카드 이야기 고쳐 쓰기 브랜치에서만 (fix/card-stories-1029)
+!/card-fix/
 **/venv/
 **/__pycache__/
 **/out/
