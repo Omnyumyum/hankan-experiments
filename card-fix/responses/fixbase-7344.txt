@@ -1,0 +1,19 @@
+{"title":"작은 소행성과 빛나는 표지판","protagonist":"나","characters":[{"name":"우주 토끼들","type":"동물"}],"pages":[
+{"page":1,"stage":"place","action":"walk","child_words":"","lines":[{"speaker":"나레이션","text":"작은 소행성 위에는 동글동글한 돌이 가득했어요."},{"speaker":"나레이션","text":"우주의 까만 하늘에 별들이 둥실둥실 떠 있었어요."},{"speaker":"나레이션","text":"나는 설레는 마음으로 산책을 나섰어요."}]},
+{"page":2,"stage":"problem","action":"run","child_words":"","lines":[{"speaker":"나레이션","text":"그때 별똥별 하나가 휘익 지나갔어요."},{"speaker":"나레이션","text":"“와, 따라가 보자!” 나는 별똥별을 쫓아갔어요."},{"speaker":"나레이션","text":"그러다 나는 그만 길을 잃었어요."}]},
+{"page":3,"stage":"problem","action":"idle","child_words":"","lines":[{"speaker":"나레이션","text":"둘러보니 처음 보는 바위들만 가득했어요."},{"speaker":"나레이션","text":"가슴이 두근두근 뛰었어요."},{"speaker":"나레이션","text":"“여기가 어디지? 집에 가고 싶어.”"},{"speaker":"나레이션","text":"그런데 그때였어요!"}]},
+{"page":4,"stage":"action","action":"run","child_words":"","lines":[{"speaker":"나레이션","text":"저 멀리 빛나는 표지판이 보였어요."},{"speaker":"나레이션","text":"“저기 가면 길을 알 수 있을 거야!”"},{"speaker":"나레이션","text":"나는 표지판으로 타다닥 달려갔어요."}]},
+{"page":5,"stage":"action","action":"walk","child_words":"","lines":[{"speaker":"나레이션","text":"표지판의 화살표가 깜빡깜빡 빛났어요."},{"speaker":"나레이션","text":"나는 화살표를 따라 한 걸음, 또 한 걸음 걸었어요."},{"speaker":"나레이션","text":"걸을수록 마음에 용기가 생겼어요."}]},
+{"page":6,"stage":"result","action":"jump","child_words":"","lines":[{"speaker":"나레이션","text":"드디어 처음 걷던 동글동글 돌밭이 보였어요."},{"speaker":"나레이션","text":"우주 토끼들이 깡충깡충 달려 나왔어요."},{"speaker":"나레이션","text":"내가 돌아오자 모두 기뻐했어요."}]},
+{"page":7,"stage":"result","action":"dance","child_words":"","lines":[{"speaker":"나레이션","text":"“찾았다! 정말 걱정했잖아!” 토끼들이 말했어요."},{"speaker":"나레이션","text":"우리는 손을 잡고 빙글빙글 돌았어요."}]},
+{"page":8,"stage":"result","action":"idle","child_words":"","lines":[{"speaker":"나레이션","text":"토끼들이 폭신폭신한 귀를 내 볼에 비볐어요."},{"speaker":"나레이션","text":"“다음엔 우리 같이 산책 가자.”"},{"speaker":"나레이션","text":"나는 토끼들 곁에서 기분 좋게 웃었어요."}]}],
+"order_pages":[1,2,4,6],
+"scene":{"character_sheet":{"우주 토끼들":"a small group of fluffy white rabbits with tiny glowing round antennae and little silver space suits"},"pages":[
+{"page":1,"hero_on_page":true,"characters":[],"background":"A tiny round asteroid covered with smooth round pebbles, floating in deep dark space full of twinkling stars. Calm and wonder-filled mood."},
+{"page":2,"hero_on_page":true,"characters":[],"background":"A bright shooting star streaking across dark starry space above a rocky asteroid path. Exciting, lively mood."},
+{"page":3,"hero_on_page":true,"characters":[],"background":"An unfamiliar area of big strange gray space rocks floating under a dark starry sky. Quiet, slightly uncertain but gentle mood."},
+{"page":4,"hero_on_page":true,"characters":[],"background":"Far away among the space rocks stands a softly glowing signpost with a blank arrow shape. Hopeful mood in starry space."},
+{"page":5,"hero_on_page":true,"characters":[],"background":"Close view of a glowing signpost with a blinking light arrow pointing along a path of floating stepping stones through space. Brave, hopeful mood."},
+{"page":6,"hero_on_page":true,"characters":[{"name":"우주 토끼들","slot":"right-middle"}],"background":"The familiar field of round pebbles on the small asteroid appears again under twinkling stars, and the space rabbits are hopping happily toward the viewer. Joyful mood."},
+{"page":7,"hero_on_page":true,"characters":[{"name":"우주 토끼들","slot":"right-middle"}],"background":"On the small asteroid, the space rabbits hold paws and spin in a happy circle dance among glowing stars. Cheerful, festive mood."},
+{"page":8,"hero_on_page":true,"characters":[{"name":"우주 토끼들","slot":"right-bottom"}],"background":"The cozy small asteroid glows softly in starry space while the space rabbits snuggle close with gentle smiles. Warm, peaceful mood."}]}}

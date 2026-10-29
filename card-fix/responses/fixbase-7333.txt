@@ -1,0 +1,19 @@
+{"title":"고리 별 옆의 내 별","protagonist":"나","characters":[],"pages":[
+{"page":1,"stage":"place","action":"idle","child_words":"","lines":[{"speaker":"나레이션","text":"나는 우주의 별 사이를 둥실둥실 떠다녔어요."},{"speaker":"나레이션","text":"노란 별, 파란 별이 내 곁을 스쳐 지나갔어요."},{"speaker":"나레이션","text":"고리 달린 별 옆에는 내가 사는 작은 별이 있어요."},{"speaker":"나레이션","text":"“와, 별이 손에 닿을 것만 같아!”"}]},
+{"page":2,"stage":"problem","action":"walk","child_words":"","lines":[{"speaker":"나레이션","text":"작은 별똥별을 따라 빙글빙글 날아갔어요."},{"speaker":"나레이션","text":"고개를 들어 보니 처음 보는 별들뿐이었어요."},{"speaker":"나레이션","text":"어디가 어딘지 몰라 나는 그만 길을 잃었어요."}]},
+{"page":3,"stage":"problem","action":"idle","child_words":"","lines":[{"speaker":"나레이션","text":"가슴이 두근두근, 자꾸만 걱정이 됐어요."},{"speaker":"나레이션","text":"“여기가 어디지? 어디로 가야 하지?”"},{"speaker":"나레이션","text":"나는 눈을 꼭 감고 숨을 크게 쉬었어요."},{"speaker":"나레이션","text":"그런데 그때였어요, 작은 용기가 쏙 생겼어요!"}]},
+{"page":4,"stage":"action","action":"walk","child_words":"","lines":[{"speaker":"나레이션","text":"나는 천천히 주위를 살피며 걸었어요."},{"speaker":"나레이션","text":"한 걸음, 또 한 걸음, 콩콩 별빛 길을 밟았어요."},{"speaker":"나레이션","text":"“천천히 보면 꼭 찾을 수 있을 거야.”"}]},
+{"page":5,"stage":"action","action":"walk","child_words":"","lines":[{"speaker":"나레이션","text":"오른쪽도 두리번두리번, 왼쪽도 두리번두리번."},{"speaker":"나레이션","text":"동그란 달과 고리 달린 별이 보였어요."},{"speaker":"나레이션","text":"“어? 저 고리 별, 아까 본 것 같은데!”"}]},
+{"page":6,"stage":"result","action":"jump","child_words":"","lines":[{"speaker":"나레이션","text":"고리 별 옆에서 내 별이 깜빡깜빡 빛났어요."},{"speaker":"나레이션","text":"아는 별을 보자 나는 마음이 놓였어요."},{"speaker":"나레이션","text":"“찾았다! 이제 길을 알 것 같아!”"}]},
+{"page":7,"stage":"result","action":"dance","child_words":"","lines":[{"speaker":"나레이션","text":"후유, 나는 길게 숨을 내쉬었어요."},{"speaker":"나레이션","text":"낯설던 별들도 이제 예쁘게만 보였어요."},{"speaker":"나레이션","text":"나는 내 별을 따라 천천히 날아갔어요."}]},
+{"page":8,"stage":"result","action":"wave","child_words":"","lines":[{"speaker":"나레이션","text":"내 별 곁에 앉으니 별빛이 포근했어요."},{"speaker":"나레이션","text":"나는 별을 보며 방긋 웃었어요."},{"speaker":"나레이션","text":"“고마워, 내 별아. 네 덕분에 찾았어.”"}]}],
+"order_pages":[1,2,4,6],
+"scene":{"character_sheet":{},"pages":[
+{"page":1,"hero_on_page":true,"characters":[],"background":"Deep outer space filled with many colorful yellow and blue stars floating close together, a ringed star with a small warm star beside it in the distance, soft glowing light and a calm, wonder-filled mood."},
+{"page":2,"hero_on_page":true,"characters":[],"background":"A small shooting star swirling through unfamiliar space, with strange new stars of different shapes scattered around, a slightly puzzled mood."},
+{"page":3,"hero_on_page":true,"characters":[],"background":"A quiet, wide stretch of space with unfamiliar stars far apart, gentle purple and dark blue tones, a lonely but soft mood."},
+{"page":4,"hero_on_page":true,"characters":[],"background":"A sparkling path made of tiny glowing star dots winding through space, calm and hopeful mood."},
+{"page":5,"hero_on_page":true,"characters":[],"background":"Space with a big round friendly moon on one side and a ringed planet-like star glowing in the distance, a curious hopeful mood."},
+{"page":6,"hero_on_page":true,"characters":[],"background":"A ringed star with a small, warm, twinkling star right beside it, bright cheerful glow spreading in space, a joyful relieved mood."},
+{"page":7,"hero_on_page":true,"characters":[],"background":"Pretty colorful stars all around looking friendly and bright, a gentle glowing trail leading toward a small warm star, a happy peaceful mood."},
+{"page":8,"hero_on_page":true,"characters":[],"background":"Close beside a small warm glowing star in cozy space, soft golden starlight surrounding everything, a warm and safe mood."}]}}

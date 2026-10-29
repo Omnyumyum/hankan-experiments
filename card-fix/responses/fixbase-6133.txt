@@ -1,0 +1,19 @@
+{"title":"동그란 바위의 하얀 조개","protagonist":"나","characters":[],"pages":[
+{"page":1,"stage":"place","action":"walk","child_words":"","lines":[{"speaker":"나레이션","text":"철썩, 파도가 바다의 바위 웅덩이에 부딪혀요."},{"speaker":"나레이션","text":"웅덩이 속에는 빨간 불가사리가 숨어 있어요."},{"speaker":"나레이션","text":"나는 저 끝 큰 동그란 바위까지 가 보고 싶었어요."},{"speaker":"나레이션","text":"“저기엔 무엇이 있을까?” 마음이 두근거렸어요."}]},
+{"page":2,"stage":"problem","action":"idle","child_words":"","lines":[{"speaker":"나레이션","text":"미끌, 젖은 바위가 생각보다 미끄러웠어요."},{"speaker":"나레이션","text":"나는 그만 넘어졌어요."},{"speaker":"나레이션","text":"“앗, 차가워!” 바지가 바닷물에 푹 젖었어요."}]},
+{"page":3,"stage":"problem","action":"idle","child_words":"","lines":[{"speaker":"나레이션","text":"엉덩방아를 찧어서 깜짝 놀랐어요."},{"speaker":"나레이션","text":"큰 동그란 바위는 아직 멀리 있었어요."},{"speaker":"나레이션","text":"“이제 못 가면 어떡하지?” 걱정이 됐어요."},{"speaker":"나레이션","text":"나는 숨을 크게 쉬었어요."}]},
+{"page":4,"stage":"action","action":"walk","child_words":"","lines":[{"speaker":"나레이션","text":"나는 툭툭 바지를 털고 일어났어요."},{"speaker":"나레이션","text":"“괜찮아, 천천히 가면 돼.”"},{"speaker":"나레이션","text":"나는 천천히 다시 걸었어요."}]},
+{"page":5,"stage":"action","action":"walk","child_words":"","lines":[{"speaker":"나레이션","text":"한 걸음, 또 한 걸음, 살금살금 걸었어요."},{"speaker":"나레이션","text":"미끄러운 곳은 손으로 짚고 지나갔어요."},{"speaker":"나레이션","text":"“조금만 더!” 마음속에 용기가 생겼어요."}]},
+{"page":6,"stage":"result","action":"jump","child_words":"","lines":[{"speaker":"나레이션","text":"드디어 나는 가려던 곳까지 갔어요."},{"speaker":"나레이션","text":"큰 동그란 바위 옆에 섰어요."},{"speaker":"나레이션","text":"작은 웅덩이 속에 조개가 반짝반짝 빛났어요."},{"speaker":"나레이션","text":"“와, 내가 해냈어!”"}]},
+{"page":7,"stage":"result","action":"idle","child_words":"","lines":[{"speaker":"나레이션","text":"물속에서 물방울이 뽀글뽀글 올라왔어요."},{"speaker":"나레이션","text":"분홍 조개, 하얀 조개, 줄무늬 조개도 있었어요."},{"speaker":"나레이션","text":"나는 젖은 바지도 잊고 활짝 웃었어요."}]},
+{"page":8,"stage":"result","action":"dance","child_words":"","lines":[{"speaker":"나레이션","text":"쏴아, 파도가 내 발끝까지 와서 인사했어요."},{"speaker":"나레이션","text":"나는 하얀 조개 하나를 손에 꼭 쥐었어요."},{"speaker":"나레이션","text":"“한 걸음씩 오니까 여기까지 왔네.”"},{"speaker":"나레이션","text":"조개를 귀에 대니 바다 노래가 들렸어요."}]}],
+"order_pages":[1,2,4,6],
+"scene":{"character_sheet":{},"pages":[
+{"page":1,"hero_on_page":true,"characters":[],"background":"A calm seaside rock pool in bright morning, small waves splashing against dark rocks, a red starfish resting in clear shallow water. A big round rock stands far away at the end of the rocky shore."},
+{"page":2,"hero_on_page":true,"characters":[],"background":"Wet, shiny rocks beside the rock pool with a little splash of seawater, gentle waves nearby in the morning light. The mood is surprised but not scary."},
+{"page":3,"hero_on_page":true,"characters":[],"background":"The rocky shore seen from low down, the big round rock looking small and far away across the wet stones. Soft morning sky, a slightly worried but gentle mood."},
+{"page":4,"hero_on_page":true,"characters":[],"background":"Rocky seaside path with flat stones and small tide pools, calm sea in the background, bright and hopeful morning atmosphere."},
+{"page":5,"hero_on_page":true,"characters":[],"background":"A line of flat rocks leading toward the big round rock, little puddles between them, gentle waves on the side. A brave, encouraging mood."},
+{"page":6,"hero_on_page":true,"characters":[],"background":"Beside a big round rock at the end of the shore, a small tide pool full of shiny shells glittering in the sunlight. Joyful, proud atmosphere."},
+{"page":7,"hero_on_page":true,"characters":[],"background":"Close view of a clear tide pool with tiny bubbles rising, pink, white, and striped shells on the sandy bottom. Bright, happy morning by the sea."},
+{"page":8,"hero_on_page":true,"characters":[],"background":"A gentle white wave reaching the rocks beside the big round rock, the far rocky shore visible behind. Warm, peaceful seaside mood with sparkling water."}]}}

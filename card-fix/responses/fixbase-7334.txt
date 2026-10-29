@@ -1,0 +1,19 @@
+{"title":"반짝 돌길과 우주선 불빛","protagonist":"나","characters":[],"pages":[
+{"page":1,"stage":"place","action":"walk","child_words":"","lines":[{"speaker":"나레이션","text":"발밑의 동그란 돌멩이들이 반짝반짝 빛났어요."},{"speaker":"나레이션","text":"여기는 우주에 있는 반짝이는 행성이에요."},{"speaker":"나레이션","text":"“우아, 돌이 별처럼 빛나!” 나는 마음이 설렜어요."}]},
+{"page":2,"stage":"problem","action":"idle","child_words":"","lines":[{"speaker":"나레이션","text":"빛나는 돌을 따라 걷다 보니 우주선이 안 보였어요."},{"speaker":"나레이션","text":"나는 그만 길을 잃었어요."},{"speaker":"나레이션","text":"두리번두리번 둘러봐도 모두 처음 보는 곳이었어요."}]},
+{"page":3,"stage":"problem","action":"idle","child_words":"","lines":[{"speaker":"나레이션","text":"걱정이 되어 가슴이 콩닥콩닥 뛰었어요."},{"speaker":"나레이션","text":"“어디로 가야 하지?” 나는 작게 말했어요."},{"speaker":"나레이션","text":"그런데 그때, 저 멀리서 작은 빛이 보였어요!"}]},
+{"page":4,"stage":"action","action":"walk","child_words":"","lines":[{"speaker":"나레이션","text":"나는 용기를 내어 주위를 살피며 걸었어요."},{"speaker":"나레이션","text":"한 걸음, 또 한 걸음, 사각사각 돌길을 밟았어요."},{"speaker":"나레이션","text":"“천천히 잘 보면 찾을 수 있어.” 나는 혼잣말을 했어요."}]},
+{"page":5,"stage":"action","action":"run","child_words":"","lines":[{"speaker":"나레이션","text":"작은 빛이 깜빡깜빡 나를 부르는 것 같았어요."},{"speaker":"나레이션","text":"가까이 가 보니 바로 내 우주선 불빛이었어요!"},{"speaker":"나레이션","text":"“찾았다!” 나는 우주선을 향해 달려갔어요."}]},
+{"page":6,"stage":"result","action":"dance","child_words":"","lines":[{"speaker":"나레이션","text":"내가 우주선 앞에 닿자 반짝 돌멩이도, 하늘의 별도 모두 기뻐했어요."},{"speaker":"나레이션","text":"하늘의 별들이 춤추듯 빙글빙글 돌았어요."},{"speaker":"나레이션","text":"나도 너무 기뻐서 우주선 옆에서 춤을 췄어요."}]},
+{"page":7,"stage":"result","action":"wave","child_words":"","lines":[{"speaker":"나레이션","text":"빛나는 돌멩이들도 알록달록 빛을 냈어요."},{"speaker":"나레이션","text":"“다 같이 기뻐해 줘서 고마워!” 나는 인사했어요."},{"speaker":"나레이션","text":"우주선은 둥실둥실 까만 하늘로 떠올랐어요."}]},
+{"page":8,"stage":"result","action":"idle","child_words":"","lines":[{"speaker":"나레이션","text":"창밖으로 반짝이는 행성이 점점 작아졌어요."},{"speaker":"나레이션","text":"작은 별 하나가 창문 옆에서 소곤소곤 빛났어요."},{"speaker":"나레이션","text":"나는 별을 보며 빙그레 웃었어요."}]}],
+"order_pages":[1,2,4,6],
+"scene":{"character_sheet":{},"pages":[
+{"page":1,"hero_on_page":true,"characters":[],"background":"The surface of a sparkling planet in outer space, covered with round glowing pebbles, a deep purple starry sky above, cheerful and wondrous mood."},
+{"page":2,"hero_on_page":true,"characters":[],"background":"An unfamiliar part of the sparkling planet with strange rock shapes and glowing pebbles scattered around, no spaceship in sight, starry sky, slightly puzzled mood."},
+{"page":3,"hero_on_page":true,"characters":[],"background":"A wide quiet plain on the sparkling planet under a dark starry sky, a tiny soft light glimmering far away on the horizon, hopeful mood."},
+{"page":4,"hero_on_page":true,"characters":[],"background":"A winding path of glowing pebbles across the sparkling planet, gentle starlight, the small distant light a little closer, brave and curious mood."},
+{"page":5,"hero_on_page":true,"characters":[],"background":"A small round friendly spaceship resting on the sparkling planet with its blinking light glowing warmly, starry sky, excited mood."},
+{"page":6,"hero_on_page":true,"characters":[],"background":"Stars swirling happily in the sky above the small spaceship on the sparkling planet, glowing pebbles twinkling brightly on the ground, joyful festive mood."},
+{"page":7,"hero_on_page":true,"characters":[],"background":"Colorful glowing pebbles shining in many colors around the small spaceship as it gently floats up into the starry sky, happy mood."},
+{"page":8,"hero_on_page":true,"characters":[],"background":"View from inside the cozy round spaceship window, the sparkling planet getting smaller outside, one little star glowing right beside the window, calm and warm mood."}]}}

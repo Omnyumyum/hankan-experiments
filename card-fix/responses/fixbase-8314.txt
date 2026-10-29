@@ -1,0 +1,19 @@
+{"title":"반짝이 돌 따라간 좁은 굴","protagonist":"나","characters":[{"name":"동굴 안내원","type":"어른-남"}],"pages":[
+{"page":1,"stage":"place","action":"walk","child_words":"","lines":[{"speaker":"나레이션","text":"동굴 속 좁은 굴에는 뾰족한 돌들이 줄지어 있었어요."},{"speaker":"나레이션","text":"천장에서 물방울이 똑똑 떨어졌어요."},{"speaker":"나레이션","text":"나는 손전등을 단단히 쥐고 설레며 걸었어요."}]},
+{"page":2,"stage":"problem","action":"walk","child_words":"","lines":[{"speaker":"나레이션","text":"벽에 붙은 돌이 반짝반짝 빛나고 있었어요."},{"speaker":"나레이션","text":"예쁜 돌을 따라 한 걸음, 또 한 걸음 걸었어요."},{"speaker":"나레이션","text":"그러다 나는 그만 길을 잃었어요."}]},
+{"page":3,"stage":"problem","action":"idle","child_words":"","lines":[{"speaker":"나레이션","text":"“누구 없어요?” 하고 불렀지만 내 목소리만 울렸어요."},{"speaker":"나레이션","text":"가슴이 콩닥콩닥 뛰고 너무 걱정됐어요."},{"speaker":"나레이션","text":"그런데 그때, 생각 하나가 떠올랐어요!"}]},
+{"page":4,"stage":"action","action":"idle","child_words":"","lines":[{"speaker":"나레이션","text":"“길을 잃으면 그 자리에서 기다리렴.”"},{"speaker":"나레이션","text":"동굴에 들어올 때 안내원 아저씨가 해 준 말이었어요."},{"speaker":"나레이션","text":"나는 바위 옆에 털썩 앉아 그 자리에서 기다렸어요."}]},
+{"page":5,"stage":"action","action":"idle","child_words":"","lines":[{"speaker":"나레이션","text":"나는 손전등을 켜고 하나, 둘 숫자를 세었어요."},{"speaker":"나레이션","text":"“조금만 더, 조금만 더.” 나는 용기를 냈어요."},{"speaker":"나레이션","text":"그런데 그때였어요! 저벅저벅 발소리가 들렸어요."}]},
+{"page":6,"stage":"result","action":"jump","child_words":"","lines":[{"speaker":"나레이션","text":"“여기 있었구나!” 동굴 안내원 아저씨가 왔어요."},{"speaker":"나레이션","text":"나는 깡충깡충 뛰며 아저씨에게 갔어요."},{"speaker":"나레이션","text":"아저씨도, 나도, 반짝이 돌들도 모두 기뻐했어요."}]},
+{"page":7,"stage":"result","action":"idle","child_words":"","lines":[{"speaker":"나레이션","text":"아저씨가 내 어깨를 토닥토닥 해 주었어요."},{"speaker":"나레이션","text":"“그 자리에서 잘 기다렸네.” 안내원이 웃었어요."},{"speaker":"나레이션","text":"글썽이던 눈물이 쏙 들어갔어요."}]},
+{"page":8,"stage":"result","action":"walk","child_words":"","lines":[{"speaker":"나레이션","text":"우리는 손을 잡고 좁은 굴을 다시 걸었어요."},{"speaker":"나레이션","text":"아저씨 손이 따뜻해서 발걸음이 사뿐사뿐했어요."},{"speaker":"나레이션","text":"반짝이는 돌에게 나는 살짝 웃어 주었어요."}]}],
+"order_pages":[1,2,4,6],
+"scene":{"character_sheet":{"동굴 안내원":"a friendly cave guide man with short brown hair, green vest, and a helmet with a headlamp"},"pages":[
+{"page":1,"hero_on_page":true,"characters":[],"background":"A narrow tunnel inside a cave with rows of pointed rocks and water drops falling from the ceiling. Soft flashlight glow makes the scene feel curious and exciting."},
+{"page":2,"hero_on_page":true,"characters":[],"background":"A winding cave passage where small sparkling stones glow on the rock walls, leading deeper inside. The mood is magical and wondering."},
+{"page":3,"hero_on_page":true,"characters":[],"background":"A quiet cave junction with several dark paths branching out, dimly lit by a flashlight. The mood is a little worried but not scary."},
+{"page":4,"hero_on_page":true,"characters":[],"background":"A calm spot in the cave beside a large smooth rock, a good place to sit. Gentle light from a flashlight and a few glowing stones."},
+{"page":5,"hero_on_page":true,"characters":[],"background":"The same calm cave spot by the smooth rock, with a faint warm light appearing far down the passage. The mood is hopeful."},
+{"page":6,"hero_on_page":true,"characters":[{"name":"동굴 안내원","slot":"right-middle"}],"background":"Warm headlamp light fills the cave passage as 동굴 안내원 arrives with a happy, relieved face, sparkling stones glowing brightly on the walls. Joyful mood."},
+{"page":7,"hero_on_page":true,"characters":[{"name":"동굴 안내원","slot":"right-middle"}],"background":"Inside the cave by the smooth rock, 동굴 안내원 kneels down with a kind, warm smile. Warm, cozy light."},
+{"page":8,"hero_on_page":true,"characters":[{"name":"동굴 안내원","slot":"right-middle"}],"background":"The narrow cave tunnel with sparkling stones on the walls, 동굴 안내원 reaching out a hand to hold and lighting the way with his headlamp. Peaceful and happy mood."}]}}

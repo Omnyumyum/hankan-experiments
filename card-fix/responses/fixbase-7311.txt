@@ -1,0 +1,19 @@
+{"title":"노란 별 따라 창문 방으로","protagonist":"나","characters":[],"pages":[
+{"page":1,"stage":"place","action":"walk","child_words":"","lines":[{"speaker":"나레이션","text":"웅웅, 우주를 나는 우주선 안에서 기계 소리가 울려요."},{"speaker":"나레이션","text":"둥근 창밖에는 작은 별들이 콕콕 박혀 있어요."},{"speaker":"나레이션","text":"나는 별 보는 창문 방에 가고 싶었어요."},{"speaker":"나레이션","text":"“가장 큰 창문으로 별을 볼 거야!”"}]},
+{"page":2,"stage":"problem","action":"walk","child_words":"","lines":[{"speaker":"나레이션","text":"복도를 따라 콩콩 걷다 보니 문이 아주 많았어요."},{"speaker":"나레이션","text":"이 문도, 저 문도 다 똑같이 생겼어요."},{"speaker":"나레이션","text":"나는 그만 길을 잃었어요."}]},
+{"page":3,"stage":"problem","action":"idle","child_words":"","lines":[{"speaker":"나레이션","text":"“여기가 어디지?” 가슴이 두근두근 뛰었어요."},{"speaker":"나레이션","text":"왼쪽으로 가도, 오른쪽으로 가도 모르는 길이었어요."},{"speaker":"나레이션","text":"그런데 그때, 좋은 생각이 떠올랐어요!"}]},
+{"page":4,"stage":"action","action":"idle","child_words":"","lines":[{"speaker":"나레이션","text":"나는 그 자리에서 기다렸어요."},{"speaker":"나레이션","text":"벽에 등을 대고 바닥에 털썩 앉았어요."},{"speaker":"나레이션","text":"“괜찮아, 조금만 기다려 보자.”"}]},
+{"page":5,"stage":"action","action":"jump","child_words":"","lines":[{"speaker":"나레이션","text":"똑딱똑딱, 우주선 시계 소리가 들렸어요."},{"speaker":"나레이션","text":"작은 창밖으로 노란 별 하나가 보였어요."},{"speaker":"나레이션","text":"“어? 저 별은 창문 방에서 보던 별이야!”"}]},
+{"page":6,"stage":"result","action":"walk","child_words":"","lines":[{"speaker":"나레이션","text":"나는 노란 별이 보이는 쪽으로 걸었어요."},{"speaker":"나레이션","text":"사뿐사뿐 한 걸음, 또 한 걸음 별을 따라갔어요."},{"speaker":"나레이션","text":"그리고 드디어 길을 찾았어요."}]},
+{"page":7,"stage":"result","action":"jump","child_words":"","lines":[{"speaker":"나레이션","text":"스르르, 마지막 문이 옆으로 열렸어요."},{"speaker":"나레이션","text":"눈앞에 커다란 창문이 쫙 펼쳐졌어요."},{"speaker":"나레이션","text":"“찾았다! 별 보는 창문 방이야!”"}]},
+{"page":8,"stage":"result","action":"dance","child_words":"","lines":[{"speaker":"나레이션","text":"나는 창문에 손을 대고 별을 바라봤어요."},{"speaker":"나레이션","text":"노란 별이 깜빡깜빡 빛났어요."},{"speaker":"나레이션","text":"“노란 별아, 길을 알려 줘서 고마워.”"},{"speaker":"나레이션","text":"나는 노란 별 앞에서 오래오래 웃었어요."}]}],
+"order_pages":[1,2,4,6],
+"scene":{"character_sheet":{},"pages":[
+{"page":1,"hero_on_page":true,"characters":[],"background":"Inside a big friendly spaceship flying through space, a round porthole window shows tiny scattered stars. Soft glowing panels and humming machines line the cozy metal hallway."},
+{"page":2,"hero_on_page":true,"characters":[],"background":"A long spaceship corridor with many identical round doors on both sides, soft blue lights along the floor. The mood is curious and a little puzzling."},
+{"page":3,"hero_on_page":true,"characters":[],"background":"A spaceship hallway that splits into left and right paths, both looking the same with matching doors. Gentle dim lighting gives a slightly worried but safe feeling."},
+{"page":4,"hero_on_page":true,"characters":[],"background":"A quiet corner of the spaceship corridor with a smooth metal wall and a clean floor, calm soft lights glowing. A peaceful, patient mood."},
+{"page":5,"hero_on_page":true,"characters":[],"background":"A spaceship corridor with a round wall clock and a small porthole window showing one bright yellow star among dark blue space. A hopeful, surprised mood."},
+{"page":6,"hero_on_page":true,"characters":[],"background":"A spaceship hallway with small windows in a row, each showing the same bright yellow star leading the way forward. A cheerful, brave mood."},
+{"page":7,"hero_on_page":true,"characters":[],"background":"A sliding spaceship door opening wide to reveal a huge panoramic window full of colorful stars and a bright yellow star. An exciting, joyful moment."},
+{"page":8,"hero_on_page":true,"characters":[],"background":"A cozy star-viewing room in the spaceship with a giant curved window, a bright yellow star twinkling warmly among many stars and soft planets. A warm, happy, peaceful mood."}]}}

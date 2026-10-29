@@ -1,0 +1,19 @@
+{"title":"멈춘 우주선과 우정 별","protagonist":"나","characters":[{"name":"친구","type":"아이-남"},{"name":"선장님","type":"어른-여"}],"pages":[
+{"page":1,"stage":"place","action":"walk","child_words":"","lines":[{"speaker":"나레이션","text":"까만 우주에는 별이 가득했어요. 나는 별 사이를 둥실둥실 떠다녔어요. “와, 별이 손에 닿을 것 같아!”"}]},
+{"page":2,"stage":"problem","action":"idle","child_words":"","lines":[{"speaker":"나레이션","text":"그런데 어디선가 흑흑 소리가 들렸어요. 작은 별 위에서 친구가 울고 있었어요. 나는 걱정이 되어 가만히 다가갔어요."}]},
+{"page":3,"stage":"problem","action":"idle","child_words":"","lines":[{"speaker":"나레이션","text":"“왜 울어?” 나는 살며시 물었어요. “내 우주선이 멈췄어. 집에 못 가.” 친구 눈물이 또르르 떨어졌어요. 그런데 그때였어요! 멀리서 커다란 우주선 불빛이 보였어요. 선장님이 계신 우주선이었어요."}]},
+{"page":4,"stage":"action","action":"run","child_words":"","lines":[{"speaker":"나레이션","text":"나는 친구를 도우려고 어른에게 달려갔어요. 한 걸음, 또 한 걸음, 휙휙 달렸어요. “선장님, 제 친구를 도와주세요!”"}]},
+{"page":5,"stage":"action","action":"idle","child_words":"","lines":[{"speaker":"나레이션","text":"선장님이 친구의 우주선을 살펴봤어요. 뚝딱뚝딱, 고치는 소리가 들렸어요. “이제 다시 날 수 있단다.” 나는 친구 손을 꼭 잡았어요."}]},
+{"page":6,"stage":"result","action":"jump","child_words":"","lines":[{"speaker":"나레이션","text":"부릉부릉, 친구 우주선이 다시 움직였어요. “고마워! 우리 친구 하자.” 그렇게 우리는 친한 친구가 됐어요."}]},
+{"page":7,"stage":"result","action":"run","child_words":"","lines":[{"speaker":"나레이션","text":"우리는 별 사이에서 술래잡기를 했어요. 깔깔깔, 웃음소리가 우주에 퍼졌어요. 나는 가슴이 두근거릴 만큼 신났어요."}]},
+{"page":8,"stage":"result","action":"idle","child_words":"","lines":[{"speaker":"나레이션","text":"친구가 작은 별 하나를 내 손에 쏙 놓아 주었어요. “이건 우리 둘만의 우정 별이야.” 손안의 별처럼 내 마음도 환하게 빛났어요."}]}],
+"order_pages":[1,2,4,6],
+"scene":{"character_sheet":{"친구":"a small boy with round cheeks and messy black hair, wearing a light blue space suit with a round clear helmet","선장님":"a kind woman space captain with short brown hair, wearing a white and orange captain uniform with a star badge"},"pages":[
+{"page":1,"hero_on_page":true,"characters":[],"background":"Deep dark blue outer space filled with countless twinkling stars and soft colorful planets far away. A calm, dreamy and wonder-filled mood."},
+{"page":2,"hero_on_page":true,"characters":[{"name":"친구","slot":"right-middle"}],"background":"Outer space among the stars, with a tiny glowing star planet. 친구 sits on the tiny star crying, next to a small stopped spaceship."},
+{"page":3,"hero_on_page":true,"characters":[{"name":"친구","slot":"right-middle"}],"background":"Outer space among the stars, 친구 sitting sadly beside a small stopped spaceship. A big warm light glows far away in the dark sky."},
+{"page":4,"hero_on_page":true,"characters":[{"name":"선장님","slot":"right-bottom"}],"background":"Outer space near a large friendly round spaceship glowing with warm lights. 선장님 stands at the open spaceship door, turning to listen kindly."},
+{"page":5,"hero_on_page":true,"characters":[{"name":"선장님","slot":"right-bottom"},{"name":"친구","slot":"right-middle"}],"background":"Outer space beside a small spaceship on a tiny star. 선장님 fixes the small spaceship with a tool while 친구 watches hopefully."},
+{"page":6,"hero_on_page":true,"characters":[{"name":"친구","slot":"right-middle"}],"background":"Outer space with the small spaceship lit up and floating again, soft sparkles around it. 친구 smiles brightly with joy."},
+{"page":7,"hero_on_page":true,"characters":[{"name":"친구","slot":"right-middle"}],"background":"Bright, playful outer space among many colorful stars. 친구 floats and laughs, playing tag among the stars."},
+{"page":8,"hero_on_page":true,"characters":[{"name":"친구","slot":"right-middle"}],"background":"Peaceful outer space with gentle glowing stars. 친구 smiles warmly, holding out a small softly glowing star as a gift."}]}}

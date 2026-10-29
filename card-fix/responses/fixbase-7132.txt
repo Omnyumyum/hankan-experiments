@@ -1,0 +1,19 @@
+{"title":"달 위에 찍힌 발자국","protagonist":"나","characters":[],"pages":[
+{"page":1,"stage":"place","action":"walk","child_words":"","lines":[{"speaker":"나레이션","text":"여기는 까만 우주, 동그란 달 위예요."},{"speaker":"나레이션","text":"멀리 파란 지구가 동동 떠 있어요."},{"speaker":"나레이션","text":"나는 회색 달 흙을 밟으며 마음이 설렜어요."}]},
+{"page":2,"stage":"problem","action":"idle","child_words":"","lines":[{"speaker":"나레이션","text":"그런데 작은 돌멩이에 발이 탁 걸렸어요."},{"speaker":"나레이션","text":"나는 그만 넘어졌어요."},{"speaker":"나레이션","text":"보드라운 달 흙이 폴폴 날아올랐어요."}]},
+{"page":3,"stage":"problem","action":"idle","child_words":"","lines":[{"speaker":"나레이션","text":"“어이쿠, 깜짝이야!” 나는 작게 말했어요."},{"speaker":"나레이션","text":"또 넘어질까 봐 가슴이 콩닥콩닥 뛰었어요."},{"speaker":"나레이션","text":"나는 살며시 일어섰어요. 그리고 마음을 꼭 먹었어요."}]},
+{"page":4,"stage":"action","action":"walk","child_words":"","lines":[{"speaker":"나레이션","text":"나는 천천히 다시 걸었어요."},{"speaker":"나레이션","text":"한 걸음, 또 한 걸음, 사뿐사뿐 걸었어요."},{"speaker":"나레이션","text":"“천천히, 천천히.” 나는 혼자 말했어요."}]},
+{"page":5,"stage":"action","action":"jump","child_words":"","lines":[{"speaker":"나레이션","text":"발을 살짝 굴렀더니 몸이 둥실 떠올랐어요."},{"speaker":"나레이션","text":"달에서는 내 몸이 아주 가벼웠어요."},{"speaker":"나레이션","text":"“우아, 내가 날고 있어!”"}]},
+{"page":6,"stage":"result","action":"dance","child_words":"","lines":[{"speaker":"나레이션","text":"나도 모르게 키득키득 웃음이 났어요."},{"speaker":"나레이션","text":"“히히, 넘어진 것도 재미있네!”"},{"speaker":"나레이션","text":"나는 빙그르르 한 바퀴 돌았어요."}]},
+{"page":7,"stage":"result","action":"jump","child_words":"","lines":[{"speaker":"나레이션","text":"나는 깔깔 웃으며 통통 뛰어올랐어요."},{"speaker":"나레이션","text":"뒤를 보니 발자국이 줄줄이 찍혀 있었어요."}]},
+{"page":8,"stage":"result","action":"idle","child_words":"","lines":[{"speaker":"나레이션","text":"넘어진 자리에는 동그란 자국이 남아 있었어요."},{"speaker":"나레이션","text":"까만 하늘에서 별들이 반짝반짝 빛났어요."},{"speaker":"나레이션","text":"나는 그 자국을 보며 또 히죽 웃었어요."}]}],
+"order_pages":[1,2,4,6],
+"scene":{"character_sheet":{},"pages":[
+{"page":1,"hero_on_page":true,"characters":[],"background":"The gray, dusty surface of the moon in deep black space, with the round blue Earth floating far away and tiny stars around. A calm, wondrous mood."},
+{"page":2,"hero_on_page":true,"characters":[],"background":"The moon surface with a small gray rock and a soft puff of moon dust floating up gently. Black starry sky, a surprised but gentle mood."},
+{"page":3,"hero_on_page":true,"characters":[],"background":"A quiet spot on the moon with soft gray dust settling down and gentle craters nearby. Starry black sky, a quiet and slightly nervous mood."},
+{"page":4,"hero_on_page":true,"characters":[],"background":"A wide, gentle moon plain with small craters, and Earth glowing softly in the black sky. A careful, brave mood."},
+{"page":5,"hero_on_page":true,"characters":[],"background":"Open moon surface with low gray hills and bright stars above, feeling light and floaty. A joyful, airy mood."},
+{"page":6,"hero_on_page":true,"characters":[],"background":"The moon surface with swirls of soft dust like a playful dance, and twinkling stars above. A cheerful, happy mood."},
+{"page":7,"hero_on_page":true,"characters":[],"background":"The moon surface with a long line of small footprints stretching back across the gray dust under a starry sky. A bright, playful mood."},
+{"page":8,"hero_on_page":true,"characters":[],"background":"A peaceful spot on the moon with a small round mark in the dust next to footprints, and many twinkling stars and blue Earth above. A warm, cozy mood."}]}}

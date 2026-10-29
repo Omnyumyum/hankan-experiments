@@ -1,0 +1,19 @@
+{"title":"토성 고리 돌 위에서","protagonist":"나","characters":[],"pages":[
+{"page":1,"stage":"place","action":"walk","child_words":"","lines":[{"speaker":"나레이션","text":"여기는 우주, 커다란 토성 고리 옆이에요."},{"speaker":"나레이션","text":"알록달록 고리 돌들이 빙글빙글 돌고 있었어요."},{"speaker":"나레이션","text":"“와, 꼭 돌멩이 길 같아!” 나는 마음이 설렜어요."}]},
+{"page":2,"stage":"problem","action":"jump","child_words":"","lines":[{"speaker":"나레이션","text":"나는 고리 돌을 하나, 또 하나 폴짝폴짝 건넜어요."},{"speaker":"나레이션","text":"그러다 미끄러운 돌에 발이 쭉 미끄러졌어요."},{"speaker":"나레이션","text":"나는 그만 넘어졌어요."}]},
+{"page":3,"stage":"problem","action":"idle","child_words":"","lines":[{"speaker":"나레이션","text":"엉덩방아를 찧어서 깜짝 놀랐어요."},{"speaker":"나레이션","text":"“이제 어떡하지? 다리가 후들후들해.”"},{"speaker":"나레이션","text":"그런데 그때였어요! 내 옆에서 폭신한 고리 돌 하나가 반짝 빛났어요."}]},
+{"page":4,"stage":"action","action":"idle","child_words":"","lines":[{"speaker":"나레이션","text":"나는 잠깐 쉬며 기다렸어요."},{"speaker":"나레이션","text":"반짝이는 폭신한 고리 돌에 앉아 숨을 후우 내쉬었어요."},{"speaker":"나레이션","text":"“괜찮아, 조금만 쉬면 돼.”"}]},
+{"page":5,"stage":"action","action":"idle","child_words":"","lines":[{"speaker":"나레이션","text":"가만히 앉아 있으니 별들이 가까이 보였어요."},{"speaker":"나레이션","text":"작은 별이 깜빡, 또 깜빡 눈짓을 했어요."},{"speaker":"나레이션","text":"놀란 마음도 조금씩 괜찮아졌어요."}]},
+{"page":6,"stage":"result","action":"dance","child_words":"","lines":[{"speaker":"나레이션","text":"깜빡이는 별을 보다가 나는 웃음이 났어요."},{"speaker":"나레이션","text":"아까 고리 돌 위를 데굴데굴 구른 게 생각났거든요."},{"speaker":"나레이션","text":"“나 아까 돌멩이처럼 굴렀지!”"}]},
+{"page":7,"stage":"result","action":"walk","child_words":"","lines":[{"speaker":"나레이션","text":"나는 천천히 일어나 다시 고리 돌에 섰어요."},{"speaker":"나레이션","text":"이번에는 사뿐사뿐 조심조심 걸었어요."},{"speaker":"나레이션","text":"“하하, 이번엔 안 넘어졌다!”"}]},
+{"page":8,"stage":"result","action":"dance","child_words":"","lines":[{"speaker":"나레이션","text":"고리 돌들이 둥실둥실 내 둘레를 돌았어요."},{"speaker":"나레이션","text":"나는 고리 돌 사이에서 흔들흔들 춤을 췄어요."},{"speaker":"나레이션","text":"토성 고리 옆에서 내 웃음이 자꾸자꾸 났어요."}]}],
+"order_pages":[1,2,4,6],
+"scene":{"character_sheet":{},"pages":[
+{"page":1,"hero_on_page":true,"characters":[],"background":"Deep outer space beside the giant rings of Saturn, colorful floating ring rocks swirling slowly like a stepping-stone path, twinkling stars all around, a wondrous and exciting mood."},
+{"page":2,"hero_on_page":true,"characters":[],"background":"Close view of Saturn's rings in space, round colorful ring rocks lined up like stepping stones, one smooth shiny rock looking slippery, a lively playful mood."},
+{"page":3,"hero_on_page":true,"characters":[],"background":"A quiet spot on Saturn's ring among floating rocks, a soft cushion-like ring rock glowing gently nearby in the dark starry space, a gentle slightly worried mood turning curious."},
+{"page":4,"hero_on_page":true,"characters":[],"background":"A soft, cushion-like ring rock with a gentle glow floating calmly beside Saturn, stars glowing gently in the deep blue space, a calm and restful mood."},
+{"page":5,"hero_on_page":true,"characters":[],"background":"Many small friendly stars twinkling close by in space near Saturn's rings, warm soft light, a peaceful and comforting mood."},
+{"page":6,"hero_on_page":true,"characters":[],"background":"Saturn's colorful rings with round rocks tumbling playfully, bright twinkling stars that seem to be smiling, a cheerful funny mood."},
+{"page":7,"hero_on_page":true,"characters":[],"background":"A steady path of ring rocks stretching along Saturn's rings in sparkling space, a light happy and confident mood."},
+{"page":8,"hero_on_page":true,"characters":[],"background":"Ring rocks floating in a happy circle beside Saturn, stars sparkling brightly all around, a joyful dancing celebration mood in space."}]}}

@@ -1,0 +1,19 @@
+{"title":"등대 옆 조개껍데기 친구","protagonist":"나","characters":[{"name":"친구","type":"아이-여"}],"pages":[
+{"page":1,"stage":"place","action":"walk","child_words":"","lines":[{"speaker":"나레이션","text":"바다 방파제 끝에 하얀 등대가 우뚝 서 있었어요. 머리 위로 갈매기가 끼룩끼룩 날아갔어요. 나는 난간이 있는 방파제 길을 따라 콩콩 걸었어요. 짭짤한 바다 냄새에 가슴이 두근거렸어요."}]},
+{"page":2,"stage":"problem","action":"idle","child_words":"","lines":[{"speaker":"나레이션","text":"그런데 어디선가 훌쩍훌쩍 소리가 들렸어요. 등대 옆 의자에서 친구가 울고 있었어요. 내 가슴이 콩닥콩닥 뛰었어요. “어, 왜 울고 있지?”"}]},
+{"page":3,"stage":"problem","action":"walk","child_words":"","lines":[{"speaker":"나레이션","text":"나는 살금살금 다가가 물었어요. “왜 울어?” 친구는 “혼자라서 쓸쓸해.” 하고 말했어요. 나는 무슨 말을 할지 몰라 머뭇머뭇했어요. 그런데 그때, 좋은 생각이 번쩍 떠올랐어요!"}]},
+{"page":4,"stage":"action","action":"wave","child_words":"","lines":[{"speaker":"나레이션","text":"“안녕, 안녕!” 나는 손을 살랑살랑 흔들었어요. 한 번, 또 한 번, 더 크게 흔들었어요. 나는 손을 흔들어 친구를 웃게 했어요."}]},
+{"page":5,"stage":"action","action":"jump","child_words":"","lines":[{"speaker":"나레이션","text":"친구 눈물이 쏙 들어가고 입이 방긋 열렸어요. “하하, 너 꼭 갈매기 같아!” 우리는 함께 깔깔 웃었어요."}]},
+{"page":6,"stage":"result","action":"idle","child_words":"","lines":[{"speaker":"나레이션","text":"그날 우리는 친한 친구가 됐어요. 나란히 앉아 철썩이는 파도를 보았어요. “내일도 여기서 만나자.” 친구가 말했어요."}]},
+{"page":7,"stage":"result","action":"walk","child_words":"","lines":[{"speaker":"나레이션","text":"친구가 반짝 빛나는 조개껍데기를 내밀었어요. “이거 너 가져. 친구 선물이야.” 우리는 난간 안쪽 넓은 길을 천천히 함께 걸었어요."}]},
+{"page":8,"stage":"result","action":"idle","child_words":"","lines":[{"speaker":"나레이션","text":"바닷바람이 솔솔 우리 곁으로 불어왔어요. 우리는 등대 옆 의자에 앉아 바람 소리를 들었어요. 주머니 속 조개를 만지니 내일이 벌써 기다려졌어요."}]}],
+"order_pages":[1,2,4,6],
+"scene":{"character_sheet":{"친구":"a small girl with short black bob hair, yellow raincoat, red sneakers"},"pages":[
+{"page":1,"hero_on_page":true,"characters":[],"background":"A calm seaside breakwater path with safety railings and a white lighthouse at the far end, seagulls flying over blue sea in the afternoon. Gentle waves and a cheerful, fresh mood."},
+{"page":2,"hero_on_page":true,"characters":[{"name":"친구","slot":"right-middle"}],"background":"Beside the white lighthouse on the breakwater, 친구 sits on a bench crying softly with hands on her face. The afternoon sea is quiet and the mood is a little sad."},
+{"page":3,"hero_on_page":true,"characters":[{"name":"친구","slot":"right-middle"}],"background":"On the breakwater near the lighthouse, 친구 sits on a bench looking down with teary eyes. A soft breeze and gentle afternoon light over the sea."},
+{"page":4,"hero_on_page":true,"characters":[{"name":"친구","slot":"right-middle"}],"background":"On the breakwater by the lighthouse, 친구 on the bench looks up in surprise with wiping tears. Seagulls glide overhead and the sea sparkles softly."},
+{"page":5,"hero_on_page":true,"characters":[{"name":"친구","slot":"right-middle"}],"background":"On the breakwater by the lighthouse, 친구 laughs happily on the bench. The sea is bright and the mood is joyful."},
+{"page":6,"hero_on_page":true,"characters":[{"name":"친구","slot":"right-middle"}],"background":"On the breakwater bench, 친구 sits calmly watching waves splash gently against the stones. Warm late-afternoon light and a peaceful, friendly mood."},
+{"page":7,"hero_on_page":true,"characters":[{"name":"친구","slot":"right-middle"}],"background":"On the safe middle of the breakwater path inside the railings, 친구 holds out a shiny seashell with a big smile. Soft golden light over the sea and the lighthouse behind."},
+{"page":8,"hero_on_page":true,"characters":[{"name":"친구","slot":"right-middle"}],"background":"On the bench beside the white lighthouse, 친구 sits happily in the gentle sea breeze. Golden late-afternoon sky over a calm sea, a warm and happy mood."}]}}

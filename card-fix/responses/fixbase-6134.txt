@@ -1,0 +1,19 @@
+{"title":"분홍 조개와 바다 친구","protagonist":"나","characters":[{"name":"친구","type":"아이-여"}],"pages":[
+{"page":1,"stage":"place","action":"walk","child_words":"","lines":[{"speaker":"나레이션","text":"철썩, 철썩! 파도가 바다 모래밭을 쓸고 지나가요."},{"speaker":"나레이션","text":"나는 조개껍데기가 많은 곳에 왔어요."},{"speaker":"나레이션","text":"분홍 조개, 하얀 조개가 여기저기 숨어 있었어요."}]},
+{"page":2,"stage":"problem","action":"idle","child_words":"","lines":[{"speaker":"나레이션","text":"예쁜 조개만 보느라 발밑을 못 봤어요."},{"speaker":"나레이션","text":"미끄덩! 젖은 바위에서 발이 미끄러졌어요."},{"speaker":"나레이션","text":"나는 그만 넘어졌어요."}]},
+{"page":3,"stage":"problem","action":"idle","child_words":"","lines":[{"speaker":"나레이션","text":"손에도 무릎에도 모래가 까슬까슬 묻었어요."},{"speaker":"나레이션","text":"“다시 일어날 수 있을까?” 조금 걱정이 됐어요."},{"speaker":"나레이션","text":"나는 숨을 크게 쉬었어요. “다시 일어나 보자!”"}]},
+{"page":4,"stage":"action","action":"walk","child_words":"","lines":[{"speaker":"나레이션","text":"나는 천천히 다시 걸었어요."},{"speaker":"나레이션","text":"“괜찮아, 천천히 가면 돼.”"},{"speaker":"나레이션","text":"사뿐사뿐, 발끝으로 모래를 살짝 밟았어요."}]},
+{"page":5,"stage":"action","action":"walk","child_words":"","lines":[{"speaker":"나레이션","text":"한 걸음, 또 한 걸음 바위를 피해서 걸었어요."},{"speaker":"나레이션","text":"뽀득뽀득, 젖은 모래 소리가 났어요."},{"speaker":"나레이션","text":"내 마음에 작은 용기가 생겼어요."}]},
+{"page":6,"stage":"result","action":"wave","child_words":"","lines":[{"speaker":"나레이션","text":"모래성 옆에서 한 아이가 조개를 줍고 있었어요."},{"speaker":"나레이션","text":"“나도 같이 주워도 돼?”"},{"speaker":"나레이션","text":"까르르, 아이가 웃으며 고개를 끄덕였어요."},{"speaker":"나레이션","text":"나에게 바다 친구가 생겼어요."}]},
+{"page":7,"stage":"result","action":"dance","child_words":"","lines":[{"speaker":"나레이션","text":"우리는 조개를 모아 모래 위에 늘어놓았어요."},{"speaker":"나레이션","text":"달그락달그락, 바구니가 금세 가득 찼어요."},{"speaker":"나레이션","text":"“이건 네 거, 이건 내 거!”"}]},
+{"page":8,"stage":"result","action":"idle","child_words":"","lines":[{"speaker":"나레이션","text":"찰랑찰랑, 파도가 우리 발을 간질였어요."},{"speaker":"나레이션","text":"나는 제일 예쁜 분홍 조개를 친구 손에 올려 주었어요."},{"speaker":"나레이션","text":"친구가 활짝 웃자 내 가슴이 콩닥콩닥 뛰었어요."}]}],
+"order_pages":[1,2,4,6],
+"scene":{"character_sheet":{"친구":"a cheerful little girl with short black bob hair, yellow sun hat, mint green swimsuit with a white skirt"},"pages":[
+{"page":1,"hero_on_page":true,"characters":[],"background":"A sandy beach spot covered with many pink and white seashells, gentle waves rolling onto the shore in the bright afternoon. Calm, cheerful seaside mood."},
+{"page":2,"hero_on_page":true,"characters":[],"background":"Wet smooth rocks near the shell-covered sand by the sea, small waves splashing nearby in the afternoon. A slightly surprised mood."},
+{"page":3,"hero_on_page":true,"characters":[],"background":"Quiet beach with scattered seashells and soft sand beside low rocks, waves rolling gently. A calm, thoughtful mood."},
+{"page":4,"hero_on_page":true,"characters":[],"background":"Soft sandy path along the shore with shells and small rocks, gentle waves in the afternoon. A brave, hopeful mood."},
+{"page":5,"hero_on_page":true,"characters":[],"background":"Wet shiny sand along the waterline with small rocks to walk around, seagulls flying far in the sky. Steady, encouraging mood."},
+{"page":6,"hero_on_page":true,"characters":[{"name":"친구","slot":"right-middle"}],"background":"A small sandcastle on the beach with seashells around it, 친구 kneeling and picking up shells while smiling. Warm, friendly mood."},
+{"page":7,"hero_on_page":true,"characters":[{"name":"친구","slot":"right-bottom"}],"background":"Seashells lined up neatly on the sand next to a small basket full of shells, 친구 placing shells happily. Playful, joyful mood."},
+{"page":8,"hero_on_page":true,"characters":[{"name":"친구","slot":"right-middle"}],"background":"Shallow gentle waves washing over the sand at the shoreline, 친구 holding a pink seashell and smiling in the soft late afternoon. Warm, happy mood."}]}}
