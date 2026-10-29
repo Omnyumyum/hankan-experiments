@@ -1,0 +1,1 @@
+{"protagonist": "라라", "characters": [], "sentences": [[{"speaker": "나레이션", "text": "라라는 바다 파도 앞에서 파도를 넘었어요."}], [{"speaker": "나레이션", "text": "파도를 넘는 사이 파도 앞이 어두워졌어요."}], [{"speaker": "나레이션", "text": "라라는 아빠와 살금살금 걸어갔어요."}], [{"speaker": "나레이션", "text": "라라는"}, {"speaker": "주인공", "text": "바다에 보내 줘요!", "emotion": "신남"}, {"speaker": "나레이션", "text": "하며 용기가 생겼어요."}]]}

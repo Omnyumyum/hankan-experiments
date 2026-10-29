@@ -1,0 +1,1 @@
+{"protagonist": "라라", "characters": [], "sentences": [[{"speaker": "나레이션", "text": "라라는 숲 큰 나무 아래에서 팽이를 만들었어요."}], [{"speaker": "나레이션", "text": "팽이를 돌리는 사이 숲이 어두워졌어요."}], [{"speaker": "나레이션", "text": "라라는 할머니와 살금살금 걸어갔어요."}], [{"speaker": "나레이션", "text": "라라는"}, {"speaker": "주인공", "text": "안녕, 다람쥐야.", "emotion": "기쁨"}, {"speaker": "나레이션", "text": "하며 용기가 생겼어요."}]]}
