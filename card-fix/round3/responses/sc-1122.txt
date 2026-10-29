@@ -1,0 +1,8 @@
+{"protagonist": "라라",
+ "characters": [{"name": "엄마", "type": "어른-여"}],
+ "sentences": [
+  [{"speaker": "나레이션", "text": "라라는 집 욕실 앞에서 자동차를 밀며 놀았어요."}],
+  [{"speaker": "나레이션", "text": "장난감 자동차를 밟아서 라라는 그만 넘어졌어요."}],
+  [{"speaker": "나레이션", "text": "라라는"}, {"speaker": "주인공", "text": "엄마, 이리 와 주세요!", "emotion": "놀람"}, {"speaker": "나레이션", "text": "하고 어른을 불렀어요."}],
+  [{"speaker": "나레이션", "text": "엄마가"}, {"speaker": "엄마", "text": "자동차가 장난쳤구나!", "emotion": "기쁨"}, {"speaker": "나레이션", "text": "하자 라라는 웃음이 났어요."}]
+ ]}

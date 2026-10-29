@@ -1,0 +1,8 @@
+{"protagonist": "라라",
+ "characters": [{"name": "친구", "type": "아이-여"}],
+ "sentences": [
+  [{"speaker": "나레이션", "text": "라라는 집 베란다에서 블록 상자를 열었어요."}],
+  [{"speaker": "나레이션", "text": "현관으로 뛰다가 라라는 블록에 걸려 넘어졌어요."}],
+  [{"speaker": "나레이션", "text": "라라는"}, {"speaker": "주인공", "text": "엄마, 누가 왔어요!", "emotion": "신남"}, {"speaker": "나레이션", "text": "하며 무릎을 툭툭 털고 달려갔어요."}],
+  [{"speaker": "나레이션", "text": "옆집 아이가"}, {"speaker": "친구", "text": "쿠키 같이 먹을래?", "emotion": "다정"}, {"speaker": "나레이션", "text": "하고 웃어서 라라에게 친구가 생겼어요."}]
+ ]}
