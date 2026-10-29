@@ -2009,3 +2009,13 @@ def animate(d, kind, pts):
         "used_kind": kind,
         "notice": notice,
     }
+
+
+# ---------- 4차 합치기: 사진 정리 앞에 연한 연필 · 공책 줄 갈래 (FAINT_RULED.md) ----------
+# faint_ruled 는 위의 clean_photo 를 BASE 로 불러 쓰고, 갈래가 안 켜지면 그 결과를 그대로 돌려준다.
+# Drawing · colored_eval.mask_iou 등은 모듈 안 이름 clean_photo 로 찾아 쓰므로 이름만 바꿔 끼운다
+# (faint_ruled 를 먼저 불러온 경우에는 아직 다 만들어지지 않았으니 건너뛴다 — eval_real/with_faint_ruled.py 가 직접 바꿔 끼운다).
+import faint_ruled as _fr  # noqa: E402
+
+if hasattr(_fr, "clean_photo"):
+    clean_photo = _fr.clean_photo
