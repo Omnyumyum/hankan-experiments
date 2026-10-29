@@ -1,0 +1,19 @@
+{"title":"현관문 앞의 손 흔들기 대장","protagonist":"나","characters":[{"name":"친구","type":"아이-남"}],"pages":[
+{"page":1,"stage":"place","action":"idle","child_words":"","lines":[{"speaker":"나레이션","text":"우리 집 현관에는 내 운동화가 나란히 놓여 있어요."},{"speaker":"나레이션","text":"나는 현관문 앞에 서서 문만 바라보았어요."},{"speaker":"나레이션","text":"오늘은 친구가 놀러 오는 날이라 가슴이 두근두근해요."}]},
+{"page":2,"stage":"problem","action":"walk","child_words":"","lines":[{"speaker":"나레이션","text":"딩동! 문을 열었는데 친구가 울고 있었어요. 친구 눈에서 눈물이 뚝뚝 떨어졌어요. 나는 깜짝 놀라서 걱정이 되었어요."}]},
+{"page":3,"stage":"problem","action":"idle","child_words":"","lines":[{"speaker":"나레이션","text":"친구는 소파에 앉아 훌쩍훌쩍 울었어요. “어떻게 하면 웃을까?” 나는 곰곰이 생각했어요. 그런데 그때였어요! 좋은 생각이 번쩍 떠올랐어요."}]},
+{"page":4,"stage":"action","action":"wave","child_words":"","lines":[{"speaker":"나레이션","text":"나는 손을 흔들어 친구를 웃게 했어요. 살랑살랑 손을 흔들며 우스운 얼굴도 지었어요. “안녕, 안녕! 나는 손 흔들기 대장이야!”"}]},
+{"page":5,"stage":"action","action":"jump","child_words":"","lines":[{"speaker":"나레이션","text":"한 번, 또 한 번, 나는 손을 크게 흔들었어요. 친구 입가가 실룩실룩 움직이기 시작했어요. 나는 용기를 내어 폴짝 뛰며 더 신나게 흔들었어요."}]},
+{"page":6,"stage":"result","action":"dance","child_words":"","lines":[{"speaker":"나레이션","text":"드디어 친구 눈물이 그쳤어요. 친구가 키득키득 웃음을 터뜨렸어요. 나는 너무 기뻐서 가슴이 콩닥거렸어요."}]},
+{"page":7,"stage":"result","action":"idle","child_words":"","lines":[{"speaker":"나레이션","text":"친구가 손등으로 눈을 쓱쓱 닦았어요. “고마워. 이제 하나도 안 슬퍼.” 우리는 마주 보고 방긋 웃었어요."}]},
+{"page":8,"stage":"result","action":"wave","child_words":"","lines":[{"speaker":"나레이션","text":"친구도 나를 따라 손을 흔들흔들했어요. 거실에 우리 웃음소리가 까르르 퍼졌어요. 나는 친구가 다시 웃어서 정말 좋았어요."}]}],
+"order_pages":[1,2,4,6],
+"scene":{"character_sheet":{"친구":"a small boy with short black hair, round cheeks, yellow striped T-shirt and blue shorts"},"pages":[
+{"page":1,"hero_on_page":true,"characters":[],"background":"A small home entryway in the afternoon, with a pair of children's sneakers lined up neatly on the floor in front of a closed front door. A low shoe cabinet and a coat hook stand along the wall."},
+{"page":2,"hero_on_page":true,"characters":[{"name":"친구","slot":"right-middle"}],"background":"The front door of a cozy home opened wide in the afternoon, 친구 standing at the doorway crying with tears on his cheeks."},
+{"page":3,"hero_on_page":true,"characters":[{"name":"친구","slot":"right-middle"}],"background":"A cozy living room with a soft sofa, 친구 sitting on the sofa sniffling sadly, a gentle quiet mood."},
+{"page":4,"hero_on_page":true,"characters":[{"name":"친구","slot":"right-middle"}],"background":"A cozy living room in the afternoon, 친구 sitting on the sofa looking up with wet eyes, a playful warm mood."},
+{"page":5,"hero_on_page":true,"characters":[{"name":"친구","slot":"right-middle"}],"background":"A cozy living room, 친구 on the sofa starting to smile a little, bright cheerful mood with toy blocks on the rug."},
+{"page":6,"hero_on_page":true,"characters":[{"name":"친구","slot":"right-middle"}],"background":"A cozy living room filled with warm light, 친구 laughing happily on the sofa with no more tears."},
+{"page":7,"hero_on_page":true,"characters":[{"name":"친구","slot":"right-middle"}],"background":"A cozy living room, 친구 wiping his eyes with the back of his hand and smiling gently, a calm happy mood."},
+{"page":8,"hero_on_page":true,"characters":[{"name":"친구","slot":"right-middle"}],"background":"A cozy living room with a tall toy block tower on the rug, 친구 waving his hand and laughing joyfully, a warm cheerful afternoon."}]}}

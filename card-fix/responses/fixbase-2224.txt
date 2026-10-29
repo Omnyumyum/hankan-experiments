@@ -1,0 +1,19 @@
+{"title":"구름다리에서 흔든 손","protagonist":"나","characters":[{"name":"친구","type":"아이-남"}],"pages":[
+{"page":1,"stage":"place","action":"walk","child_words":"","lines":[{"speaker":"나레이션","text":"나는 놀이터 구름다리에 두 손으로 매달렸어요. 쇠막대를 잡을 때마다 손에서 탁탁 소리가 났어요. 끝까지 건너간 나는 사다리를 조심조심 내려왔어요. 그리고 콧노래를 부르며 걸어갔어요."}]},
+{"page":2,"stage":"problem","action":"idle","child_words":"","lines":[{"speaker":"나레이션","text":"그런데 미끄럼틀 아래에서 친구가 울고 있었어요."},{"speaker":"나레이션","text":"훌쩍훌쩍, 작은 어깨가 들썩였어요."},{"speaker":"나레이션","text":"나는 걸음을 멈추고 가만히 바라보았어요."}]},
+{"page":3,"stage":"problem","action":"walk","child_words":"","lines":[{"speaker":"나레이션","text":"“왜 울어?” 하고 물어도 친구는 고개만 숙였어요."},{"speaker":"나레이션","text":"걱정이 되어 내 가슴이 콩닥콩닥 뛰었어요."},{"speaker":"나레이션","text":"그런데 그때, 좋은 생각이 떠올랐어요!"}]},
+{"page":4,"stage":"action","action":"wave","child_words":"","lines":[{"speaker":"나레이션","text":"나는 손을 흔들어 친구를 웃게 했어요."},{"speaker":"나레이션","text":"두 손을 머리 위로 올려 살랑살랑 흔들었지요."},{"speaker":"나레이션","text":"“친구야, 여기 봐! 안녕, 안녕!”"}]},
+{"page":5,"stage":"action","action":"wave","child_words":"","lines":[{"speaker":"나레이션","text":"친구가 천천히 고개를 들고 나를 보았어요."},{"speaker":"나레이션","text":"나는 손을 더 크게, 더 크게 흔들었어요."},{"speaker":"나레이션","text":"그러자 친구 입에서 키득키득 웃음이 나왔어요."}]},
+{"page":6,"stage":"result","action":"jump","child_words":"","lines":[{"speaker":"나레이션","text":"친구도 웃고 나도 웃고, 모두 기뻐했어요."},{"speaker":"나레이션","text":"깔깔 웃는 소리가 놀이터에 퍼졌어요."},{"speaker":"나레이션","text":"친구가 눈물을 닦으며 “고마워!” 하고 말했어요."}]},
+{"page":7,"stage":"result","action":"jump","child_words":"","lines":[{"speaker":"나레이션","text":"이번에는 친구도 나를 따라 손을 흔들었어요."},{"speaker":"나레이션","text":"우리는 폴짝폴짝 뛰며 손을 흔들었어요."},{"speaker":"나레이션","text":"“한 번 더! 한 번 더!”"}]},
+{"page":8,"stage":"result","action":"dance","child_words":"","lines":[{"speaker":"나레이션","text":"우리는 그네 앞에서 빙글빙글 돌았어요."},{"speaker":"나레이션","text":"친구 얼굴에는 눈물 대신 웃음이 가득했어요."},{"speaker":"나레이션","text":"흔들던 내 손이 오늘따라 참 자랑스러웠어요."}]}],
+"order_pages":[1,2,4,6],
+"scene":{"character_sheet":{"친구":"a small boy with short black hair, wearing a yellow t-shirt and blue shorts"},"pages":[
+{"page":1,"hero_on_page":true,"characters":[],"background":"A low set of metal monkey bars in a quiet playground in the daytime, with sand below and the rungs stretching from one ladder to the other."},
+{"page":2,"hero_on_page":true,"characters":[{"name":"친구","slot":"right-bottom"}],"background":"The playground slide in the afternoon, with 친구 sitting alone at the bottom of the slide, crying with his head down. Quiet, slightly sad mood."},
+{"page":3,"hero_on_page":true,"characters":[{"name":"친구","slot":"right-bottom"}],"background":"Close view of the playground slide area in the afternoon, 친구 sitting with his head lowered and shoulders hunched. Gentle, hopeful mood as if an idea is coming."},
+{"page":4,"hero_on_page":true,"characters":[{"name":"친구","slot":"right-bottom"}],"background":"The playground in the afternoon near the slide, 친구 still sitting and starting to look up. Bright, playful mood."},
+{"page":5,"hero_on_page":true,"characters":[{"name":"친구","slot":"right-bottom"}],"background":"The playground near the slide in the afternoon, 친구 looking up and beginning to giggle. Warm and lively mood."},
+{"page":6,"hero_on_page":true,"characters":[{"name":"친구","slot":"right-middle"}],"background":"The playground in the afternoon, 친구 standing and laughing happily while wiping his eyes. Joyful, bright mood."},
+{"page":7,"hero_on_page":true,"characters":[{"name":"친구","slot":"right-middle"}],"background":"The open playground in the afternoon, 친구 hopping and waving both hands in the air. Energetic, happy mood."},
+{"page":8,"hero_on_page":true,"characters":[{"name":"친구","slot":"right-middle"}],"background":"In front of the playground swings in the late afternoon, 친구 spinning around happily with a big smile. Warm, gentle, joyful mood."}]}}

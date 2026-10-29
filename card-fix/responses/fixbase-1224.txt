@@ -1,0 +1,19 @@
+{"title":"식탁에서 시작된 손 인사","protagonist":"나","characters":[{"name":"친구","type":"아이-여"}],"pages":[
+{"page":1,"stage":"place","action":"walk","child_words":"","lines":[{"speaker":"나레이션","text":"우리 집 식탁에 앉아 나는 우유를 마셔요."},{"speaker":"나레이션","text":"빨대를 물면 쪼록쪼록 소리가 나서 재미있어요."},{"speaker":"나레이션","text":"“다 마시면 뭐 하고 놀까?” 나는 설렜어요."}]},
+{"page":2,"stage":"problem","action":"walk","child_words":"","lines":[{"speaker":"나레이션","text":"그때 현관에서 딩동 하고 소리가 났어요."},{"speaker":"나레이션","text":"엄마가 누구인지 먼저 보고 문을 열어 주셨어요."},{"speaker":"나레이션","text":"문 앞에서 친구가 울고 있었어요."},{"speaker":"나레이션","text":"친구 눈에서 눈물이 뚝뚝 떨어졌어요."}]},
+{"page":3,"stage":"problem","action":"idle","child_words":"","lines":[{"speaker":"나레이션","text":"친구는 고개를 숙이고 훌쩍훌쩍 울기만 했어요."},{"speaker":"나레이션","text":"“왜 그래? 괜찮아?” 나는 걱정이 되었어요."},{"speaker":"나레이션","text":"그런데 그때였어요! 좋은 생각이 번쩍 났어요."}]},
+{"page":4,"stage":"action","action":"wave","child_words":"","lines":[{"speaker":"나레이션","text":"나는 손을 흔들어 친구를 웃게 했어요."},{"speaker":"나레이션","text":"머리 위에서 살랑살랑, 배 앞에서 살랑살랑!"},{"speaker":"나레이션","text":"“안녕, 안녕! 울보 구름아, 저리 가라!”"}]},
+{"page":5,"stage":"action","action":"dance","child_words":"","lines":[{"speaker":"나레이션","text":"친구가 눈물을 닦고 나를 쳐다봤어요."},{"speaker":"나레이션","text":"나는 한 번, 또 한 번 더 크게 손을 흔들었어요."},{"speaker":"나레이션","text":"그러자 친구가 키득키득 웃기 시작했어요."}]},
+{"page":6,"stage":"result","action":"jump","child_words":"","lines":[{"speaker":"나레이션","text":"친구도 나도 모두 기뻐했어요."},{"speaker":"나레이션","text":"우리는 거실에서 깡충깡충 뛰었어요."},{"speaker":"나레이션","text":"“이제 하나도 안 슬퍼!” 친구가 말했어요."}]},
+{"page":7,"stage":"result","action":"dance","child_words":"","lines":[{"speaker":"나레이션","text":"이번에는 친구가 나를 따라 손을 흔들었어요."},{"speaker":"나레이션","text":"소파 위 곰 인형도 같이 웃는 것 같았어요."},{"speaker":"나레이션","text":"우리 웃음소리가 집 안에 까르르 퍼졌어요."}]},
+{"page":8,"stage":"result","action":"idle","child_words":"","lines":[{"speaker":"나레이션","text":"친구 볼에 남은 눈물이 반짝 빛났어요."},{"speaker":"나레이션","text":"나는 친구 손을 꼭 잡았어요."},{"speaker":"나레이션","text":"“내일도 같이 손 흔들자.” 내 마음이 콩닥콩닥 뛰었어요."}]}],
+"order_pages":[1,2,4,6],
+"scene":{"character_sheet":{"친구":"a little girl with short black pigtails, yellow dress and white socks"},"pages":[
+{"page":1,"hero_on_page":true,"characters":[],"background":"A cozy home dining table indoors, with a glass of milk with a straw and a small plate on a wooden table surrounded by chairs. Soft indoor lighting, with a glimpse of the living room in the background."},
+{"page":2,"hero_on_page":true,"characters":[{"name":"친구","slot":"right-middle"}],"background":"The front door of a cozy home is open, and 친구 stands at the doorway crying with tears on her cheeks. Gentle, quiet mood."},
+{"page":3,"hero_on_page":true,"characters":[{"name":"친구","slot":"right-middle"}],"background":"Inside the cozy living room, 친구 stands with her head down, sniffling sadly. Soft, gentle and caring mood."},
+{"page":4,"hero_on_page":true,"characters":[{"name":"친구","slot":"right-middle"}],"background":"In the cozy living room, 친구 stands still and looks up with teary eyes, curious. Playful and hopeful mood."},
+{"page":5,"hero_on_page":true,"characters":[{"name":"친구","slot":"right-middle"}],"background":"In the cozy living room, 친구 wipes her tears and starts to giggle. Bright and playful mood."},
+{"page":6,"hero_on_page":true,"characters":[{"name":"친구","slot":"right-middle"}],"background":"In the cozy living room, 친구 jumps happily with a big smile. Joyful and lively mood."},
+{"page":7,"hero_on_page":true,"characters":[{"name":"친구","slot":"right-middle"}],"background":"In the cozy living room with a teddy bear on the sofa, 친구 waves her hands and laughs. Happy and warm mood."},
+{"page":8,"hero_on_page":true,"characters":[{"name":"친구","slot":"right-middle"}],"background":"In the cozy living room, 친구 smiles softly and holds out her hand, a tiny tear sparkling on her cheek. Peaceful, warm and happy mood."}]}}

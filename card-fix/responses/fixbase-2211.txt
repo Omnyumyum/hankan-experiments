@@ -1,0 +1,19 @@
+{"title":"무너진 모래성과 나뭇잎 깃발","protagonist":"나","characters":[{"name":"친구","type":"아이-여"}],"pages":[
+{"page":1,"stage":"place","action":"run","child_words":"","lines":[{"speaker":"나레이션","text":"나는 놀이터 그네에 앉아 발을 굴렀어요."},{"speaker":"나레이션","text":"그네 줄을 꼭 잡으니 손이 차가웠어요."},{"speaker":"나레이션","text":"그네가 끼익끼익 소리를 내며 높이 올라갔어요."}]},
+{"page":2,"stage":"problem","action":"idle","child_words":"","lines":[{"speaker":"나레이션","text":"그런데 모래밭 옆에서 친구가 울고 있었어요. 친구는 고개를 숙이고 훌쩍훌쩍 울었어요. 나는 그네를 멈추고 가만히 바라봤어요."}]},
+{"page":3,"stage":"problem","action":"walk","child_words":"","lines":[{"speaker":"나레이션","text":"친구 앞에는 와르르 무너진 모래성이 있었어요. “어떡하지? 많이 속상하겠다.” 나는 걱정이 되어 한 걸음 다가갔어요. “내가 도와줘야지!” 나는 용기를 냈어요."}]},
+{"page":4,"stage":"action","action":"walk","child_words":"","lines":[{"speaker":"나레이션","text":"나는 사뿐사뿐 친구에게 다가가서 도와줬어요. “울지 마. 내가 같이 만들어 줄게.” 친구가 눈을 닦으며 나를 쳐다봤어요."}]},
+{"page":5,"stage":"action","action":"idle","child_words":"","lines":[{"speaker":"나레이션","text":"우리는 한 줌, 또 한 줌 모래를 모았어요. 손으로 토닥토닥 두드리니 성이 단단해졌어요. 모래성이 조금씩 다시 높아졌어요."}]},
+{"page":6,"stage":"result","action":"idle","child_words":"","lines":[{"speaker":"나레이션","text":"친구 눈물이 뚝 그쳤어요. 친구가 동그란 눈으로 모래성을 보았어요. “우아, 아까보다 더 멋지다!”"}]},
+{"page":7,"stage":"result","action":"dance","child_words":"","lines":[{"speaker":"나레이션","text":"친구가 나를 보고 방긋 웃었어요. 나도 기뻐서 따라 웃었어요. “고마워. 너랑 같이 하니까 좋아.”"}]},
+{"page":8,"stage":"result","action":"jump","child_words":"","lines":[{"speaker":"나레이션","text":"우리는 모래성 꼭대기에 나뭇잎을 꽂았어요. 나뭇잎 깃발이 살랑살랑 흔들렸어요. 웃는 친구 얼굴을 보니 나는 폴짝 뛰고 싶었어요."}]}],
+"order_pages":[1,2,4,6],
+"scene":{"character_sheet":{"친구":"a small girl with short black bob hair, a yellow T-shirt and blue shorts"},"pages":[
+{"page":1,"hero_on_page":true,"characters":[],"background":"A playground swing set in the afternoon, one swing swinging high on its metal chains above a worn patch of ground, with a red slide in the background."},
+{"page":2,"hero_on_page":true,"characters":[{"name":"친구","slot":"right-middle"}],"background":"Playground sandbox in the afternoon; 친구 sits beside the sandbox with head down, crying softly."},
+{"page":3,"hero_on_page":true,"characters":[{"name":"친구","slot":"right-middle"}],"background":"Close view of the sandbox with a collapsed sand castle; 친구 sits sadly in front of it, wiping tears."},
+{"page":4,"hero_on_page":true,"characters":[{"name":"친구","slot":"right-middle"}],"background":"Playground sandbox in warm afternoon light; 친구 looks up hopefully, rubbing her eyes beside the fallen sand pile."},
+{"page":5,"hero_on_page":true,"characters":[{"name":"친구","slot":"right-bottom"}],"background":"Sandbox with a half-built sand castle; 친구 pats sand with her hands, busy and focused."},
+{"page":6,"hero_on_page":true,"characters":[{"name":"친구","slot":"right-middle"}],"background":"A tall finished sand castle in the sandbox; 친구 stares at it with wide, amazed eyes, no more tears."},
+{"page":7,"hero_on_page":true,"characters":[{"name":"친구","slot":"right-middle"}],"background":"Bright playground sandbox beside the sand castle; 친구 smiles happily, playful and joyful mood."},
+{"page":8,"hero_on_page":true,"characters":[{"name":"친구","slot":"right-middle"}],"background":"Sand castle topped with a small green leaf flag fluttering in the breeze; 친구 smiles beside it in a warm, happy afternoon playground."}]}}

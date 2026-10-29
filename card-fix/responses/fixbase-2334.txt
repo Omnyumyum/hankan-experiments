@@ -1,0 +1,19 @@
+{"title":"혼자 탄 시소와 노란 벤치","protagonist":"나","characters":[{"name":"엄마","type":"어른-여"}],"pages":[
+{"page":1,"stage":"place","action":"run","child_words":"","lines":[{"speaker":"나레이션","text":"놀이터 시소에 나 혼자 올라앉았어요."},{"speaker":"나레이션","text":"내 쪽만 쿵 내려앉고 반대쪽은 높이 떠 있었어요."},{"speaker":"나레이션","text":"시소 옆에는 노란 벤치가 하나 놓여 있었어요."},{"speaker":"나레이션","text":"나는 시소에서 내려 더 재미있는 놀이를 찾아 나섰어요."}]},
+{"page":2,"stage":"problem","action":"idle","child_words":"","lines":[{"speaker":"나레이션","text":"꼬불꼬불 터널 미끄럼틀을 타고 슝 내려왔어요. 눈을 떠 보니 처음 보는 곳이었어요. 나는 그만 놀이터에서 길을 잃었어요."}]},
+{"page":3,"stage":"problem","action":"idle","child_words":"","lines":[{"speaker":"나레이션","text":"내 가슴이 두근두근 빨리 뛰기 시작했어요. “엄마는 어디 있을까? 어떡하지?” 그런데 그때, 마음속에서 작은 목소리가 들렸어요. “천천히 살펴보면 찾을 수 있어.”"}]},
+{"page":4,"stage":"action","action":"walk","child_words":"","lines":[{"speaker":"나레이션","text":"나는 숨을 크게 쉬고 주위를 살피며 걸었어요. 한 걸음, 또 한 걸음 천천히 걸었어요. 눈을 두리번두리번 굴리며 하나씩 보았어요."}]},
+{"page":5,"stage":"action","action":"walk","child_words":"","lines":[{"speaker":"나레이션","text":"발밑에서 모래가 사각사각 소리를 냈어요. 저 멀리 아까 본 노란 벤치가 보였어요! “저기야! 시소 옆 벤치야!”"}]},
+{"page":6,"stage":"result","action":"run","child_words":"","lines":[{"speaker":"나레이션","text":"노란 벤치 옆에 엄마가 서 있었어요. 엄마는 두리번두리번 나를 찾고 있었어요. 엄마를 만나서 엄마도 나도 모두 기뻐했어요."}]},
+{"page":7,"stage":"result","action":"idle","child_words":"","lines":[{"speaker":"나레이션","text":"엄마가 두 팔을 벌려 나를 꼭 안아 주었어요. “우리 아기, 혼자서 잘 찾아왔구나!” 벤치 옆 비둘기들도 푸드덕 날갯짓을 했어요."}]},
+{"page":8,"stage":"result","action":"jump","child_words":"","lines":[{"speaker":"나레이션","text":"엄마는 웃으며 짝짝 손뼉을 쳐 주셨어요. 나는 엄마 손을 잡고 히히 웃었어요. 이제 놀이터가 하나도 무섭지 않았어요."}]}],
+"order_pages":[1,2,4,6],
+"scene":{"character_sheet":{"엄마":"a gentle young mother with shoulder-length black hair, light blue blouse and beige pants"},"pages":[
+{"page":1,"hero_on_page":true,"characters":[],"background":"A playground in the afternoon, with a seesaw tilted down on one side and its raised end empty, and a yellow bench beside it. Other play equipment stands in the distance."},
+{"page":2,"hero_on_page":false,"characters":[],"background":"The end of a curvy tunnel slide opening onto an unfamiliar corner of a large playground with tall climbing frames and bushes, afternoon."},
+{"page":3,"hero_on_page":false,"characters":[],"background":"A quiet unfamiliar corner of a big playground with tall climbing frames, a sandbox and trees, calm but slightly lonely mood, afternoon."},
+{"page":4,"hero_on_page":true,"characters":[],"background":"A winding path through a large playground with climbing frames and spring riders on both sides, peaceful afternoon, careful searching mood."},
+{"page":5,"hero_on_page":true,"characters":[],"background":"A sandbox in a playground with a yellow bench visible in the distance, hopeful afternoon mood."},
+{"page":6,"hero_on_page":true,"characters":[{"name":"엄마","slot":"right-middle"}],"background":"A yellow bench in a playground where the mother stands looking happy and relieved, afternoon."},
+{"page":7,"hero_on_page":true,"characters":[{"name":"엄마","slot":"right-middle"}],"background":"Next to a yellow bench in a playground, the mother opens her arms warmly, pigeons fluttering nearby, warm afternoon."},
+{"page":8,"hero_on_page":true,"characters":[{"name":"엄마","slot":"right-middle"}],"background":"A cozy playground by a yellow bench where the mother claps happily and smiles, red swing in the background, warm afternoon."}]}}

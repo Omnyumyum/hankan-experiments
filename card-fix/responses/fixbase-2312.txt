@@ -1,0 +1,19 @@
+{"title":"미끄럼틀에서 나비 따라간 날","protagonist":"나","characters":[{"name":"아주머니","type":"어른-여"}],"pages":[
+{"page":1,"stage":"place","action":"walk","child_words":"","lines":[{"speaker":"나레이션","text":"나는 놀이터 미끄럼틀 꼭대기에 올라섰어요."},{"speaker":"나레이션","text":"두 손으로 손잡이를 단단히 잡았어요."},{"speaker":"나레이션","text":"그리고 쭈르륵 미끄럼틀을 타고 내려왔어요."}]},
+{"page":2,"stage":"problem","action":"run","child_words":"","lines":[{"speaker":"나레이션","text":"그때 노란 나비가 팔랑팔랑 날아왔어요."},{"speaker":"나레이션","text":"나는 나비를 따라 한 걸음, 또 한 걸음 뛰었어요."},{"speaker":"나레이션","text":"놀이터 끝 큰 나무 사이에서 나는 그만 길을 잃었어요."}]},
+{"page":3,"stage":"problem","action":"idle","child_words":"","lines":[{"speaker":"나레이션","text":"그네도 미끄럼틀도 보이지 않았어요."},{"speaker":"나레이션","text":"가슴이 두근두근 자꾸만 뛰었어요."},{"speaker":"나레이션","text":"“어디로 가야 하지?” 나는 숨을 크게 쉬었어요."}]},
+{"page":4,"stage":"action","action":"idle","child_words":"","lines":[{"speaker":"나레이션","text":"“함부로 움직이지 말고 여기서 기다리자.”"},{"speaker":"나레이션","text":"나는 그 자리에서 꼼짝 않고 기다렸어요."},{"speaker":"나레이션","text":"바람이 살랑살랑 나뭇잎을 흔들었어요."}]},
+{"page":5,"stage":"action","action":"wave","child_words":"","lines":[{"speaker":"나레이션","text":"저쪽에서 또각또각 발소리가 들려왔어요."},{"speaker":"나레이션","text":"놀이터를 돌보는 아주머니였어요."},{"speaker":"나레이션","text":"나는 손을 높이 들고 “여기요!” 하고 불렀어요."}]},
+{"page":6,"stage":"result","action":"idle","child_words":"","lines":[{"speaker":"나레이션","text":"아주머니가 내 등을 토닥토닥 두드려 주었어요."},{"speaker":"나레이션","text":"“혼자서 참 잘 기다렸구나. 걱정 마.”"},{"speaker":"나레이션","text":"아주머니가 나를 집까지 데려다 줬어요."}]},
+{"page":7,"stage":"result","action":"walk","child_words":"","lines":[{"speaker":"나레이션","text":"아주머니 손을 잡고 콩콩 걸어갔어요."},{"speaker":"나레이션","text":"아까 그 그네와 미끄럼틀이 다시 보였어요."},{"speaker":"나레이션","text":"무섭던 마음이 조금씩 작아졌어요."}]},
+{"page":8,"stage":"result","action":"dance","child_words":"","lines":[{"speaker":"나레이션","text":"드디어 우리 집 대문 앞에 도착했어요."},{"speaker":"나레이션","text":"노란 나비가 대문 위에 살포시 앉아 있었어요."},{"speaker":"나레이션","text":"“나비야, 너도 집에 같이 왔구나!”"},{"speaker":"나레이션","text":"나는 아주머니를 보며 방긋 웃었어요."}]}],
+"order_pages":[1,2,4,6],
+"scene":{"character_sheet":{"아주머니":"a kind middle-aged woman with short brown hair, wearing a green vest over a white shirt and comfortable sneakers"},"pages":[
+{"page":1,"hero_on_page":true,"characters":[],"background":"A small neighborhood playground in the afternoon, seen from beside a tall slide with a ladder and handrails. A sandbox and a row of swings sit nearby."},
+{"page":2,"hero_on_page":true,"characters":[],"background":"The far edge of a playground where tall leafy trees stand close together, a small yellow butterfly fluttering between the branches in soft afternoon light."},
+{"page":3,"hero_on_page":true,"characters":[],"background":"Among tall trees at the edge of a playground, no swings or slides in sight, quiet and slightly lonely afternoon mood with gentle shadows."},
+{"page":4,"hero_on_page":true,"characters":[],"background":"A calm spot under big trees at the playground's edge, leaves swaying in a light breeze, peaceful and patient afternoon atmosphere."},
+{"page":5,"hero_on_page":true,"characters":[{"name":"아주머니","slot":"right-middle"}],"background":"Under tall trees at the playground's edge, 아주머니 walking closer along a small path, looking around kindly, warm afternoon light."},
+{"page":6,"hero_on_page":true,"characters":[{"name":"아주머니","slot":"right-middle"}],"background":"Under the trees at the playground's edge, 아주머니 bending down with a gentle smile and reaching out a hand, comforting warm afternoon mood."},
+{"page":7,"hero_on_page":true,"characters":[{"name":"아주머니","slot":"right-middle"}],"background":"Walking back through the playground past the swing set and the colorful slide, 아주머니 holding out her hand, relieved and cozy late afternoon light."},
+{"page":8,"hero_on_page":true,"characters":[{"name":"아주머니","slot":"right-middle"}],"background":"In front of a cozy house with a green front gate, a small yellow butterfly resting on top of the gate, 아주머니 smiling warmly in golden late afternoon light."}]}}

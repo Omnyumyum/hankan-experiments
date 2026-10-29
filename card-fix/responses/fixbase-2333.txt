@@ -1,0 +1,19 @@
+{"title":"모래 산과 그네 소리","protagonist":"나","characters":[],"pages":[
+{"page":1,"stage":"place","action":"walk","child_words":"","lines":[{"speaker":"나레이션","text":"나는 놀이터 모래밭에 쪼그려 앉았어요."},{"speaker":"나레이션","text":"손가락 사이로 모래가 솔솔 빠져나갔어요."},{"speaker":"나레이션","text":"나는 모래를 모아 작은 산을 쌓았어요."},{"speaker":"나레이션","text":"모래밭 옆에서는 그네 소리가 들려왔어요."}]},
+{"page":2,"stage":"problem","action":"run","child_words":"","lines":[{"speaker":"나레이션","text":"그때 노란 나비가 팔랑팔랑 날아갔어요."},{"speaker":"나레이션","text":"나는 나비를 따라 정글짐 사이로 달려갔어요."},{"speaker":"나레이션","text":"그러다 나는 그만 길을 잃었어요."}]},
+{"page":3,"stage":"problem","action":"idle","child_words":"","lines":[{"speaker":"나레이션","text":"둘레를 보니 처음 보는 미끄럼틀만 가득했어요."},{"speaker":"나레이션","text":"“여기가 어디지?” 가슴이 콩닥콩닥 뛰었어요."},{"speaker":"나레이션","text":"그런데 그때, 나는 좋은 생각이 떠올랐어요!"}]},
+{"page":4,"stage":"action","action":"walk","child_words":"","lines":[{"speaker":"나레이션","text":"나는 주위를 살피며 걸었어요."},{"speaker":"나레이션","text":"한 걸음, 또 한 걸음, 발소리가 사박사박 났어요."},{"speaker":"나레이션","text":"“천천히 보면 찾을 수 있어.” 나는 용기를 냈어요."}]},
+{"page":5,"stage":"action","action":"walk","child_words":"","lines":[{"speaker":"나레이션","text":"커다란 터널 미끄럼틀 옆을 살금살금 지났어요."},{"speaker":"나레이션","text":"그런데 어디선가 아는 소리가 들렸어요."},{"speaker":"나레이션","text":"끼익, 끼익! 바로 아까 들었던 그네 소리였어요."}]},
+{"page":6,"stage":"result","action":"run","child_words":"","lines":[{"speaker":"나레이션","text":"소리를 따라가니 아까 그 그네가 보였어요."},{"speaker":"나레이션","text":"그네를 보자 나는 마음이 놓였어요."},{"speaker":"나레이션","text":"나는 그네까지 후다닥 달려갔어요."}]},
+{"page":7,"stage":"result","action":"jump","child_words":"","lines":[{"speaker":"나레이션","text":"모래밭도, 정글짐도 다 아는 곳이었어요."},{"speaker":"나레이션","text":"나는 너무 기뻐서 폴짝 뛰었어요."},{"speaker":"나레이션","text":"“찾았다! 여기가 아까 그 자리야.”"}]},
+{"page":8,"stage":"result","action":"idle","child_words":"","lines":[{"speaker":"나레이션","text":"나는 그네에 앉아 다리를 흔들흔들했어요."},{"speaker":"나레이션","text":"노란 나비가 그네 줄에 사뿐 내려앉았어요."},{"speaker":"나레이션","text":"“너도 여기로 돌아왔구나.” 나는 빙그레 웃었어요."}]}],
+"order_pages":[1,2,4,6],
+"scene":{"character_sheet":{},"pages":[
+{"page":1,"hero_on_page":true,"characters":[],"background":"A playground sandbox in the afternoon, with a small hand-built sand mound in the foreground and a swing set standing just beside the sandbox."},
+{"page":2,"hero_on_page":true,"characters":[],"background":"Inside a big playground among colorful jungle gym bars, a small yellow butterfly flutters away ahead. The mood is playful and curious."},
+{"page":3,"hero_on_page":true,"characters":[],"background":"A corner of a large playground full of unfamiliar slides and climbing frames, quiet and a little confusing. The mood is puzzled but calm, not scary."},
+{"page":4,"hero_on_page":true,"characters":[],"background":"A path between playground equipment with small footprints in the sand, slides and climbing frames on both sides. The mood is careful and brave."},
+{"page":5,"hero_on_page":true,"characters":[],"background":"Beside a big tube slide in the playground, with a glimpse of swings far in the distance. The mood is hopeful."},
+{"page":6,"hero_on_page":true,"characters":[],"background":"The familiar swing set in the playground comes into view, swings swaying softly. The mood is relieved and happy."},
+{"page":7,"hero_on_page":true,"characters":[],"background":"The familiar part of the playground with the sandbox, jungle gym and swings all together. The mood is joyful."},
+{"page":8,"hero_on_page":true,"characters":[],"background":"A calm playground swing set in warm late afternoon light, a small yellow butterfly resting on a swing chain. The mood is peaceful and cozy."}]}}

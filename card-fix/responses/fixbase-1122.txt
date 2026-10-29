@@ -1,0 +1,19 @@
+{"title":"욕실 앞 파란 발 닦개","protagonist":"나","characters":[{"name":"엄마","type":"어른-여"}],"pages":[
+{"page":1,"stage":"place","action":"idle","child_words":"","lines":[{"speaker":"나레이션","text":"우리 집 욕실 앞에 서면 물 떨어지는 소리가 똑똑 들려요."},{"speaker":"나레이션","text":"문 앞 바닥에는 파란 발 닦개가 깔려 있어요."},{"speaker":"나레이션","text":"나는 그 옆에 장난감 자동차를 줄줄이 늘어놓았어요."}]},
+{"page":2,"stage":"problem","action":"walk","child_words":"","lines":[{"speaker":"나레이션","text":"한 걸음, 또 한 걸음 걷다가 장난감 자동차를 밟았어요."},{"speaker":"나레이션","text":"나는 그만 넘어졌어요."},{"speaker":"나레이션","text":"꽈당! 엉덩방아를 찧었어요."}]},
+{"page":3,"stage":"problem","action":"idle","child_words":"","lines":[{"speaker":"나레이션","text":"나는 깜짝 놀라 바닥에 앉아 눈만 끔뻑였어요."},{"speaker":"나레이션","text":"“혼자 일어나기 힘들어.” 나는 작게 말했어요."},{"speaker":"나레이션","text":"그런데 그때, 좋은 생각이 번뜩 떠올랐어요!"}]},
+{"page":4,"stage":"action","action":"wave","child_words":"","lines":[{"speaker":"나레이션","text":"나는 숨을 크게 쉬고 어른을 불렀어요."},{"speaker":"나레이션","text":"“엄마! 엄마, 이리 와 주세요!”"},{"speaker":"나레이션","text":"내 목소리가 집 안에 쩌렁쩌렁 퍼졌어요."}]},
+{"page":5,"stage":"action","action":"idle","child_words":"","lines":[{"speaker":"나레이션","text":"부엌에서 엄마가 후다닥 달려왔어요."},{"speaker":"나레이션","text":"“어디 보자, 우리 아기 괜찮니?”"},{"speaker":"나레이션","text":"엄마가 내 손을 잡고 살살 일으켜 주었어요."}]},
+{"page":6,"stage":"result","action":"idle","child_words":"","lines":[{"speaker":"나레이션","text":"엄마가 바닥의 자동차를 보고 눈을 동그랗게 떴어요."},{"speaker":"나레이션","text":"“요 녀석, 자동차가 장난을 쳤구나!”"},{"speaker":"나레이션","text":"그 말에 나는 웃음이 났어요. 킥킥!"}]},
+{"page":7,"stage":"result","action":"jump","child_words":"","lines":[{"speaker":"나레이션","text":"엄마가 손등에 귀여운 곰돌이 스티커를 붙여 주었어요."},{"speaker":"나레이션","text":"곰돌이가 나를 보고 방긋 웃는 것 같았어요."},{"speaker":"나레이션","text":"엄마랑 나는 함께 깔깔 웃었어요."}]},
+{"page":8,"stage":"result","action":"dance","child_words":"","lines":[{"speaker":"나레이션","text":"나는 자동차들을 상자에 차곡차곡 넣었어요."},{"speaker":"나레이션","text":"“이제 푹 쉬어, 장난꾸러기들아.”"},{"speaker":"나레이션","text":"곰돌이 스티커를 보니 또 웃음이 새어 나왔어요."}]}],
+"order_pages":[1,2,4,6],
+"scene":{"character_sheet":{"엄마":"a gentle young mother with shoulder-length black hair, yellow apron over a light blue sweater"},"pages":[
+{"page":1,"hero_on_page":true,"characters":[],"background":"A hallway in front of an open bathroom door inside a home during the day, with a blue bath mat on the floor, a row of small toy cars lined up beside it, and a dripping faucet visible inside the bathroom."},
+{"page":2,"hero_on_page":true,"characters":[],"background":"The same cozy living room, a small toy car rolling across the wooden floor near the sofa. A surprised, slightly clumsy moment."},
+{"page":3,"hero_on_page":true,"characters":[],"background":"The quiet living room floor near the sofa with scattered toy cars, soft afternoon light. A calm, slightly worried mood."},
+{"page":4,"hero_on_page":true,"characters":[],"background":"The living room seen toward an open doorway leading to the kitchen, toy cars on the floor. A hopeful, brave mood."},
+{"page":5,"hero_on_page":true,"characters":[{"name":"엄마","slot":"right-middle"}],"background":"The cozy living room, 엄마 hurrying in from the kitchen doorway and kneeling down with a caring face. Warm and gentle mood."},
+{"page":6,"hero_on_page":true,"characters":[{"name":"엄마","slot":"right-middle"}],"background":"The living room floor, 엄마 kneeling and pointing at a little toy car with a playful smile. Light and funny mood."},
+{"page":7,"hero_on_page":true,"characters":[{"name":"엄마","slot":"right-middle"}],"background":"The cozy living room, 엄마 kneeling and laughing happily while holding a small sheet of cute bear stickers. Joyful and warm mood."},
+{"page":8,"hero_on_page":true,"characters":[{"name":"엄마","slot":"right-bottom"}],"background":"The tidy living room with an open toy box full of neatly stacked toy cars, 엄마 sitting on the floor smiling softly. Peaceful and happy mood."}]}}

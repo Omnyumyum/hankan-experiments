@@ -1,0 +1,19 @@
+{"title":"현관에 놓인 실내화 한 켤레","protagonist":"나","characters":[{"name":"친구","type":"아이-남"}],"pages":[
+{"page":1,"stage":"place","action":"walk","child_words":"","lines":[{"speaker":"나레이션","text":"우리 집 현관에는 작은 신발이 나란히 있어요."},{"speaker":"나레이션","text":"나는 빈자리에 실내화 한 켤레를 더 놓았어요."},{"speaker":"나레이션","text":"그때 현관 초인종이 딩동 울렸어요."}]},
+{"page":2,"stage":"problem","action":"idle","child_words":"","lines":[{"speaker":"나레이션","text":"그런데 놀러 온 친구가 울고 있었어요."},{"speaker":"나레이션","text":"소파 구석에서 훌쩍훌쩍 소리가 났어요."},{"speaker":"나레이션","text":"친구는 무릎을 꼭 안고 고개를 숙였어요."}]},
+{"page":3,"stage":"problem","action":"idle","child_words":"","lines":[{"speaker":"나레이션","text":"내 가슴이 콩닥콩닥 뛰기 시작했어요."},{"speaker":"나레이션","text":"“왜 울어?” 하고 물어도 친구는 말이 없었어요."},{"speaker":"나레이션","text":"그런데 그때, 나는 생각했어요. “말없이 곁에 있어 줘야지.”"}]},
+{"page":4,"stage":"action","action":"walk","child_words":"","lines":[{"speaker":"나레이션","text":"나는 친구 옆에서 기다려 줬어요."},{"speaker":"나레이션","text":"살금살금 다가가 친구 옆에 살짝 앉았어요."},{"speaker":"나레이션","text":"아무 말 없이, 그냥 곁에 있어 주었어요."}]},
+{"page":5,"stage":"action","action":"idle","child_words":"","lines":[{"speaker":"나레이션","text":"조금 기다리고, 또 조금 기다렸어요."},{"speaker":"나레이션","text":"창문 틈으로 바람이 솔솔 들어왔어요."},{"speaker":"나레이션","text":"나는 친구 등을 토닥토닥 쓸어 주었어요."}]},
+{"page":6,"stage":"result","action":"idle","child_words":"","lines":[{"speaker":"나레이션","text":"드디어 친구 눈물이 그쳤어요."},{"speaker":"나레이션","text":"친구가 소매로 눈가를 쓱쓱 닦았어요."},{"speaker":"나레이션","text":"그리고 작은 목소리로 “고마워.” 하고 말했어요."}]},
+{"page":7,"stage":"result","action":"jump","child_words":"","lines":[{"speaker":"나레이션","text":"걱정하던 마음이 사르르 풀렸어요."},{"speaker":"나레이션","text":"“우리 같이 블록 쌓을래?” 내가 물었어요."},{"speaker":"나레이션","text":"친구가 고개를 끄덕끄덕했어요."}]},
+{"page":8,"stage":"result","action":"dance","child_words":"","lines":[{"speaker":"나레이션","text":"우리는 나란히 앉아 블록을 높이 쌓았어요."},{"speaker":"나레이션","text":"친구가 나를 보고 방긋 웃었어요."},{"speaker":"나레이션","text":"블록 탑만큼 내 마음도 높이 들떴어요."}]}],
+"order_pages":[1,2,4,6],
+"scene":{"character_sheet":{"친구":"a small boy with short black hair, wearing a yellow striped T-shirt and blue shorts"},"pages":[
+{"page":1,"hero_on_page":true,"characters":[],"background":"The front entrance of a cozy home in the afternoon, with small shoes lined up neatly on the floor beside an extra pair of indoor slippers. A closed front door and a doorbell button on the wall."},
+{"page":2,"hero_on_page":false,"characters":[{"name":"친구","slot":"right-middle"}],"background":"The same cozy living room, a little quiet and soft. 친구 sits in the corner of the big sofa hugging his knees and crying softly."},
+{"page":3,"hero_on_page":true,"characters":[{"name":"친구","slot":"right-middle"}],"background":"The cozy living room with the sofa and scattered toy blocks. 친구 keeps his head down on the sofa, gentle and thoughtful mood."},
+{"page":4,"hero_on_page":true,"characters":[{"name":"친구","slot":"right-middle"}],"background":"The living room sofa seen up close, with an empty cushion beside 친구. 친구 still looks sad, soft quiet mood."},
+{"page":5,"hero_on_page":true,"characters":[{"name":"친구","slot":"right-middle"}],"background":"The living room with a slightly open window and curtains gently moving in the breeze. 친구 sits calmly on the sofa, peaceful comforting mood."},
+{"page":6,"hero_on_page":true,"characters":[{"name":"친구","slot":"right-middle"}],"background":"The cozy living room feels brighter. 친구 wipes his eyes with his sleeve and gives a small thankful look."},
+{"page":7,"hero_on_page":true,"characters":[{"name":"친구","slot":"right-middle"}],"background":"The living room rug with the open box of colorful toy blocks. 친구 nods with a gentle face, warm and relieved mood."},
+{"page":8,"hero_on_page":true,"characters":[{"name":"친구","slot":"right-middle"}],"background":"The cozy living room rug with a tall tower of colorful toy blocks. 친구 smiles brightly while stacking blocks, joyful and warm mood."}]}}

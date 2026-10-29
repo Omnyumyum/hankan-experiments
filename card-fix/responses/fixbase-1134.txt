@@ -1,0 +1,19 @@
+{"title":"베란다에서 쌓은 블록 탑","protagonist":"나","characters":[{"name":"친구","type":"아이-여"}],"pages":[
+{"page":1,"stage":"place","action":"idle","child_words":"","lines":[{"speaker":"나레이션","text":"우리 집 베란다에는 화분 옆에 블록 상자가 있어요."},{"speaker":"나레이션","text":"나는 블록을 꺼내 달그락달그락 탑을 쌓았어요."},{"speaker":"나레이션","text":"베란다 바닥에 쌓은 탑이 내 키만큼 높아졌어요."}]},
+{"page":2,"stage":"problem","action":"run","child_words":"","lines":[{"speaker":"나레이션","text":"나는 탑을 자랑하고 싶어서 거실을 뛰어다녔어요."},{"speaker":"나레이션","text":"그러다 바닥에 있던 블록을 밟고 말았어요."},{"speaker":"나레이션","text":"쿵! 나는 그만 넘어졌어요."}]},
+{"page":3,"stage":"problem","action":"idle","child_words":"","lines":[{"speaker":"나레이션","text":"엉덩방아를 찧고 나니 괜히 시무룩해졌어요."},{"speaker":"나레이션","text":"“일어나기 싫어….” 나는 바닥에 앉아 있었어요."},{"speaker":"나레이션","text":"그런데 그때였어요! 현관에서 딩동 소리가 났어요."}]},
+{"page":4,"stage":"action","action":"walk","child_words":"","lines":[{"speaker":"나레이션","text":"나는 무릎을 털고 천천히 다시 걸었어요."},{"speaker":"나레이션","text":"조심조심, 블록을 피해서 발을 내디뎠어요."},{"speaker":"나레이션","text":"“이번엔 뛰지 말고 천천히 가야지.”"}]},
+{"page":5,"stage":"action","action":"walk","child_words":"","lines":[{"speaker":"나레이션","text":"한 걸음, 또 한 걸음 현관까지 걸어갔어요."},{"speaker":"나레이션","text":"가슴이 콩닥콩닥 뛰었어요. 누가 왔을까요?"},{"speaker":"나레이션","text":"엄마가 와서 누구인지 묻고 문을 철컥 열어 주셨어요."}]},
+{"page":6,"stage":"result","action":"wave","child_words":"","lines":[{"speaker":"나레이션","text":"문 앞에는 처음 보는 여자아이가 서 있었어요."},{"speaker":"나레이션","text":"“안녕? 옆집에 이사 왔어. 큰 소리 나서 걱정됐어.”"},{"speaker":"나레이션","text":"아이가 방긋 웃자 나도 따라 웃었어요."},{"speaker":"나레이션","text":"그렇게 나에게 친구가 생겼어요."}]},
+{"page":7,"stage":"result","action":"jump","child_words":"","lines":[{"speaker":"나레이션","text":"나는 친구를 거실로 데려와 블록을 보여 줬어요."},{"speaker":"나레이션","text":"우리는 블록을 차곡차곡 함께 쌓았어요."},{"speaker":"나레이션","text":"“이번엔 둘이니까 더 높이 쌓자!”"}]},
+{"page":8,"stage":"result","action":"dance","child_words":"","lines":[{"speaker":"나레이션","text":"블록 탑이 우리 둘보다 더 높아졌어요."},{"speaker":"나레이션","text":"친구와 나는 탑 앞에서 깔깔 웃었어요."},{"speaker":"나레이션","text":"“내일도 같이 쌓을래?” 친구가 고개를 끄덕였어요."}]}],
+"order_pages":[1,2,4,6],
+"scene":{"character_sheet":{"친구":"a cheerful girl with short black bob hair, yellow T-shirt and blue overalls"},"pages":[
+{"page":1,"hero_on_page":true,"characters":[],"background":"A small apartment balcony at home in the daytime, with green potted plants along the railing, an open box of colorful toy blocks, and a tall block tower standing on the tiled floor."},
+{"page":2,"hero_on_page":true,"characters":[],"background":"The same cozy living room with a few colorful toy blocks scattered on the wooden floor near the block tower. Lively, playful mood."},
+{"page":3,"hero_on_page":true,"characters":[],"background":"The cozy living room floor with scattered toy blocks, the front door visible at the far end of the room. Quiet, slightly sad but gentle mood."},
+{"page":4,"hero_on_page":true,"characters":[],"background":"The cozy living room seen low near the floor, toy blocks lying here and there, a clear path leading toward the hallway. Hopeful, careful mood."},
+{"page":5,"hero_on_page":true,"characters":[],"background":"A small bright entrance hallway at home with shoes neatly lined up and a closed wooden front door. Curious, gentle mood."},
+{"page":6,"hero_on_page":true,"characters":[{"name":"친구","slot":"right-middle"}],"background":"The wooden front door wide open in the entrance hallway, 친구 standing at the doorway smiling and waving hello. Friendly, warm mood."},
+{"page":7,"hero_on_page":true,"characters":[{"name":"친구","slot":"right-middle"}],"background":"The cozy living room in the afternoon, 친구 kneeling on the rug stacking colorful toy blocks into a new tower. Happy, playful mood."},
+{"page":8,"hero_on_page":true,"characters":[{"name":"친구","slot":"right-middle"}],"background":"The cozy living room with a very tall colorful toy block tower in the middle, 친구 laughing happily beside it. Joyful, warm mood."}]}}

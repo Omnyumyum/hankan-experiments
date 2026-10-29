@@ -1,0 +1,19 @@
+{"title":"모래 속 반짝 리본","protagonist":"나","characters":[{"name":"친구","type":"아이-여"}],"pages":[
+{"page":1,"stage":"place","action":"walk","child_words":"","lines":[{"speaker":"나레이션","text":"나는 놀이터 모래밭에 쪼그리고 앉았어요."},{"speaker":"나레이션","text":"손으로 모래를 토닥토닥 두드려 두꺼비집을 만들었어요."},{"speaker":"나레이션","text":"모래가 손에 닿으니 차갑고 부드러웠어요."}]},
+{"page":2,"stage":"problem","action":"idle","child_words":"","lines":[{"speaker":"나레이션","text":"그런데 모래밭 한쪽에서 친구가 울고 있었어요."},{"speaker":"나레이션","text":"훌쩍훌쩍, 작은 어깨가 자꾸 들썩였어요."},{"speaker":"나레이션","text":"나는 걱정이 되어 모래를 두드리던 손을 멈췄어요."}]},
+{"page":3,"stage":"problem","action":"idle","child_words":"","lines":[{"speaker":"나레이션","text":"친구는 손으로 모래를 사각사각 파고 있었어요."},{"speaker":"나레이션","text":"“내 리본이 모래 속에 들어갔어. 안 보여.”"},{"speaker":"나레이션","text":"그런데 그때였어요! 나에게 좋은 생각이 났어요."}]},
+{"page":4,"stage":"action","action":"walk","child_words":"","lines":[{"speaker":"나레이션","text":"나는 친구에게 콩콩 다가가서 도와줬어요."},{"speaker":"나레이션","text":"“울지 마. 내가 같이 찾아 줄게.”"},{"speaker":"나레이션","text":"우리는 나란히 앉아 모래를 살살 헤쳤어요."}]},
+{"page":5,"stage":"action","action":"jump","child_words":"","lines":[{"speaker":"나레이션","text":"한 번, 또 한 번, 조심조심 모래를 헤쳤어요."},{"speaker":"나레이션","text":"그때 모래 속에서 무언가가 반짝 빛났어요!"},{"speaker":"나레이션","text":"“찾았다! 여기 있어!”"}]},
+{"page":6,"stage":"result","action":"wave","child_words":"","lines":[{"speaker":"나레이션","text":"친구가 리본을 들고 방긋 웃었어요."},{"speaker":"나레이션","text":"“고마워. 우리 같이 놀래?”"},{"speaker":"나레이션","text":"그렇게 우리는 친한 친구가 됐어요."}]},
+{"page":7,"stage":"result","action":"run","child_words":"","lines":[{"speaker":"나레이션","text":"우리는 손을 잡고 미끄럼틀로 달려갔어요."},{"speaker":"나레이션","text":"슝, 하고 내려오면 바람이 시원했어요."},{"speaker":"나레이션","text":"“한 번 더! 한 번 더!”"}]},
+{"page":8,"stage":"result","action":"dance","child_words":"","lines":[{"speaker":"나레이션","text":"까르르, 우리 웃음소리가 놀이터에 퍼졌어요."},{"speaker":"나레이션","text":"친구 머리 위 리본이 나풀나풀 흔들렸어요."},{"speaker":"나레이션","text":"나는 내일도 친구랑 여기서 놀고 싶었어요."}]}],
+"order_pages":[1,2,4,6],
+"scene":{"character_sheet":{"친구":"a little girl with short black bob hair, round cheeks, yellow t-shirt and blue shorts"},"pages":[
+{"page":1,"hero_on_page":true,"characters":[],"background":"A playground sandbox in the afternoon, with a small mound of patted sand shaped like a little house in the middle. A small toy shovel lies in the sand nearby."},
+{"page":2,"hero_on_page":true,"characters":[{"name":"친구","slot":"right-middle"}],"background":"A corner of the playground sandbox in daytime, 친구 sitting in the sand and crying softly, gentle and quiet mood."},
+{"page":3,"hero_on_page":true,"characters":[{"name":"친구","slot":"right-middle"}],"background":"Close view of the sandbox in daytime, 친구 digging in the sand with her hands, looking sad and searching for something."},
+{"page":4,"hero_on_page":true,"characters":[{"name":"친구","slot":"right-middle"}],"background":"The playground sandbox in daytime, 친구 looking up with teary eyes, small sand piles around, warm and kind mood."},
+{"page":5,"hero_on_page":true,"characters":[{"name":"친구","slot":"right-middle"}],"background":"The sandbox in daytime with a small pink hair ribbon peeking out and shining in the sand, 친구 looking surprised and happy."},
+{"page":6,"hero_on_page":true,"characters":[{"name":"친구","slot":"right-middle"}],"background":"The playground in daytime, 친구 smiling brightly and holding a pink hair ribbon, friendly and warm mood."},
+{"page":7,"hero_on_page":true,"characters":[{"name":"친구","slot":"right-middle"}],"background":"A red playground slide in daytime, 친구 sliding down happily with a pink ribbon in her hair, joyful mood."},
+{"page":8,"hero_on_page":true,"characters":[{"name":"친구","slot":"right-middle"}],"background":"The playground with the yellow swings in soft afternoon light, 친구 laughing with a pink ribbon fluttering in her hair, happy and cozy mood."}]}}

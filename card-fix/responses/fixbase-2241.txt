@@ -1,0 +1,19 @@
+{"title":"정글짐 위에서 들린 소리","protagonist":"나","characters":[{"name":"친구","type":"아이-여"}],"pages":[
+{"page":1,"stage":"place","action":"walk","child_words":"","lines":[{"speaker":"나레이션","text":"나는 놀이터 정글짐에 영차영차 올라갔어요. 차가운 쇠막대를 두 손으로 꼭 잡았어요. 꼭대기에 앉으니 저 멀리까지 다 보였어요."}]},
+{"page":2,"stage":"problem","action":"idle","child_words":"","lines":[{"speaker":"나레이션","text":"그런데 벤치 쪽에서 친구가 울고 있었어요."},{"speaker":"나레이션","text":"훌쩍훌쩍, 작은 울음소리가 계속 들렸어요."},{"speaker":"나레이션","text":"친구는 두 손으로 얼굴을 꼭 가리고 있었어요."}]},
+{"page":3,"stage":"problem","action":"idle","child_words":"","lines":[{"speaker":"나레이션","text":"나는 정글짐을 조심조심 내려와 가만히 섰어요."},{"speaker":"나레이션","text":"걱정이 돼서 가슴이 콩닥콩닥 뛰었어요."},{"speaker":"나레이션","text":"“내가 뭘 해 줄 수 있을까?” 나는 곰곰이 생각했어요."}]},
+{"page":4,"stage":"action","action":"walk","child_words":"","lines":[{"speaker":"나레이션","text":"나는 살금살금 다가가 친구 옆에서 기다려 줬어요."},{"speaker":"나레이션","text":"“내가 여기 있을게.” 나는 작게 말했어요."},{"speaker":"나레이션","text":"빨리 그치라고 말하지 않고 가만히 앉아 있었어요."}]},
+{"page":5,"stage":"action","action":"idle","child_words":"","lines":[{"speaker":"나레이션","text":"나무 위 나뭇잎이 살랑살랑 흔들렸어요."},{"speaker":"나레이션","text":"조금만 더, 또 조금만 더 나는 기다렸어요."},{"speaker":"나레이션","text":"친구의 들썩이던 어깨가 천천히 멈췄어요."}]},
+{"page":6,"stage":"result","action":"idle","child_words":"","lines":[{"speaker":"나레이션","text":"그러다 마침내 친구 눈물이 그쳤어요."},{"speaker":"나레이션","text":"친구가 고개를 들고 나를 보며 방긋 웃었어요."},{"speaker":"나레이션","text":"“옆에 있어 줘서 고마워.” 친구가 말했어요."}]},
+{"page":7,"stage":"result","action":"jump","child_words":"","lines":[{"speaker":"나레이션","text":"나도 너무 기뻐서 키득키득 웃음이 났어요."},{"speaker":"나레이션","text":"“우리 같이 그네 탈래?” 내가 물었어요."},{"speaker":"나레이션","text":"친구는 고개를 끄덕끄덕하며 일어났어요."}]},
+{"page":8,"stage":"result","action":"dance","child_words":"","lines":[{"speaker":"나레이션","text":"우리는 나란히 그네에 앉아 휙휙 발을 굴렀어요."},{"speaker":"나레이션","text":"친구 얼굴에는 눈물 자국만 조금 남아 있었어요."},{"speaker":"나레이션","text":"옆에서 들리는 친구 웃음소리가 참 좋았어요."}]}],
+"order_pages":[1,2,4,6],
+"scene":{"character_sheet":{"친구":"a little girl with short black bob hair and a yellow hairpin, wearing a pink t-shirt and blue shorts"},"pages":[
+{"page":1,"hero_on_page":true,"characters":[],"background":"A colorful metal jungle gym in a playground in the afternoon, seen from near its top. Crossing bars fill the foreground, and the quiet playground spreads out below."},
+{"page":2,"hero_on_page":true,"characters":[{"name":"친구","slot":"right-middle"}],"background":"A playground bench in the afternoon where 친구 sits covering her face with both hands, crying softly. Quiet, gentle, slightly sad mood."},
+{"page":3,"hero_on_page":true,"characters":[{"name":"친구","slot":"right-middle"}],"background":"The playground bench from a little distance, 친구 still sitting and crying with her head down. Soft afternoon light, thoughtful mood."},
+{"page":4,"hero_on_page":true,"characters":[{"name":"친구","slot":"right-middle"}],"background":"A wooden playground bench with space beside 친구, who is still crying quietly. Warm, gentle, caring mood."},
+{"page":5,"hero_on_page":true,"characters":[{"name":"친구","slot":"right-middle"}],"background":"A tree beside the playground bench with leaves swaying in a light breeze, 친구 sitting calmly as her crying slows down. Peaceful, patient mood."},
+{"page":6,"hero_on_page":true,"characters":[{"name":"친구","slot":"right-middle"}],"background":"The playground bench in soft afternoon light, 친구 lifting her head and smiling shyly. Warm, relieved mood."},
+{"page":7,"hero_on_page":true,"characters":[{"name":"친구","slot":"right-middle"}],"background":"The playground with swings in the background, 친구 standing up from the bench and nodding happily. Bright, joyful mood."},
+{"page":8,"hero_on_page":true,"characters":[{"name":"친구","slot":"right-middle"}],"background":"Playground swings in the afternoon, 친구 swinging happily and laughing. Cozy, warm, happy mood."}]}}
