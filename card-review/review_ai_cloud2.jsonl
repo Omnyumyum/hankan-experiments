@@ -88,3 +88,33 @@
 {"combo": "6413", "fingerprint": "33cc643a2437", "verdict": "check", "issues": [{"version": "long-narration", "type": "안전", "quote": "밀물이 들어오며 물소리가 찰박찰박 가까워졌어요. … 나는 큰 바위 뒤에 몸을 꼭 붙이고 숨었어요", "why": "밤에 밀물이 드는 바위 쪽에 아이가 혼자 숨어 있는 장면이라, 실제로는 위험한 행동으로 읽힐 수 있어요."}]}
 {"combo": "6414", "fingerprint": "09c57e905d57", "verdict": "pass", "issues": []}
 {"combo": "6421", "fingerprint": "74d6d54b3a12", "verdict": "pass", "issues": []}
+{"combo": "6422", "fingerprint": "6156a3dbb646", "verdict": "pass", "issues": []}
+{"combo": "6423", "fingerprint": "db75c993a86b", "verdict": "pass", "issues": []}
+{"combo": "6424", "fingerprint": "5cf3777facdb", "verdict": "pass", "issues": []}
+{"combo": "6431", "fingerprint": "c481ead27fe4", "verdict": "pass", "issues": []}
+{"combo": "6432", "fingerprint": "c78c9d469c53", "verdict": "pass", "issues": []}
+{"combo": "6433", "fingerprint": "933df6002ec4", "verdict": "pass", "issues": []}
+{"combo": "6434", "fingerprint": "df3208b21945", "verdict": "check", "issues": [{"version": "long-characters", "type": "어색한 문장", "quote": "[할머니] “쉿, 저기 물새 가족이” [할머니] “자고 있단다.”", "why": "한 문장인 대사가 두 개로 잘려 있어(7쪽 「물새들은 아침이 되면」도 같아요) 읽어 줄 때 끊겨요."}]}
+{"combo": "6441", "fingerprint": "0f75a8b7ae38", "verdict": "pass", "issues": []}
+{"combo": "6442", "fingerprint": "311b2fde1313", "verdict": "pass", "issues": []}
+{"combo": "6443", "fingerprint": "c079c45672bd", "verdict": "pass", "issues": []}
+{"combo": "6444", "fingerprint": "13696a9a2ca6", "verdict": "pass", "issues": []}
+{"combo": "7411", "fingerprint": "0fb295b2d0a8", "verdict": "pass", "issues": []}
+{"combo": "7412", "fingerprint": "f67f15177f64", "verdict": "pass", "issues": []}
+{"combo": "7413", "fingerprint": "e3fcfbb49bd7", "verdict": "pass", "issues": []}
+{"combo": "7414", "fingerprint": "38992168948b", "verdict": "pass", "issues": []}
+{"combo": "7421", "fingerprint": "fa612ba33193", "verdict": "pass", "issues": []}
+{"combo": "7422", "fingerprint": "9c85d73711d2", "verdict": "pass", "issues": []}
+{"combo": "7423", "fingerprint": "deb3c9ae618c", "verdict": "pass", "issues": []}
+{"combo": "7424", "fingerprint": "fcfafbcac141", "verdict": "pass", "issues": []}
+{"combo": "7431", "fingerprint": "e73e26e62804", "verdict": "pass", "issues": []}
+{"combo": "7432", "fingerprint": "3aca9fe24629", "verdict": "pass", "issues": []}
+{"combo": "7433", "fingerprint": "113b9bf2c0ee", "verdict": "pass", "issues": []}
+{"combo": "7434", "fingerprint": "cb574aaf74b6", "verdict": "pass", "issues": []}
+{"combo": "7441", "fingerprint": "1465d677f37f", "verdict": "pass", "issues": []}
+{"combo": "7442", "fingerprint": "c6f0ceaa77bd", "verdict": "pass", "issues": []}
+{"combo": "7443", "fingerprint": "88b2d85c7f5f", "verdict": "pass", "issues": []}
+{"combo": "7444", "fingerprint": "b24fb0549ec4", "verdict": "pass", "issues": []}
+{"combo": "8411", "fingerprint": "595357714052", "verdict": "pass", "issues": []}
+{"combo": "8412", "fingerprint": "9bdf33edd30b", "verdict": "pass", "issues": []}
+{"combo": "8413", "fingerprint": "eafb31eee735", "verdict": "pass", "issues": []}
