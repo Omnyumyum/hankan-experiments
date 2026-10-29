@@ -58,3 +58,33 @@
 {"combo": "4431", "fingerprint": "2393f508a6c7", "verdict": "pass", "issues": []}
 {"combo": "4432", "fingerprint": "58718b985ffb", "verdict": "pass", "issues": []}
 {"combo": "4433", "fingerprint": "bc6af6698bfc", "verdict": "pass", "issues": []}
+{"combo": "4434", "fingerprint": "68beafdbd8c2", "verdict": "pass", "issues": []}
+{"combo": "4441", "fingerprint": "c3b9cd4c8211", "verdict": "pass", "issues": []}
+{"combo": "4442", "fingerprint": "89bb95a41fc7", "verdict": "pass", "issues": []}
+{"combo": "4443", "fingerprint": "e417c9afb79f", "verdict": "check", "issues": [{"version": "short-characters", "type": "어색한 문장", "quote": "사장님이 [꽃집 사장님] “쉿, 잠들었네요.” 했어요, 잠이 들었어요.", "why": "벌써 잠들었다는 말 뒤에 잠이 들었다고 해서 앞뒤 순서가 거꾸로예요."}]}
+{"combo": "4444", "fingerprint": "79ac2947af59", "verdict": "pass", "issues": []}
+{"combo": "5121", "fingerprint": "aae2aafad97e", "verdict": "pass", "issues": []}
+{"combo": "5123", "fingerprint": "b7668d237f1d", "verdict": "pass", "issues": []}
+{"combo": "5341", "fingerprint": "3ff4e8611b77", "verdict": "pass", "issues": []}
+{"combo": "5411", "fingerprint": "e27e067fc7f3", "verdict": "pass", "issues": []}
+{"combo": "5412", "fingerprint": "cef464e779df", "verdict": "pass", "issues": []}
+{"combo": "5413", "fingerprint": "1f1ed2588c17", "verdict": "pass", "issues": []}
+{"combo": "5414", "fingerprint": "f6e04cb4e75b", "verdict": "pass", "issues": []}
+{"combo": "5421", "fingerprint": "2736c49e6f4a", "verdict": "pass", "issues": []}
+{"combo": "5422", "fingerprint": "96546be9e728", "verdict": "pass", "issues": []}
+{"combo": "5423", "fingerprint": "6f3958f61ac6", "verdict": "pass", "issues": []}
+{"combo": "5424", "fingerprint": "a58cd33b5ed2", "verdict": "pass", "issues": []}
+{"combo": "5431", "fingerprint": "b69283f81576", "verdict": "pass", "issues": []}
+{"combo": "5432", "fingerprint": "96de266718ce", "verdict": "pass", "issues": []}
+{"combo": "5433", "fingerprint": "06b9186cac81", "verdict": "pass", "issues": []}
+{"combo": "5434", "fingerprint": "401054c36a0e", "verdict": "pass", "issues": []}
+{"combo": "5441", "fingerprint": "0ff397030835", "verdict": "check", "issues": [{"version": "all", "type": "안전", "quote": "개울물이 콸콸 불어나기 시작했어요. … 비가 그칠 때까지 다리 지붕 밑에서 기다리자", "why": "물이 불어나는 개울 위 다리에 머물러 기다리는 것은 실제로는 위험해서, 따라 하지 않도록 부모가 한번 볼 만해요."}]}
+{"combo": "5442", "fingerprint": "6d306e868805", "verdict": "pass", "issues": []}
+{"combo": "5443", "fingerprint": "160c594484c1", "verdict": "pass", "issues": []}
+{"combo": "5444", "fingerprint": "2aa472311d08", "verdict": "pass", "issues": []}
+{"combo": "6341", "fingerprint": "50a894a464dc", "verdict": "pass", "issues": []}
+{"combo": "6411", "fingerprint": "e640e21cfdc0", "verdict": "pass", "issues": []}
+{"combo": "6412", "fingerprint": "c733faefaff9", "verdict": "pass", "issues": []}
+{"combo": "6413", "fingerprint": "33cc643a2437", "verdict": "check", "issues": [{"version": "long-narration", "type": "안전", "quote": "밀물이 들어오며 물소리가 찰박찰박 가까워졌어요. … 나는 큰 바위 뒤에 몸을 꼭 붙이고 숨었어요", "why": "밤에 밀물이 드는 바위 쪽에 아이가 혼자 숨어 있는 장면이라, 실제로는 위험한 행동으로 읽힐 수 있어요."}]}
+{"combo": "6414", "fingerprint": "09c57e905d57", "verdict": "pass", "issues": []}
+{"combo": "6421", "fingerprint": "74d6d54b3a12", "verdict": "pass", "issues": []}
