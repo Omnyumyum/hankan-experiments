@@ -1,0 +1,8 @@
+{"protagonist": "라라",
+ "characters": [{"name": "친구", "type": "아이-남"}],
+ "sentences": [
+  [{"speaker": "나레이션", "text": "라라는 우주의 달 위를 두근두근 걸었어요."}],
+  [{"speaker": "나레이션", "text": "커다란 바위 뒤에서 친구가 울고 있었어요."}],
+  [{"speaker": "나레이션", "text": "라라는"}, {"speaker": "주인공", "text": "친구를 도와주세요!", "emotion": "놀람"}, {"speaker": "나레이션", "text": "하며 어른에게 달려갔어요."}],
+  [{"speaker": "나레이션", "text": "친구가"}, {"speaker": "친구", "text": "달려가 줘서 고마워!", "emotion": "기쁨"}, {"speaker": "나레이션", "text": "해서 라라는 고맙다는 말을 들었어요."}]
+ ]}

@@ -1,0 +1,8 @@
+{"protagonist": "라라",
+ "characters": [{"name": "안내원 아저씨", "type": "어른-남"}],
+ "sentences": [
+  [{"speaker": "나레이션", "text": "라라는 손전등을 쥐고 동굴 속 좁은 굴을 걸었어요."}],
+  [{"speaker": "나레이션", "text": "반짝이 돌을 따라가다 라라는 길을 잃었어요."}],
+  [{"speaker": "나레이션", "text": "라라는"}, {"speaker": "주인공", "text": "조금만 더 기다리자.", "emotion": "속삭임"}, {"speaker": "나레이션", "text": "하며 그 자리에서 기다렸어요."}],
+  [{"speaker": "나레이션", "text": "안내원 아저씨가"}, {"speaker": "안내원 아저씨", "text": "여기 있었구나!", "emotion": "기쁨"}, {"speaker": "나레이션", "text": "하자 모두 기뻐했어요."}]
+ ]}
