@@ -1,0 +1,1 @@
+{"protagonist": "라라", "characters": [], "sentences": [[{"speaker": "나레이션", "text": "라라는 놀이터 정글짐에 올라갔어요."}], [{"speaker": "나레이션", "text": "나비를 따라가다가 그만 길을 잃었어요."}], [{"speaker": "나레이션", "text": "라라는"}, {"speaker": "주인공", "text": "표지판이다!", "emotion": "신남"}, {"speaker": "나레이션", "text": "하며 표지판으로 달려갔어요."}], [{"speaker": "나레이션", "text": "화살표를 따라가니 라라는 길을 찾았어요."}]]}

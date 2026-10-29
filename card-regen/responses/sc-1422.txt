@@ -1,0 +1,1 @@
+{"protagonist": "라라", "characters": [], "sentences": [[{"speaker": "나레이션", "text": "라라는 집 욕실 앞에서 몸을 닦았어요."}], [{"speaker": "나레이션", "text": "잠옷을 입는 사이 욕실 앞이 어두워졌어요."}], [{"speaker": "나레이션", "text": "라라는 거실의 밝은 곳으로 달려갔어요."}], [{"speaker": "나레이션", "text": "라라는"}, {"speaker": "주인공", "text": "오리 찾을래요!", "emotion": "신남"}, {"speaker": "나레이션", "text": "하고 용기가 생겼어요."}]]}
