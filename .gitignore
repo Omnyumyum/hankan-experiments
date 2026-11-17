@@ -4,6 +4,7 @@
 !/README.md
 !/animal-monster/
 !/creature-picker/
+!/creature-pose/
 **/venv/
 **/__pycache__/
 **/out/
@@ -11,6 +12,8 @@ animal-monster/results/
 animal-monster/shape/
 animal-monster/quadruped/
 animal-monster/models/
+creature-pose/data/
+creature-pose/work/
 *.onnx
 
 # 키 파일은 절대 올리지 않는다
